@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">{{ site.title }}</a>
+      <div class="nav-links">
+        <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Guide</a>
+        <a href="{{ '/templates' | relative_url }}" {% if page.url == '/templates.html' %}class="active"{% endif %}>Templates</a>
+        <a href="https://github.com/managedcode/MCAF" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <article class="content">
+      {{ content }}
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>{{ site.title }} &copy; {{ 'now' | date: '%Y' }} <a href="https://github.com/managedcode">ManagedCode</a></p>
+      <p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+    </div>
+  </footer>
+</body>
+</html>

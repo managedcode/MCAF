@@ -1,20 +1,10 @@
 title: MCAF
 description: Managed Code Coding AI Framework
-remote_theme: just-the-docs/just-the-docs@v0.10.0
+url: "https://mcaf.managed-code.com"
+baseurl: ""
+
 plugins:
-  - jekyll-remote-theme
   - jekyll-seo-tag
-
-color_scheme: dark
-
-gh_edit_link: true
-gh_edit_link_text: "Edit on GitHub"
-gh_edit_repository: "https://github.com/managedcode/MCAF"
-gh_edit_branch: "main"
-
-nav_enabled: true
-search_enabled: true
-back_to_top: true
 
 exclude:
   - Gemfile
