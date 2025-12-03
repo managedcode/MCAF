@@ -45,6 +45,7 @@ jobs:
           echo "$VERSION" > VERSION
 
       - name: Commit version file
+        if: steps.changes.outputs.release == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
