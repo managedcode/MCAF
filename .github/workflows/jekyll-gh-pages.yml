@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate templates page
         run: |
-          cat > github-pages/templates.md << 'EOF'
+          cat > github-pages/templates.md << 'HEADER'
           ---
           layout: default
           title: Templates
@@ -57,31 +57,25 @@ jobs:
           # Templates
 
           Copy these templates to your project and customize them.
-          EOF
+          HEADER
           sed -i 's/^          //' github-pages/templates.md
 
           for file in docs/templates/*.md; do
             if [ -f "$file" ]; then
               filename=$(basename "$file")
               name="${filename%.md}"
-
-              # Read first line as title (remove # prefix)
               title=$(head -1 "$file" | sed 's/^#* *//')
-
-              # Read second non-empty line as description
               desc=$(sed -n '2,10p' "$file" | grep -v '^$' | grep -v '^#' | head -1)
 
-              cat >> github-pages/templates.md << TEMPLATE
-
----
-
-## ${title:-$name}
-
-${desc:-Template file for your project.}
-
-[View on GitHub](https://github.com/managedcode/MCAF/blob/main/docs/templates/${filename}){: .btn .btn-primary }
-[Download](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/${filename}){: .btn }
-TEMPLATE
+              echo "" >> github-pages/templates.md
+              echo "---" >> github-pages/templates.md
+              echo "" >> github-pages/templates.md
+              echo "## ${title:-$name}" >> github-pages/templates.md
+              echo "" >> github-pages/templates.md
+              echo "${desc:-Template file for your project.}" >> github-pages/templates.md
+              echo "" >> github-pages/templates.md
+              echo "[View on GitHub](https://github.com/managedcode/MCAF/blob/main/docs/templates/${filename}){: .btn .btn-primary }" >> github-pages/templates.md
+              echo "[Download](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/${filename}){: .btn }" >> github-pages/templates.md
             fi
           done
 
