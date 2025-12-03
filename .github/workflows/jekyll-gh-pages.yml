@@ -21,9 +21,21 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
+      release: ${{ steps.changes.outputs.release }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Check for content changes
+        id: changes
+        run: |
+          git fetch origin main --depth=2
+          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          if echo "$CHANGED" | grep -qE '^(README\.md|docs/)'; then
+            echo "release=true" >> $GITHUB_OUTPUT
+          else
+            echo "release=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set version
         id: version
@@ -125,6 +137,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: build
+    if: needs.build.outputs.release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
