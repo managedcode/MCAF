@@ -1,3 +1,121 @@
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, #27232A, #785D8F);
+  z-index: 1000;
+  transition: width 0.1s ease;
+}
+
+/* Table of Contents */
+.toc {
+  background: #F5F3F7;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+  border: 1px solid #E8E5EB;
+}
+
+.toc-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b6574;
+  margin-bottom: 16px;
+}
+
+.toc ol {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  counter-reset: toc-counter;
+}
+
+.toc > ol > li {
+  counter-increment: toc-counter;
+  margin-bottom: 8px;
+}
+
+.toc > ol > li > a::before {
+  content: counter(toc-counter) ". ";
+  color: #785D8F;
+  font-weight: 500;
+}
+
+.toc a {
+  color: #353D4C;
+  font-size: 15px;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.toc a:hover {
+  color: #785D8F;
+}
+
+/* Anchor links on headings */
+h2, h3, h4 {
+  position: relative;
+}
+
+.anchor-link {
+  position: absolute;
+  left: -24px;
+  opacity: 0;
+  font-size: 0.8em;
+  color: #785D8F;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link {
+  opacity: 1;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  background: #27232A;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(39, 35, 42, 0.2);
+  z-index: 99;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: #785D8F;
+  transform: translateY(-3px);
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Basic Reset */
 * {
   margin: 0;

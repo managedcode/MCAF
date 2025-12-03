@@ -39,7 +39,7 @@ Architecture Decision Record template for `docs/ADR/`.
 
 ## CLAUDE.md
 
-Simple file that references AGENTS.md for Claude Code.
+Claude Code does not support `AGENTS.md` directly. This file acts as a bridge — it references `AGENTS.md` so Claude Code can follow the same rules.
 
 [View on GitHub](https://github.com/managedcode/MCAF/blob/main/docs/templates/CLAUDE.md){: .btn .btn-primary }
 [Download](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/CLAUDE.md){: .btn }
