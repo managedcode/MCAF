@@ -783,16 +783,12 @@ details.faq-item[open] > summary {
 
 details.faq-item .faq-answer {
   padding: 20px 24px 20px 28px !important;
-  margin: 0 !important;
+  margin: 16px 20px 20px 20px !important;
   color: #4a4a4a !important;
   line-height: 1.8 !important;
   background: #FAFAFA !important;
   font-size: 15px !important;
   border-left: 3px solid #785D8F !important;
-  margin-left: 20px !important;
-  margin-right: 20px !important;
-  margin-bottom: 20px !important;
-  margin-top: 16px !important;
   border-radius: 0 8px 8px 0 !important;
 }
 
