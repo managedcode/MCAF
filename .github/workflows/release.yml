@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'VERSION'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set version
+        id: version
+        run: |
+          VERSION="1.0.${{ github.run_number }}"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "$VERSION" > VERSION
+
+      - name: Commit version file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add VERSION
+          git diff --staged --quiet || git commit -m "Bump version to ${{ steps.version.outputs.VERSION }} [skip ci]"
+          git push
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## MCAF Release ${{ steps.version.outputs.VERSION }}
+
+            Managed Code Coding AI Framework
+          draft: false
+          prerelease: false
+          generate_release_notes: true
