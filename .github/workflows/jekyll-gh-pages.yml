@@ -30,11 +30,15 @@ jobs:
         id: changes
         run: |
           git fetch origin main --depth=2
-          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
-          # Release if any changes outside github-pages/ and .github/
-          if echo "$CHANGED" | grep -qvE '^(github-pages/|\.github/)'; then
+          # Get files changed, excluding github-pages/ and .github/
+          CONTENT_CHANGES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -vE '^(github-pages/|\.github/|$)' || true)
+          # Release only if there are content changes
+          if [ -n "$CONTENT_CHANGES" ]; then
+            echo "Content changes detected:"
+            echo "$CONTENT_CHANGES"
             echo "release=true" >> $GITHUB_OUTPUT
           else
+            echo "No content changes, skipping release"
             echo "release=false" >> $GITHUB_OUTPUT
           fi
 

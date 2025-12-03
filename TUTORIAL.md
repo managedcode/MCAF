@@ -150,52 +150,60 @@ Best for:
 
 ## FAQ
 
-<details>
+<details class="faq-item">
 <summary>Does MCAF work with any programming language?</summary>
-
-Yes. MCAF is language-agnostic. Define your `build`, `test`, `format` commands for your stack.
+<div class="faq-answer">
+Yes. MCAF is language-agnostic. Define your <code>build</code>, <code>test</code>, <code>format</code> commands for your stack.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>Do I need all documentation folders?</summary>
-
-Start with `Features/`, `ADR/`, and `Development/`. Add others as needed.
+<div class="faq-answer">
+Start with <code>Features/</code>, <code>ADR/</code>, and <code>Development/</code>. Add others as needed.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>What if my team doesn't have a dedicated QA?</summary>
-
+<div class="faq-answer">
 Developers take the QA perspective. The point is ensuring test coverage, not having a specific role.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>Why avoid mocking internal services?</summary>
-
+<div class="faq-answer">
 Mocks hide integration bugs. Real containers catch issues that mocks miss.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>How much test coverage is enough?</summary>
-
+<div class="faq-answer">
 Every significant behaviour needs at least one integration/API/UI test. Focus on workflows, not percentages.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>Which AI agents work with MCAF?</summary>
-
-Any AI coding assistant that can read files. Point them to `AGENTS.md`.
+<div class="faq-answer">
+Any AI coding assistant that can read files. Point them to <code>AGENTS.md</code>.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>How does the agent learn my preferences?</summary>
-
-Update `AGENTS.md` when you give feedback. Chat is not memory — the file is.
+<div class="faq-answer">
+Update <code>AGENTS.md</code> when you give feedback. Chat is not memory — the file is.
+</div>
 </details>
 
-<details>
+<details class="faq-item">
 <summary>Can I adopt MCAF gradually?</summary>
-
-Yes. Start with `AGENTS.md` and one feature doc. Add structure as you go.
+<div class="faq-answer">
+Yes. Start with <code>AGENTS.md</code> and one feature doc. Add structure as you go.
+</div>
 </details>
 
 ---
