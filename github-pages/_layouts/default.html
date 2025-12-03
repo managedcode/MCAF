@@ -33,21 +33,6 @@
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <meta name="twitter:image" content="{{ '/assets/images/og-image.png' | absolute_url }}">
 
-  <!-- Google tag (gtag.js) - cookieless -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMRJ311LEF"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied'
-    });
-
-    gtag('js', new Date());
-    gtag('config', 'G-FMRJ311LEF');
-  </script>
-
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
 
@@ -55,13 +40,25 @@
   <meta name="theme-color" content="#785D8F">
   <meta name="msapplication-TileColor" content="#785D8F">
 
-  <!-- Fonts -->
+  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <!-- Critical CSS inline -->
+  <style>
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;background:#fff}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;max-width:1280px;margin:0 auto}
+    .main{max-width:860px;margin:0 auto;padding:40px 60px}
+  </style>
+
+  <!-- Stylesheet - non-blocking -->
+  <link rel="preload" href="{{ '/assets/css/style.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"></noscript>
+
+  <!-- Fonts - non-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -116,67 +113,62 @@
     </div>
   </footer>
 
+  <!-- Scripts at end of body -->
   <script>
-    // TOC navigation
-    document.querySelectorAll('.toc a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const text = this.textContent.trim().toLowerCase();
-        const headings = document.querySelectorAll('h2');
-        for (const h of headings) {
-          if (h.textContent.toLowerCase().includes(text)) {
-            h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            break;
-          }
-        }
-      });
-    });
+    // Dark mode - run immediately to prevent flash
+    (function(){
+      var d=document.body,t=document.getElementById('dark-toggle'),
+          s=localStorage.getItem('darkMode'),
+          p=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='true'||(s===null&&p)){d.classList.add('dark');if(t)t.checked=true}
+      if(t)t.onchange=function(){d.classList.toggle('dark');localStorage.setItem('darkMode',d.classList.contains('dark'))}
+    })();
+  </script>
 
+  <!-- Deferred scripts -->
+  <script defer>
     // Back to top
-    const backToTop = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
+    var b=document.getElementById('back-to-top');
+    window.onscroll=function(){b.classList.toggle('visible',window.scrollY>400)};
+    b.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+
+    // TOC navigation
+    document.querySelectorAll('.toc a').forEach(function(l){
+      l.onclick=function(e){
+        e.preventDefault();
+        var t=this.textContent.trim().toLowerCase();
+        document.querySelectorAll('h2').forEach(function(h){
+          if(h.textContent.toLowerCase().includes(t))h.scrollIntoView({behavior:'smooth',block:'start'})
+        })
       }
-    });
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // Copy code button
-    document.querySelectorAll('pre').forEach(pre => {
-      const btn = document.createElement('button');
-      btn.className = 'copy-btn';
-      btn.textContent = 'Copy';
-      btn.addEventListener('click', () => {
-        const code = pre.querySelector('code') || pre;
-        navigator.clipboard.writeText(code.textContent).then(() => {
-          btn.textContent = 'Copied!';
-          setTimeout(() => btn.textContent = 'Copy', 2000);
-        });
-      });
-      pre.style.position = 'relative';
-      pre.appendChild(btn);
+    document.querySelectorAll('pre').forEach(function(p){
+      var b=document.createElement('button');
+      b.className='copy-btn';b.textContent='Copy';
+      b.onclick=function(){
+        navigator.clipboard.writeText((p.querySelector('code')||p).textContent).then(function(){
+          b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},2000)
+        })
+      };
+      p.style.position='relative';p.appendChild(b)
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) - cookieless -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMRJ311LEF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied'
     });
 
-    // Dark mode
-    const darkToggle = document.getElementById('dark-toggle');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const stored = localStorage.getItem('darkMode');
-
-    if (stored === 'true' || (stored === null && prefersDark)) {
-      document.body.classList.add('dark');
-      if (darkToggle) darkToggle.checked = true;
-    }
-
-    if (darkToggle) {
-      darkToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark');
-        localStorage.setItem('darkMode', document.body.classList.contains('dark'));
-      });
-    }
+    gtag('js', new Date());
+    gtag('config', 'G-FMRJ311LEF');
   </script>
 </body>
 </html>
