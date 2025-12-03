@@ -69,7 +69,7 @@ jobs:
 
           # Templates
 
-          Copy these templates to your project and customize them.
+          Ready-to-use templates for adopting MCAF in your repository. These files define how AI agents work in your codebase, document architectural decisions, and describe features with clear test flows.
 
           <div class="templates-list">
           HEADER
