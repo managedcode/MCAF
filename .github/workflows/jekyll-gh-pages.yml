@@ -40,13 +40,23 @@ jobs:
           git diff --staged --quiet || git commit -m "Bump version to ${{ steps.version.outputs.VERSION }} [skip ci]"
           git push
 
+      - name: Copy README to github-pages
+        run: |
+          echo '---
+          layout: default
+          title: MCAF Guide
+          nav_order: 1
+          ---
+          ' > github-pages/index.md
+          cat README.md >> github-pages/index.md
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./
+          source: ./github-pages
           destination: ./_site
 
       - name: Upload artifact
