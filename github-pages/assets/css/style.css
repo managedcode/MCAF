@@ -228,21 +228,21 @@ ul, ol {
 
 li {
   font-size: 17px;
-  line-height: 1.7;
+  line-height: 1.5;
   color: #353D4C;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   letter-spacing: 0.01em;
 }
 
 li > ul, li > ol {
-  margin-top: 10px;
+  margin-top: 6px;
   margin-bottom: 0;
 }
 
-/* Make nested lists look better */
+/* Nested lists */
 li > ul > li,
 li > ol > li {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 /* Code */
@@ -448,11 +448,13 @@ hr {
 
 /* Back to top button */
 .back-to-top {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  width: 44px;
-  height: 44px;
+  position: fixed !important;
+  bottom: 32px !important;
+  right: 32px !important;
+  left: auto !important;
+  width: 44px !important;
+  max-width: 44px !important;
+  height: 44px !important;
   background: #27232A;
   color: white;
   border: none;
@@ -536,7 +538,7 @@ hr {
     font-size: 22px;
   }
 
-  .btn {
+  .btn:not(.back-to-top) {
     width: 100%;
     margin-right: 0;
   }
