@@ -33,16 +33,21 @@
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <meta name="twitter:image" content="{{ site.url }}/assets/images/og-image.png">
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) - cookieless -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0F5FQ4W37"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied'
+    });
+
+    gtag('js', new Date());
     gtag('config', 'G-X0F5FQ4W37', {
-      client_storage: 'none',
-      anonymize_ip: true
+      anonymize_ip: true,
+      send_page_view: true
     });
   </script>
 
