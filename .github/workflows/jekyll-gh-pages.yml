@@ -69,7 +69,8 @@ jobs:
 
           # Templates
 
-          Ready-to-use templates for adopting MCAF in your repository. These files define how AI agents work in your codebase, document architectural decisions, and describe features with clear test flows.
+          Ready-to-use templates for adopting MCAF in your repository. <br/>
+          These files define how AI agents work in your codebase, document architectural decisions, and describe features with clear test flows.
 
           <div class="templates-list">
           HEADER
@@ -94,8 +95,12 @@ jobs:
 
       - name: Copy README to github-pages with TOC
         run: |
+          WORDS=$(wc -w < README.md)
+          MINUTES=$(( (WORDS + 200) / 200 ))
           printf '%s\n' '---' 'layout: default' 'title: MCAF Guide' 'nav_order: 1' '---' '' > github-pages/index.md
           awk '/^---$/{exit} {print}' README.md >> github-pages/index.md
+          echo "" >> github-pages/index.md
+          echo "<p class=\"reading-time\">${MINUTES} min read</p>" >> github-pages/index.md
           echo '' >> github-pages/index.md
           echo '<nav class="toc">' >> github-pages/index.md
           echo '<div class="toc-title">Table of Contents</div>' >> github-pages/index.md

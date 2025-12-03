@@ -45,10 +45,7 @@
     });
 
     gtag('js', new Date());
-    gtag('config', 'G-FMRJ311LEF', {
-      anonymize_ip: true,
-      send_page_view: true
-    });
+    gtag('config', 'G-FMRJ311LEF');
   </script>
 
   <!-- Favicon -->
@@ -90,6 +87,11 @@
       <a href="{{ '/templates' | relative_url }}" {% if page.url == '/templates.html' %}class="active"{% endif %}>Templates</a>
       <a href="https://github.com/managedcode/MCAF" target="_blank" rel="noopener">GitHub</a>
       <a href="https://managed-code.com" target="_blank" rel="noopener" class="nav-brand">ManagedCode</a>
+      <label class="dark-toggle-label" title="Toggle dark mode">
+        <input type="checkbox" id="dark-toggle">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </label>
     </div>
   </nav>
 
@@ -141,6 +143,39 @@
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Copy code button
+    document.querySelectorAll('pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        const code = pre.querySelector('code') || pre;
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        });
+      });
+      pre.style.position = 'relative';
+      pre.appendChild(btn);
+    });
+
+    // Dark mode
+    const darkToggle = document.getElementById('dark-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const stored = localStorage.getItem('darkMode');
+
+    if (stored === 'true' || (stored === null && prefersDark)) {
+      document.body.classList.add('dark');
+      if (darkToggle) darkToggle.checked = true;
+    }
+
+    if (darkToggle) {
+      darkToggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+      });
+    }
   </script>
 </body>
 </html>
