@@ -3,6 +3,11 @@ description: Managed Code Coding AI Framework
 url: "https://mcaf.managed-code.com"
 baseurl: ""
 
+markdown: kramdown
+kramdown:
+  auto_ids: true
+  input: GFM
+
 plugins:
   - jekyll-seo-tag
 

@@ -42,30 +42,35 @@ jobs:
 
       - name: Copy README to github-pages with TOC
         run: |
-          cat > github-pages/index.md << 'FRONTMATTER'
-          ---
-          layout: default
-          title: MCAF Guide
-          nav_order: 1
-          ---
+          # Front matter
+          printf '%s\n' '---' 'layout: default' 'title: MCAF Guide' 'nav_order: 1' '---' '' > github-pages/index.md
 
-          <nav class="toc">
-            <div class="toc-title">Table of Contents</div>
-            <ol>
-              <li><a href="#1-what-mcaf-is">What MCAF Is</a></li>
-              <li><a href="#2-context">Context</a></li>
-              <li><a href="#3-verification">Verification</a></li>
-              <li><a href="#4-instructions-and-agentsmd">Instructions and AGENTS.md</a></li>
-              <li><a href="#5-coding-and-testability">Coding and Testability</a></li>
-              <li><a href="#6-perspectives">Perspectives</a></li>
-              <li><a href="#7-development-cycle">Development Cycle</a></li>
-              <li><a href="#8-ai-participation-modes">AI Participation Modes</a></li>
-              <li><a href="#9-adopting-mcaf-in-a-repository">Adopting MCAF</a></li>
-            </ol>
-          </nav>
+          # Header (before first ---)
+          awk '/^---$/{exit} {print}' README.md >> github-pages/index.md
 
-          FRONTMATTER
-          cat README.md >> github-pages/index.md
+          # TOC
+          cat >> github-pages/index.md << 'TOCEOF'
+
+<nav class="toc">
+<div class="toc-title">Table of Contents</div>
+<ol>
+<li><a href="#1-what-mcaf-is">What MCAF Is</a></li>
+<li><a href="#2-context">Context</a></li>
+<li><a href="#3-verification">Verification</a></li>
+<li><a href="#4-instructions-and-agentsmd">Instructions and AGENTS.md</a></li>
+<li><a href="#5-coding-and-testability">Coding and Testability</a></li>
+<li><a href="#6-perspectives">Perspectives</a></li>
+<li><a href="#7-development-cycle">Development Cycle</a></li>
+<li><a href="#8-ai-participation-modes">AI Participation Modes</a></li>
+<li><a href="#9-adopting-mcaf-in-a-repository">Adopting MCAF</a></li>
+</ol>
+</nav>
+
+---
+TOCEOF
+
+          # Content (after first ---)
+          awk '/^---$/{found=1; next} found{print}' README.md >> github-pages/index.md
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

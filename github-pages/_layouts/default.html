@@ -33,14 +33,17 @@
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <meta name="twitter:image" content="{{ site.url }}/assets/images/og-image.png">
 
-  <!-- Favicons -->
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32.png' | relative_url }}">
-  <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#785D8F">
   <meta name="msapplication-TileColor" content="#785D8F">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
@@ -62,9 +65,6 @@
   </script>
 </head>
 <body>
-  <!-- Reading progress bar -->
-  <div class="reading-progress" id="reading-progress"></div>
-
   <nav class="nav">
     <a href="{{ '/' | relative_url }}" class="nav-logo">{{ site.title }}</a>
     <div class="nav-links">
@@ -88,72 +88,5 @@
     </div>
   </footer>
 
-  <!-- Back to top button -->
-  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="18 15 12 9 6 15"></polyline>
-    </svg>
-  </button>
-
-  <script>
-    // Reading progress bar
-    function updateReadingProgress() {
-      const article = document.querySelector('.content');
-      const progressBar = document.getElementById('reading-progress');
-      const scrollTop = window.scrollY;
-      const docHeight = article.offsetHeight - window.innerHeight;
-      const progress = Math.min((scrollTop / docHeight) * 100, 100);
-      progressBar.style.width = progress + '%';
-    }
-
-    // Back to top button
-    const backToTop = document.getElementById('back-to-top');
-
-    function toggleBackToTop() {
-      if (window.scrollY > 400) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    }
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Add anchor links to headings
-    document.querySelectorAll('h2, h3, h4').forEach(heading => {
-      if (heading.id) {
-        const anchor = document.createElement('a');
-        anchor.className = 'anchor-link';
-        anchor.href = '#' + heading.id;
-        anchor.textContent = '#';
-        anchor.setAttribute('aria-label', 'Link to this section');
-        heading.insertBefore(anchor, heading.firstChild);
-      }
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, null, this.getAttribute('href'));
-        }
-      });
-    });
-
-    // Event listeners
-    window.addEventListener('scroll', () => {
-      updateReadingProgress();
-      toggleBackToTop();
-    });
-
-    // Initial call
-    updateReadingProgress();
-    toggleBackToTop();
-  </script>
 </body>
 </html>
