@@ -31,7 +31,8 @@ jobs:
         run: |
           git fetch origin main --depth=2
           CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
-          if echo "$CHANGED" | grep -qE '^(README\.md|docs/)'; then
+          # Release if any changes outside github-pages/ and .github/
+          if echo "$CHANGED" | grep -qvE '^(github-pages/|\.github/)'; then
             echo "release=true" >> $GITHUB_OUTPUT
           else
             echo "release=false" >> $GITHUB_OUTPUT
@@ -92,6 +93,11 @@ jobs:
           done
 
           echo "</div>" >> github-pages/templates.md
+
+      - name: Copy TUTORIAL to github-pages
+        run: |
+          printf '%s\n' '---' 'layout: default' 'title: Tutorial' 'nav_order: 3' '---' '' > github-pages/tutorial.md
+          cat TUTORIAL.md >> github-pages/tutorial.md
 
       - name: Copy README to github-pages with TOC
         run: |
