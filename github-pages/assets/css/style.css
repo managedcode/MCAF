@@ -39,7 +39,6 @@
   font-size: 15px;
   line-height: 1.5;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
 .toc a:hover {
@@ -115,6 +114,7 @@ html {
   flex-direction: row;
   gap: 28px;
   align-items: center;
+  min-height: 40px;
 }
 
 .nav-links a {
@@ -123,7 +123,6 @@ html {
   line-height: 1.5;
   color: #27232A;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .nav-links a:hover,
@@ -137,7 +136,6 @@ html {
   padding: 8px 16px;
   border: 1px solid #E8E5EB;
   border-radius: 20px;
-  transition: all 0.3s ease;
 }
 
 .nav-links a.nav-brand:hover {
@@ -213,7 +211,6 @@ strong {
 a {
   color: #785D8F;
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 a:hover {
@@ -393,7 +390,9 @@ hr {
 }
 
 .footer-container a {
-  color: #6b6574;
+  color: #5a5565;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .footer-container a:hover {
@@ -402,7 +401,7 @@ hr {
 
 .footer-version {
   font-size: 12px;
-  color: #9992a1;
+  color: #5a5565;
   margin-top: 8px;
 }
 
@@ -521,7 +520,6 @@ pre:hover .copy-btn {
   width: 20px;
   height: 20px;
   color: #27232A;
-  transition: color 0.3s;
 }
 
 .dark-toggle-label .icon-moon {
