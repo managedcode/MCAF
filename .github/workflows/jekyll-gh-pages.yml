@@ -40,6 +40,51 @@ jobs:
           git diff --staged --quiet || git commit -m "Bump version to ${{ steps.version.outputs.VERSION }} [skip ci]"
           git push
 
+      - name: Add version and build date to config
+        run: |
+          echo "version: \"${{ steps.version.outputs.VERSION }}\"" >> github-pages/_config.yml
+          echo "build_date: \"$(date +'%Y-%m-%d')\"" >> github-pages/_config.yml
+
+      - name: Generate templates page
+        run: |
+          cat > github-pages/templates.md << 'EOF'
+          ---
+          layout: default
+          title: Templates
+          nav_order: 2
+          ---
+
+          # Templates
+
+          Copy these templates to your project and customize them.
+          EOF
+          sed -i 's/^          //' github-pages/templates.md
+
+          for file in docs/templates/*.md; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              name="${filename%.md}"
+
+              # Read first line as title (remove # prefix)
+              title=$(head -1 "$file" | sed 's/^#* *//')
+
+              # Read second non-empty line as description
+              desc=$(sed -n '2,10p' "$file" | grep -v '^$' | grep -v '^#' | head -1)
+
+              cat >> github-pages/templates.md << TEMPLATE
+
+---
+
+## ${title:-$name}
+
+${desc:-Template file for your project.}
+
+[View on GitHub](https://github.com/managedcode/MCAF/blob/main/docs/templates/${filename}){: .btn .btn-primary }
+[Download](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/${filename}){: .btn }
+TEMPLATE
+            fi
+          done
+
       - name: Copy README to github-pages with TOC
         run: |
           # Front matter

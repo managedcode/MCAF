@@ -400,6 +400,12 @@ hr {
   color: #785D8F;
 }
 
+.footer-version {
+  font-size: 12px;
+  color: #9992a1;
+  margin-top: 8px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav {

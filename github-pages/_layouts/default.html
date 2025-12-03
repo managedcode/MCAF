@@ -85,8 +85,24 @@
     <div class="footer-container">
       <p>{{ site.title }} &copy; {{ 'now' | date: '%Y' }} <a href="https://managed-code.com">ManagedCode</a></p>
       <p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a></p>
+      <p class="footer-version">v{{ site.version }} · {{ site.build_date }}</p>
     </div>
   </footer>
 
+  <script>
+    document.querySelectorAll('.toc a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const text = this.textContent.trim().toLowerCase();
+        const headings = document.querySelectorAll('h2');
+        for (const h of headings) {
+          if (h.textContent.toLowerCase().includes(text)) {
+            h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            break;
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
