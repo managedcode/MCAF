@@ -57,6 +57,8 @@ jobs:
           # Templates
 
           Copy these templates to your project and customize them.
+
+          <div class="templates-list">
           HEADER
           sed -i 's/^          //' github-pages/templates.md
 
@@ -64,20 +66,18 @@ jobs:
             if [ -f "$file" ]; then
               filename=$(basename "$file")
               name="${filename%.md}"
-              title=$(head -1 "$file" | sed 's/^#* *//')
-              desc=$(sed -n '2,10p' "$file" | grep -v '^$' | grep -v '^#' | head -1)
 
-              echo "" >> github-pages/templates.md
-              echo "---" >> github-pages/templates.md
-              echo "" >> github-pages/templates.md
-              echo "## ${title:-$name}" >> github-pages/templates.md
-              echo "" >> github-pages/templates.md
-              echo "${desc:-Template file for your project.}" >> github-pages/templates.md
-              echo "" >> github-pages/templates.md
-              echo "[View on GitHub](https://github.com/managedcode/MCAF/blob/main/docs/templates/${filename}){: .btn .btn-primary }" >> github-pages/templates.md
-              echo "[Download](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/${filename}){: .btn }" >> github-pages/templates.md
+              echo "<div class=\"template-item\">" >> github-pages/templates.md
+              echo "<span class=\"template-name\">${name}</span>" >> github-pages/templates.md
+              echo "<div class=\"template-links\">" >> github-pages/templates.md
+              echo "<a href=\"https://github.com/managedcode/MCAF/blob/main/docs/templates/${filename}\">View</a>" >> github-pages/templates.md
+              echo "<a href=\"https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/${filename}\" download>Download</a>" >> github-pages/templates.md
+              echo "</div>" >> github-pages/templates.md
+              echo "</div>" >> github-pages/templates.md
             fi
           done
+
+          echo "</div>" >> github-pages/templates.md
 
       - name: Copy README to github-pages with TOC
         run: |
