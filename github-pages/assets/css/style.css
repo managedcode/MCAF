@@ -782,19 +782,26 @@ details.faq-item[open] > summary {
 }
 
 details.faq-item .faq-answer {
-  padding: 20px 24px !important;
+  padding: 20px 24px 20px 28px !important;
   margin: 0 !important;
   color: #4a4a4a !important;
   line-height: 1.8 !important;
-  background: #FFFFFF !important;
+  background: #FAFAFA !important;
   font-size: 15px !important;
+  border-left: 3px solid #785D8F !important;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+  margin-bottom: 20px !important;
+  margin-top: 16px !important;
+  border-radius: 0 8px 8px 0 !important;
 }
 
 details.faq-item .faq-answer code {
-  background: #F5F3F7 !important;
-  padding: 2px 6px !important;
+  background: #EDE9F0 !important;
+  padding: 2px 8px !important;
   border-radius: 4px !important;
   font-size: 14px !important;
+  color: #5a4a6a !important;
 }
 
 /* Dark mode FAQ */
@@ -825,13 +832,14 @@ body.dark details.faq-item[open] > summary {
 }
 
 body.dark details.faq-item .faq-answer {
-  color: #b0b0b0 !important;
-  background: #1a1a1a !important;
+  color: #c0c0c0 !important;
+  background: #222 !important;
+  border-left-color: #a88bc4 !important;
 }
 
 body.dark details.faq-item .faq-answer code {
-  background: #2a2a2a !important;
-  color: #a88bc4 !important;
+  background: #333 !important;
+  color: #c4a8d8 !important;
 }
 
 /* Print styles */
