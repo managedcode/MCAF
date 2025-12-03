@@ -172,7 +172,7 @@ If an internal dependency cannot reasonably run in a test container or local ins
 Static analyzers and linters enforce a consistent baseline of code quality.
 
 - Analyzer configurations live in the repository and are versioned with the code.  
-- A standard console command (for example, `analyze`) runs analyzers; it is documented in `AGENTS.md` and `docs/Development/`.  
+- A standard console command runs analyzers; it is documented in `AGENTS.md` and `docs/Development/`.  
 - CI runs analyzers on relevant branches and pull requests.
 
 New code does not introduce new violations without explicit justification and review.  
@@ -272,7 +272,6 @@ Conversations are not memory. Stable patterns are written into `AGENTS.md` or do
 - `build`: build the solution  
 - `test`: run tests (with notes on focused vs full suites)  
 - `format`: run code formatter  
-- `analyze`: run static analyzers  
 
 Agents and automation use these commands instead of ad-hoc command sequences.
 

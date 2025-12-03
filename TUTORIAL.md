@@ -4,303 +4,223 @@ A practical guide to implementing MCAF in your repository.
 
 ---
 
-## Quick Start Checklist
+## Quick Start
 
-Get MCAF running in your repository in 5 steps:
+Get MCAF running in your repository:
 
-- [ ] Create `docs/` folder with `Features/`, `ADR/`, `Testing/`, `Development/`
-- [ ] Copy `AGENTS.md` template to your repository root
-- [ ] Define `build`, `test`, `format`, `analyze` commands in `AGENTS.md`
-- [ ] Set up containerized test environment (Docker Compose or equivalent)
-- [ ] Configure static analyzers and add to CI pipeline
+1. Create documentation structure in `docs/`
+2. Copy `AGENTS.md` template to repository root
+3. Define `build`, `test`, `format` commands
+4. Set up test environment for integration tests
+5. Configure CI pipeline
 
 ---
 
-## Step-by-Step Implementation
+## Step 1: Documentation Structure
 
-### Step 1: Set Up Documentation Structure
+Create folders under `docs/`:
 
-Create the following folders:
+- `Features/` — feature specifications with test flows
+- `ADR/` — Architecture Decision Records
+- `Testing/` — test strategy and execution guides
+- `Development/` — local setup and workflow
 
-```
-your-repo/
-├── docs/
-│   ├── Features/       # Feature specifications
-│   ├── ADR/            # Architecture Decision Records
-│   ├── Testing/        # Test strategy and flows
-│   ├── Development/    # Setup and workflow guides
-│   ├── API/            # API documentation (if applicable)
-│   └── Architecture/   # System diagrams and boundaries
-├── AGENTS.md           # AI agent instructions
-└── README.md           # Project overview
-```
+Optional folders as needed:
 
-### Step 2: Configure AGENTS.md
+- `API/` — endpoint documentation
+- `Architecture/` — system diagrams
+- `Operations/` — deployment and monitoring
 
-Copy the AGENTS.md template and customize:
+Start small. Add folders as your project grows.
+
+---
+
+## Step 2: Configure AGENTS.md
+
+Copy the AGENTS.md template to your repository root.
+
+Customize:
 
 1. Replace `{{ProjectName}}` and `{{Stack}}` with your values
 2. Add project-specific rules in Section 2
-3. Define your actual `build`, `test`, `format`, `analyze` commands in Section 7
+3. Define actual commands in Section 7
 4. Add team preferences in Section 8
 
-Example commands section:
+Commands section example:
 
 ```markdown
-## 7. Commands
-
-- build: `npm run build`
-- test: `npm test`
-- format: `npm run format`
-- analyze: `npm run lint`
+- build: `dotnet build`
+- test: `dotnet test`
+- format: `dotnet format`
 ```
 
-### Step 3: Create Your First Feature Doc
+Update this file whenever you discover new patterns or receive feedback.
 
-Before implementing a feature, create `docs/Features/feature-name.md`:
+---
 
-```markdown
-# Feature: User Authentication
+## Step 3: Write Feature Docs
 
-## Purpose
-Allow users to sign in with email and password.
+Before implementing a feature, create a doc in `docs/Features/`.
 
-## Business Rules
-- Email must be valid format
-- Password minimum 8 characters
-- Lock account after 5 failed attempts
+Include:
 
-## Main Flow
-1. User enters email and password
-2. System validates credentials
-3. System creates session and returns token
+- Feature name and purpose
+- Business rules and constraints
+- Main flow description
+- Test flows (positive, negative, edge cases)
+- Definition of Done
 
-## Test Flows
+Feature docs should be precise enough that:
 
-### Positive
-- Valid credentials → returns token
-- Remember me checked → extended session
+- A human can implement and verify the feature
+- An AI agent can derive code and tests without inventing behaviour
 
-### Negative
-- Invalid email format → validation error
-- Wrong password → authentication error
-- Locked account → account locked error
+---
 
-## Definition of Done
-- [ ] All test flows pass
-- [ ] API documentation updated
-- [ ] No new analyzer warnings
-```
+## Step 4: Set Up Integration Tests
 
-### Step 4: Set Up Test Environment
+Integration tests are the backbone of MCAF.
 
-Create `docker-compose.test.yml` for dependencies:
+Principles:
 
-```yaml
-version: '3.8'
-services:
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: test
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
-    ports:
-      - "5432:5432"
+- Use real dependencies, not mocks
+- Internal systems (database, cache, queues) run in containers
+- Test environment starts from documented scripts
+- Same commands work locally and in CI
 
-  redis:
-    image: redis:7
-    ports:
-      - "6379:6379"
-```
+For .NET projects, consider:
 
-Document in `docs/Development/setup.md`:
+- Aspire for container orchestration
+- TUnit or xUnit for test framework
+- WebApplicationFactory for API tests
+- Playwright for UI tests
 
-```markdown
-# Local Development Setup
+The specific tools matter less than the principle: test real behaviour with real dependencies.
 
-## Prerequisites
-- Docker and Docker Compose
-- Node.js 18+
+---
 
-## Start Test Environment
-docker-compose -f docker-compose.test.yml up -d
+## Step 5: Configure CI
 
-## Run Tests
-npm test
-```
+CI pipeline should:
 
-### Step 5: Configure CI Pipeline
+- Build the solution
+- Run all tests (unit, integration, API, UI)
+- Run static analysis
+- Fail on test failures or violations
 
-Example GitHub Actions workflow:
+Both GitHub Actions and Azure DevOps support containerized test environments.
 
-```yaml
-name: CI
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_DB: test
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-        ports:
-          - 5432:5432
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-      - run: npm run lint
-```
+Docker is available by default on hosted runners.
 
 ---
 
 ## Working with AI Agents
 
-### Delegated Mode (Agent does most work)
+### Delegated Mode
+
+Agent does most work. Human reviews and merges.
 
 Best for:
-- Bug fixes with clear reproduction steps
+
+- Bug fixes with clear reproduction
 - Features with complete documentation
 - Routine refactoring
 
-Workflow:
-1. Write feature doc with test flows
-2. Point agent to the feature doc
-3. Agent implements and tests
-4. You review and merge
+### Collaborative Mode
 
-### Collaborative Mode (Working together)
+Agent and human work together throughout.
 
 Best for:
+
 - Complex features
 - Architectural changes
-- New integrations
+- High-risk modifications
 
-Workflow:
-1. Discuss approach with agent
-2. Agent drafts, you guide
-3. Iterate on implementation
-4. Review together
+### Consultative Mode
 
-### Consultative Mode (Agent advises)
+Agent advises. Human implements.
 
 Best for:
+
 - Security-sensitive code
 - Learning new codebase
 - Design exploration
-
-Workflow:
-1. Ask agent to explain current code
-2. Discuss options and trade-offs
-3. You implement
-4. Agent reviews
 
 ---
 
 ## FAQ
 
-### General
+<details>
+<summary>Does MCAF work with any programming language?</summary>
 
-**Q: Does MCAF work with any programming language?**
+Yes. MCAF is language-agnostic. Define your `build`, `test`, `format` commands for your stack.
+</details>
 
-A: Yes. MCAF is language-agnostic. The principles apply to any stack. You just need to define your specific `build`, `test`, `format`, and `analyze` commands.
+<details>
+<summary>Do I need all documentation folders?</summary>
 
-**Q: Do I need all the documentation folders?**
+Start with `Features/`, `ADR/`, and `Development/`. Add others as needed.
+</details>
 
-A: Start with `Features/`, `ADR/`, and `Development/`. Add others as needed. The structure adapts to your project size.
+<details>
+<summary>What if my team doesn't have a dedicated QA?</summary>
 
-**Q: What if my team doesn't have a dedicated QA?**
+Developers take the QA perspective. The point is ensuring test coverage, not having a specific role.
+</details>
 
-A: Developers take the QA perspective. The point is ensuring test coverage, not having a specific role.
+<details>
+<summary>Why avoid mocking internal services?</summary>
 
-### Testing
+Mocks hide integration bugs. Real containers catch issues that mocks miss.
+</details>
 
-**Q: Why avoid mocking internal services?**
+<details>
+<summary>How much test coverage is enough?</summary>
 
-A: Mocks can hide integration bugs. Real containers catch issues that mocks miss. If you can't test without mocks, it's often a design smell.
+Every significant behaviour needs at least one integration/API/UI test. Focus on workflows, not percentages.
+</details>
 
-**Q: How much test coverage is enough?**
+<details>
+<summary>Which AI agents work with MCAF?</summary>
 
-A: Every significant behaviour needs at least one integration/API/UI test. Focus on workflows, not percentages.
+Any AI coding assistant that can read files. Point them to `AGENTS.md`.
+</details>
 
-**Q: What about unit tests?**
+<details>
+<summary>How does the agent learn my preferences?</summary>
 
-A: Use them for complex internal logic. But don't rely solely on unit tests for behaviour verification.
+Update `AGENTS.md` when you give feedback. Chat is not memory — the file is.
+</details>
 
-### AI Agents
+<details>
+<summary>Can I adopt MCAF gradually?</summary>
 
-**Q: Which AI agents work with MCAF?**
-
-A: Any AI coding assistant that can read files. Claude, GPT, Copilot, Cursor — all work. Point them to `AGENTS.md`.
-
-**Q: How does the agent learn my preferences?**
-
-A: Update `AGENTS.md` when you give feedback. The agent reads it before each task. Chat isn't memory — the file is.
-
-**Q: Can the agent merge code?**
-
-A: No. Humans always make the final merge decision. The agent prepares, you approve.
-
-### Adoption
-
-**Q: Can I adopt MCAF gradually?**
-
-A: Yes. Start with `AGENTS.md` and one feature doc. Add structure as you go.
-
-**Q: How do I get my team on board?**
-
-A: Start with one project. Show results. The framework proves itself through predictable, tested code.
+Yes. Start with `AGENTS.md` and one feature doc. Add structure as you go.
+</details>
 
 ---
 
 ## Common Mistakes
 
-### 1. Writing code before docs
+### Writing code before docs
 
-**Wrong:** Jump into coding, document later.
+Write feature doc with test flows first. Then implement.
 
-**Right:** Write feature doc with test flows first. Then implement.
+### Mocking everything
 
-### 2. Mocking everything
+Use real containers. Catch real integration issues.
 
-**Wrong:** Mock database, cache, queues for "fast" tests.
+### Treating AGENTS.md as static
 
-**Right:** Use real containers. Catch real integration issues.
+Update after every significant feedback or pattern discovery.
 
-### 3. Treating AGENTS.md as static
+### Skipping the plan step
 
-**Wrong:** Set up once, never update.
-
-**Right:** Update after every significant feedback or pattern discovery.
-
-### 4. Skipping the plan step
-
-**Wrong:** Start coding immediately for "simple" changes.
-
-**Right:** Even small changes benefit from explicit planning.
-
-### 5. Ignoring analyzer warnings
-
-**Wrong:** Suppress warnings to make CI green.
-
-**Right:** Fix warnings or document explicit exceptions.
+Even small changes benefit from explicit planning.
 
 ---
 
 ## Example Project Structure
-
-A complete MCAF-compliant repository:
 
 ```
 my-project/
@@ -325,8 +245,7 @@ my-project/
 ├── tests/
 │   ├── integration/
 │   ├── api/
-│   └── e2e/
-├── docker-compose.test.yml
+│   └── ui/
 ├── AGENTS.md
 └── README.md
 ```
@@ -337,7 +256,7 @@ my-project/
 
 1. Copy templates from [Templates](/templates)
 2. Read the full [MCAF Guide](/) for detailed specifications
-3. Set up your first feature using the workflow above
+3. Set up your first feature using this workflow
 4. Iterate and improve your `AGENTS.md` as you learn
 
 ---

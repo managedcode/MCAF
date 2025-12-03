@@ -94,9 +94,9 @@ Key points:
 
 ### Test commands
 
-- build: `{{build command from AGENTS.md}}`  
-- test: `{{test command from AGENTS.md}}`  
-- analyze: `{{analyze command from AGENTS.md}}`
+- build: `{{build command from AGENTS.md}}`
+- test: `{{test command from AGENTS.md}}`
+- format: `{{format command from AGENTS.md}}`
 
 ### New or changed tests
 

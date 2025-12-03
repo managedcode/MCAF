@@ -84,7 +84,7 @@ Links: {{Issues / tickets}}
 
 - build: `{{build command from AGENTS.md}}`
 - test: `{{test command from AGENTS.md}}`
-- analyze: `{{analyze command from AGENTS.md}}`
+- format: `{{format command from AGENTS.md}}`
 
 ### Test flows
 
