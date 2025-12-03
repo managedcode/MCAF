@@ -81,6 +81,12 @@
     </article>
   </main>
 
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
   <footer class="footer">
     <div class="footer-container">
       <p>{{ site.title }} &copy; {{ 'now' | date: '%Y' }} <a href="https://managed-code.com">ManagedCode</a></p>
@@ -90,6 +96,7 @@
   </footer>
 
   <script>
+    // TOC navigation
     document.querySelectorAll('.toc a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -102,6 +109,19 @@
           }
         }
       });
+    });
+
+    // Back to top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>

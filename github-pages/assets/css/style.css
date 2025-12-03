@@ -446,6 +446,43 @@ hr {
   text-decoration: underline;
 }
 
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  background: #27232A;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(39, 35, 42, 0.15);
+  z-index: 99;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: #785D8F;
+  transform: translateY(-2px);
+}
+
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav {
