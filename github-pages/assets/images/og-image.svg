@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#F5F3F7"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#27232A"/>
+      <stop offset="100%" style="stop-color:#785D8F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="1100" cy="100" r="200" fill="#785D8F" opacity="0.05"/>
+  <circle cx="100" cy="530" r="150" fill="#27232A" opacity="0.03"/>
+
+  <!-- Content -->
+  <text x="100" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="96" font-weight="600" fill="url(#textGrad)">MCAF</text>
+  <text x="100" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="36" fill="#353D4C">Managed Code Coding AI Framework</text>
+
+  <!-- Tagline -->
+  <text x="100" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#6b6574">Build software products together with AI coding agents</text>
+
+  <!-- Bottom bar -->
+  <rect x="100" y="530" width="120" height="4" rx="2" fill="url(#textGrad)"/>
+  <text x="240" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#785D8F">managed-code.com</text>
+</svg>

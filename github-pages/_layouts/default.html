@@ -3,19 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
   <title>{{ page.title }} | {{ site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
+  <meta name="title" content="{{ page.title }} | {{ site.title }}">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="keywords" content="MCAF, AI, coding agents, framework, software development, AI-assisted development, AGENTS.md, ManagedCode">
+  <meta name="author" content="ManagedCode">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{{ page.title }} | {{ site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
+  <meta property="og:image" content="{{ site.url }}/assets/images/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  <meta name="twitter:title" content="{{ page.title }} | {{ site.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+  <meta name="twitter:image" content="{{ site.url }}/assets/images/og-image.svg">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#785D8F">
+  <meta name="msapplication-TileColor" content="#785D8F">
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.title }}",
+    "description": "{{ site.description }}",
+    "url": "{{ site.url }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ManagedCode",
+      "url": "https://managed-code.com"
+    }
+  }
+  </script>
 </head>
 <body>
   <nav class="nav">
-    <div class="nav-container">
-      <a href="{{ '/' | relative_url }}" class="nav-logo">{{ site.title }}</a>
-      <div class="nav-links">
-        <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Guide</a>
-        <a href="{{ '/templates' | relative_url }}" {% if page.url == '/templates.html' %}class="active"{% endif %}>Templates</a>
-        <a href="https://github.com/managedcode/MCAF" target="_blank">GitHub</a>
-      </div>
+    <a href="{{ '/' | relative_url }}" class="nav-logo">{{ site.title }}</a>
+    <div class="nav-links">
+      <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Guide</a>
+      <a href="{{ '/templates' | relative_url }}" {% if page.url == '/templates.html' %}class="active"{% endif %}>Templates</a>
+      <a href="https://github.com/managedcode/MCAF" target="_blank" rel="noopener">GitHub</a>
     </div>
   </nav>
 
@@ -27,8 +79,8 @@
 
   <footer class="footer">
     <div class="footer-container">
-      <p>{{ site.title }} &copy; {{ 'now' | date: '%Y' }} <a href="https://github.com/managedcode">ManagedCode</a></p>
-      <p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+      <p>{{ site.title }} &copy; {{ 'now' | date: '%Y' }} <a href="https://managed-code.com">ManagedCode</a></p>
+      <p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a></p>
     </div>
   </footer>
 </body>
