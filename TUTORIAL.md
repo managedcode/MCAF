@@ -2,8 +2,6 @@
 
 A practical guide to implementing MCAF in your repository.
 
----
-
 ## Quick Start
 
 Get MCAF running in your repository:

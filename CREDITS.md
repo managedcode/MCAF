@@ -1,9 +1,11 @@
 # Credits
 
+MCAF is an open framework built by developers who believe AI coding agents need structure, not just prompts. 
+This page recognizes the people who made it happen.
+
 ## Contributors
 
 - [Managed Code](https://www.managed-code.com) — Framework design and development
-
 
 ## Special Thanks
 
