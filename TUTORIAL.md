@@ -8,61 +8,143 @@ A practical guide to implementing MCAF in your repository.
 
 Get MCAF running in your repository:
 
-1. Create documentation structure in `docs/`
-2. Copy `AGENTS.md` template to repository root
-3. Define `build`, `test`, `format` commands
-4. Set up test environment for integration tests
-5. Configure CI pipeline
+1. Bootstrap AGENTS.md with AI analysis
+2. Create documentation structure in `docs/`
+3. Document existing features
+4. Create ADRs for existing decisions
+5. Write feature docs before coding (ongoing workflow)
+6. Set up test environment
+7. Configure CI pipeline
 
 ---
 
-## Step 1: Documentation Structure
+## Step 1: Bootstrap AGENTS.md
 
-Create folders under `docs/`:
+Copy the AGENTS.md template to your repository root. The AI agent will analyze your project and fill in the template with actual commands, patterns, and conventions found in your codebase.
 
-- `Features/` — feature specifications with test flows
-- `ADR/` — Architecture Decision Records
-- `Testing/` — test strategy and execution guides
-- `Development/` — local setup and workflow
+**What you get:** A customized AGENTS.md with your tech stack, build commands, code style, and workflow patterns.
 
-Optional folders as needed:
+**Prompt:**
 
-- `API/` — endpoint documentation
-- `Architecture/` — system diagrams
-- `Operations/` — deployment and monitoring
+```
+Analyze this project and fill in AGENTS.md:
 
-Start small. Add folders as your project grows.
+1. Detect tech stack — language, framework, versions from config files
+2. Scan codebase — folders, modules, layers, architecture
+3. Read existing code — patterns, conventions, naming styles
+4. Check git history — commit message format, branch naming, team patterns
+5. Find existing docs — README, comments with rules, ADRs if exist
+6. Analyze tests — structure, frameworks, how organized
 
----
+Fill each AGENTS.md section:
+- Project name and detected stack
+- Commands — actual build/test/format commands
+- Task Delivery — workflow based on git patterns
+- Testing — rules based on test structure
+- Code Style — conventions from existing code
+- Boundaries — protected/critical areas
 
-## Step 2: Configure AGENTS.md
-
-Copy the AGENTS.md template to your repository root.
-
-Customize:
-
-1. Replace `{{ProjectName}}` and `{{Stack}}` with your values
-2. Add project-specific rules in Section 2
-3. Define actual commands in Section 7
-4. Add team preferences in Section 8
-
-Commands section example:
-
-```markdown
-- build: `dotnet build`
-- test: `dotnet test`
-- format: `dotnet format`
+Keep Self-Learning section as-is.
+Report what you found.
 ```
 
-Update this file whenever you discover new patterns or receive feedback.
+---
+
+## Step 2: Create Documentation Structure
+
+Create a `docs/` folder with subfolders for different types of documentation. This gives AI agents and developers a clear place to find and add documentation.
+
+**What you get:** Organized folder structure ready for feature specs, ADRs, and development guides.
+
+**Prompt:**
+
+```
+Create documentation structure for this project:
+
+1. Create docs/ folder with subfolders:
+   - docs/Features/ — for feature specifications
+   - docs/ADR/ — for architecture decisions
+   - docs/Testing/ — for test strategy
+   - docs/Development/ — for setup and workflow
+   - docs/API/ — for API documentation (if applicable)
+
+2. Create docs/Development/setup.md with:
+   - How to clone and run the project
+   - Required tools and versions
+   - Environment setup steps
+
+3. Create docs/Testing/strategy.md with:
+   - Test structure found in project
+   - How to run tests
+   - Test categories (unit/integration/e2e)
+
+Report what you created.
+```
 
 ---
 
-## Step 3: Write Feature Docs
+## Step 3: Document Existing Features
 
-Before implementing a feature, create a doc in `docs/Features/`.
+Scan the codebase for major features and modules, then create documentation for each. This captures current behavior so AI agents understand what already exists before making changes.
 
-Include:
+**What you get:** Feature docs in `docs/Features/` describing purpose, flows, components, and tests for each major feature.
+
+**Prompt:**
+
+```
+Document existing features in this project:
+
+1. Scan codebase for major features/modules
+2. For each feature create docs/Features/{feature-name}.md with:
+   - Purpose — what it does
+   - Main flows — how it works
+   - Components — files/classes involved
+   - Tests — what tests exist for it
+   - Current behavior — how it behaves now
+
+Use template from docs/templates/Feature-Template.md if exists.
+List all features you documented.
+```
+
+---
+
+## Step 4: Create ADRs for Existing Decisions
+
+Document architectural decisions that were already made in the project. This prevents AI agents from suggesting changes that conflict with existing architecture.
+
+**What you get:** ADRs in `docs/ADR/` explaining why the database, framework, auth approach, and other technical choices were made.
+
+**Prompt:**
+
+```
+Create ADRs for architectural decisions found in this project:
+
+1. Analyze codebase for architectural patterns:
+   - Database choice
+   - Framework choice
+   - Authentication approach
+   - API structure
+   - Any significant technical decisions
+
+2. For each decision create docs/ADR/{number}-{title}.md with:
+   - Status: Accepted (already implemented)
+   - Context: Why this decision was needed
+   - Decision: What was chosen
+   - Consequences: Trade-offs
+
+Use template from docs/templates/ADR-Template.md if exists.
+List all ADRs you created.
+```
+
+---
+
+## Step 5: Write Feature Docs (Ongoing Workflow)
+
+For new features, write documentation before coding. This is your ongoing workflow after bootstrap.
+
+**What you get:** Clear specification that both humans and AI agents can implement without guessing.
+
+**Include:**
 
 - Feature name and purpose
 - Business rules and constraints
@@ -77,11 +159,13 @@ Feature docs should be precise enough that:
 
 ---
 
-## Step 4: Set Up Integration Tests
+## Step 6: Set Up Tests
 
-Integration tests are the backbone of MCAF.
+Integration tests are the backbone of MCAF. Configure your test environment to use real dependencies instead of mocks.
 
-Principles:
+**What you get:** Test infrastructure that catches real integration issues, not just unit-level bugs.
+
+**Principles:**
 
 - Use real dependencies, not mocks
 - Internal systems (database, cache, queues) run in containers
@@ -91,17 +175,21 @@ Principles:
 For .NET projects, consider:
 
 - Aspire for container orchestration
-- TUnit or xUnit for test framework
-- WebApplicationFactory for API tests
+- TUnit for test framework
+- WebApplicationFactory for Integration tests
 - Playwright for UI tests
 
 The specific tools matter less than the principle: test real behaviour with real dependencies.
 
 ---
 
-## Step 5: Configure CI
+## Step 7: Configure CI
 
-CI pipeline should:
+Set up CI to run all tests automatically. This ensures every PR is verified before merge.
+
+**What you get:** Automated quality gate that runs build, tests, and static analysis.
+
+**CI pipeline should:**
 
 - Build the solution
 - Run all tests (unit, integration, API, UI)
@@ -160,7 +248,7 @@ Yes. MCAF is language-agnostic. Define your <code>build</code>, <code>test</code
 <details class="faq-item">
 <summary>Do I need all documentation folders?</summary>
 <div class="faq-answer">
-Start with <code>Features/</code>, <code>ADR/</code>, and <code>Development/</code>. Add others as needed.
+Start with <code>Features/</code>, <code>ADR/</code>, <code>Testing/</code>, and <code>Development/</code>. Add others as needed.
 </div>
 </details>
 
