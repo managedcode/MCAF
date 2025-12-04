@@ -18,7 +18,13 @@ Get MCAF running in your repository:
 
 ## Step 1: Bootstrap AGENTS.md
 
-Copy the AGENTS.md template to your repository root. The AI agent will analyze your project and fill in the template with actual commands, patterns, and conventions found in your codebase.
+Download templates from [Templates](/templates):
+- **AGENTS.md** — copy to repository root
+- **CLAUDE.md** — copy to repository root (for Claude Code users)
+
+CLAUDE.md references AGENTS.md, so Claude reads the same rules as other AI agents.
+
+The AI agent will analyze your project and fill in the template with actual commands, patterns, and conventions found in your codebase.
 
 **What you get:** A customized AGENTS.md with your tech stack, build commands, code style, and workflow patterns.
 
@@ -85,6 +91,8 @@ Report what you created.
 
 Scan the codebase for major features and modules, then create documentation for each. This captures current behavior so AI agents understand what already exists before making changes.
 
+Use [Feature-Template.md](/templates) from templates.
+
 **What you get:** Feature docs in `docs/Features/` describing purpose, flows, components, and tests for each major feature.
 
 **Prompt:**
@@ -109,6 +117,8 @@ List all features you documented.
 ## Step 4: Create ADRs for Existing Decisions
 
 Document architectural decisions that were already made in the project. This prevents AI agents from suggesting changes that conflict with existing architecture.
+
+Use [ADR-Template.md](/templates) from templates.
 
 **What you get:** ADRs in `docs/ADR/` explaining why the database, framework, auth approach, and other technical choices were made.
 
