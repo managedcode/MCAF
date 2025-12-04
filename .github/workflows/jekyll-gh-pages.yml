@@ -103,6 +103,11 @@ jobs:
           printf '%s\n' '---' 'layout: default' 'title: Tutorial' 'nav_order: 3' '---' '' > github-pages/tutorial.md
           cat TUTORIAL.md >> github-pages/tutorial.md
 
+      - name: Copy CREDITS to github-pages
+        run: |
+          printf '%s\n' '---' 'layout: default' 'title: Credits' 'nav_order: 4' '---' '' > github-pages/credits.md
+          cat CREDITS.md >> github-pages/credits.md
+
       - name: Copy README to github-pages with TOC
         run: |
           WORDS=$(wc -w < README.md)

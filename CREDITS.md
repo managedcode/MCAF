@@ -7,7 +7,7 @@
 
 ## Special Thanks
 
-- **[Roger Johansson](https://www.linkedin.com/in/roger-johansson-4a4bb61/)** — His post about self-learning agents inspired the Conversations (Self-Learning) mechanism that became the core of MCAF
+- **[Roger Johansson](https://www.linkedin.com/in/roger-johansson-4a4bb61/)** — His post about self-learning code agents inspired the self-learning logic that became the core of MCAF
 
 ---
 

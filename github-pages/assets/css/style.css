@@ -445,6 +445,37 @@ hr {
   text-decoration: underline;
 }
 
+/* Download button */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #785D8F;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin: 16px 0;
+}
+
+.download-btn:hover {
+  background: #4F3959;
+  color: white;
+  transform: translateY(-1px);
+}
+
+body.dark .download-btn {
+  background: #a88bc4;
+  color: #1a1a1a;
+}
+
+body.dark .download-btn:hover {
+  background: #c4a8d8;
+}
+
 /* 404 Error page */
 .error-page {
   text-align: center;
