@@ -60,6 +60,19 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
+  <!-- Google tag (gtag.js) - GDPR-friendly without consent -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMRJ311LEF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FMRJ311LEF', {
+      'anonymize_ip': true,
+      'cookie_expires': 0
+    });
+  </script>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -157,19 +170,5 @@
     });
   </script>
 
-  <!-- Google tag (gtag.js) - cookieless -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMRJ311LEF"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied'
-    });
-
-    gtag('js', new Date());
-    gtag('config', 'G-FMRJ311LEF');
-  </script>
 </body>
 </html>
