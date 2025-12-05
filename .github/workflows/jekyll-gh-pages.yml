@@ -30,15 +30,15 @@ jobs:
         id: changes
         run: |
           git fetch origin main --depth=2
-          # Get files changed, excluding github-pages/ and .github/
-          CONTENT_CHANGES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -vE '^(github-pages/|\.github/|$)' || true)
-          # Release only if there are content changes
+          # Only these files trigger a release (actual documentation)
+          CONTENT_CHANGES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E '^(README\.md|TUTORIAL\.md|CREDITS\.md|docs/)' || true)
+          # Release only if there are documentation changes
           if [ -n "$CONTENT_CHANGES" ]; then
-            echo "Content changes detected:"
+            echo "Documentation changes detected:"
             echo "$CONTENT_CHANGES"
             echo "release=true" >> $GITHUB_OUTPUT
           else
-            echo "No content changes, skipping release"
+            echo "No documentation changes, skipping release"
             echo "release=false" >> $GITHUB_OUTPUT
           fi
 

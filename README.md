@@ -146,10 +146,26 @@ MCAF uses several levels of tests:
 
 Coverage expectations:
 
-- Each significant feature or functional behaviour has at least one integration-level test for its core flow.  
-- If behaviour is exposed via API, there is at least one API test for it.  
-- If behaviour is visible to users through UI, there is at least one UI/E2E test for it.  
-- Unit tests are added when internal logic is complex, critical, or performance-sensitive.  
+- Each significant feature or functional behaviour has sufficient tests to cover its possible cases; at minimum, one integration-level test for the core flow.
+- If behaviour is exposed via API, each public endpoint has at least one API test; complex endpoints have tests for different input variations and error conditions.
+- API and integration tests must exercise real flows end-to-end, not just call endpoints in isolation; tests verify that components work together correctly.
+- If behaviour is visible to users through UI, there is at least one UI/E2E test for it; critical user flows have tests for main and alternative paths.
+- Unit tests are added when internal logic is complex, critical, or performance-sensitive.
+- The goal is not "one test per feature" but "enough tests to have confidence in the behaviour"; one is the minimum, not the target.
+
+Code coverage:
+
+- Code coverage is measured and tracked to see which functionality is actually tested.
+- Coverage reports show which functions, branches, and flows are exercised by tests — and which are not.
+- Coverage reports are generated as part of CI or on demand.
+- Low coverage in critical modules triggers review and test planning.
+- Coverage is a tool for finding gaps, not a target to game; 100% coverage with weak assertions is worse than 70% coverage with meaningful tests.
+
+Test quality:
+
+- Each test verifies a real flow or scenario, not just that a function can be called.
+- Tests without meaningful assertions are forbidden; a test that only calls code without verifying outcomes is not a valid test.
+- Tests check behaviour and outcomes, not implementation details.  
 
 Tests cover:
 
@@ -283,12 +299,30 @@ In large repositories, directories may have their own `AGENTS.md` files. They:
 - add stricter requirements without contradicting MCAF principles  
 - apply to files in that directory and its subdirectories  
 
-### 4.6 Hard rules for Instructions
+### 4.6 AGENTS.md governance
 
-- Every repository that uses MCAF has a root `AGENTS.md`.  
-- Root `AGENTS.md` is in English and aligned with this Guide.  
-- Agents read `AGENTS.md` and relevant docs before editing code.  
-- Stable patterns and lessons are recorded in `AGENTS.md` or docs; chat alone is not memory.  
+`AGENTS.md` is a critical document that shapes how AI agents work in the repository. Changes to it affect all future AI-assisted development.
+
+Change approval:
+
+- Changes to the root `AGENTS.md` require review and approval by a designated owner or lead maintainer.
+- The owner of `AGENTS.md` is defined in the document itself or in `CODEOWNERS`.
+- AI agents may propose changes to `AGENTS.md`, but humans approve and merge them.
+- Significant rule changes are discussed with the team before merging.
+
+Review criteria for `AGENTS.md` changes:
+
+- The change aligns with MCAF principles.
+- The rule is clear and actionable.
+- The rule does not contradict existing rules without explicit replacement.
+- The rule reflects a stable pattern, not a one-time preference.
+
+### 4.7 Hard rules for Instructions
+
+- Every repository that uses MCAF has a root `AGENTS.md`.
+- Root `AGENTS.md` is in English and aligned with this Guide.
+- Agents read `AGENTS.md` and relevant docs before editing code.
+- Stable patterns and lessons are recorded in `AGENTS.md` or docs; chat alone is not memory.
 - Automation and agent instructions rely only on documented `build`, `test`, `format`, and `analyze` commands.
 
 ---
@@ -574,3 +608,22 @@ To adopt MCAF in a repository:
    - human review and merge  
 
 MCAF is considered active only when these practices are followed in day-to-day work, not just written down.
+
+---
+
+## 10. Ownership and Process
+
+### 10.1 Ownership
+
+Every significant feature, document, and decision has an accountable owner:
+
+- Feature docs — owned by the feature owner (Product perspective).
+- ADRs — owned by the person who made the decision.
+- Test docs — owned by QA or the feature owner.
+- `AGENTS.md` — see governance rules in section 4.6.
+
+### 10.2 Process
+
+- **Onboarding**: New team members read this Guide, the root `AGENTS.md`, and key docs before making changes.
+- **Regular review**: The team periodically reviews `AGENTS.md` and docs to ensure they reflect current practices.
+- **Feedback loops**: Issues with AI agent behaviour are tracked and lead to `AGENTS.md` or doc updates, not repeated chat corrections.

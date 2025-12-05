@@ -11,6 +11,13 @@ Follows [MCAF](https://mcaf.managed-code.com/)
 
 Learn the user's habits, preferences, and working style. Extract rules from conversations, save to "## Rules to follow", and generate code according to the user's personal rules.
 
+**Update requirement (core mechanism):**
+
+Before doing ANY task, evaluate the latest user message.  
+If you detect a new rule, correction, preference, or change → update `agents.md` first.  
+Only after updating the file you may produce the task output.  
+If no new rule is detected → do not update the file.
+
 **When to extract rules:**
 
 - prohibition words (never, don't, stop, avoid) or similar → add NEVER rule
@@ -73,6 +80,7 @@ Learn the user's habits, preferences, and working style. Extract rules from conv
 - Run tests in layers: new → related suite → broader regressions
 - After all tests pass: run format, then build
 - Summarize changes and test results before marking complete
+- Always run required builds and tests yourself; do not ask the user to execute them (explicit user directive).
 
 ### Documentation (ALL TASKS)
 
@@ -87,11 +95,15 @@ Learn the user's habits, preferences, and working style. Extract rules from conv
 
 <!-- CUSTOMIZE (remove after): your test structure -->
 
-- Every behaviour change needs automated tests
+- Every behaviour change needs sufficient automated tests to cover its cases; one is the minimum, not the target
+- Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors
+- Integration tests must exercise real flows end-to-end, not just call endpoints in isolation
 - Prefer integration/API/UI tests over unit tests
 - No mocks for internal systems (DB, queues, caches) — use containers
 - Mocks only for external third-party systems
 - Never delete or weaken a test to make it pass
+- Each test verifies a real flow or scenario, not just calls a function — tests without meaningful assertions are forbidden
+- Check code coverage to see which functionality is actually tested; coverage is for finding gaps, not a number to chase
 
 ### Autonomy
 
