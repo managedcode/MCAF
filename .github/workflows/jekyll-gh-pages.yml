@@ -68,7 +68,9 @@ jobs:
           cat > github-pages/templates.md << 'HEADER'
           ---
           layout: default
-          title: Templates
+          title: Templates for AGENTS.md, ADR, and Feature Docs
+          description: Download ready-to-use templates for MCAF and vibe coding. Includes AGENTS.md template for Claude Code, Codex, Gemini, Cursor, ADR templates, and feature documentation for AI-assisted development.
+          keywords: MCAF templates, AGENTS.md template, vibe coding templates, AI-assisted development, ADR template, Claude Code, Codex, Gemini, Cursor rules
           nav_order: 2
           ---
 
@@ -100,19 +102,47 @@ jobs:
 
       - name: Copy TUTORIAL to github-pages
         run: |
-          printf '%s\n' '---' 'layout: default' 'title: Tutorial' 'nav_order: 3' '---' '' > github-pages/tutorial.md
+          cat > github-pages/tutorial.md << 'EOF'
+          ---
+          layout: default
+          title: Tutorial - Implement Vibe Coding with Structure
+          description: Step-by-step tutorial for implementing MCAF in your project. Learn to set up AGENTS.md, configure Coding AI agents like Claude Code, Codex, Gemini, Cursor, and enable safe vibe coding with automated verification.
+          keywords: MCAF tutorial, vibe coding tutorial, AI-assisted development, AI-assisted coding, AGENTS.md setup, Claude Code, Codex, Gemini, Cursor, GitHub Copilot
+          nav_order: 3
+          ---
+          EOF
+          sed -i 's/^          //' github-pages/tutorial.md
           cat TUTORIAL.md >> github-pages/tutorial.md
 
       - name: Copy CREDITS to github-pages
         run: |
-          printf '%s\n' '---' 'layout: default' 'title: Credits' 'nav_order: 4' '---' '' > github-pages/credits.md
+          cat > github-pages/credits.md << 'EOF'
+          ---
+          layout: default
+          title: Credits and Acknowledgments
+          description: Credits and acknowledgments for MCAF framework contributors. Learn about the team and inspirations behind the Managed Code Coding AI Framework.
+          keywords: MCAF credits, ManagedCode team, AI framework contributors, acknowledgments
+          nav_order: 4
+          ---
+          EOF
+          sed -i 's/^          //' github-pages/credits.md
           cat CREDITS.md >> github-pages/credits.md
 
       - name: Copy README to github-pages with TOC
         run: |
           WORDS=$(wc -w < README.md)
           MINUTES=$(( (WORDS + 200) / 200 ))
-          printf '%s\n' '---' 'layout: default' 'title: MCAF Guide' 'nav_order: 1' '---' '' > github-pages/index.md
+          cat > github-pages/index.md << 'EOF'
+          ---
+          layout: default
+          title: MCAF - Coding AI Framework for Building Real Software
+          description: MCAF is a framework that solves the problem of unpredictable AI coding. Build real production software with Coding AI agents using structured context, automated tests as verification gates, and AGENTS.md instructions. Vibe coding that actually works.
+          keywords: MCAF, Coding AI Framework, AGENTS.md, vibe coding, AI-assisted development, AI-assisted coding, real software, production code, Claude Code, Codex, Gemini, ChatGPT, Cursor, GitHub Copilot, Windsurf, Cline, Aider, ManagedCode
+          is_home: true
+          nav_order: 1
+          ---
+          EOF
+          sed -i 's/^          //' github-pages/index.md
           awk '/^---$/{exit} {print}' README.md >> github-pages/index.md
           echo "" >> github-pages/index.md
           echo "<p class=\"reading-time\">${MINUTES} min read</p>" >> github-pages/index.md

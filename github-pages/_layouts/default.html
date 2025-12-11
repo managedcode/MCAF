@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Primary Meta Tags -->
+  {% if page.is_home %}
+  <title>{{ site.title }} - {{ site.tagline }}</title>
+  <meta name="title" content="{{ site.title }} - {{ site.tagline }}">
+  {% else %}
   <title>{{ page.title }} | {{ site.title }}</title>
   <meta name="title" content="{{ page.title }} | {{ site.title }}">
+  {% endif %}
   <meta name="description" content="{{ page.description | default: site.description }}">
-  <meta name="keywords" content="MCAF, AI, coding agents, framework, software development, AI-assisted development, AGENTS.md, ManagedCode">
+  <meta name="keywords" content="{{ page.keywords | default: site.keywords }}">
   <meta name="author" content="ManagedCode">
   <meta name="robots" content="index, follow">
 
@@ -18,7 +23,11 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  {% if page.is_home %}
+  <meta property="og:title" content="{{ site.title }} - {{ site.tagline }}">
+  {% else %}
   <meta property="og:title" content="{{ page.title }} | {{ site.title }}">
+  {% endif %}
   <meta property="og:description" content="{{ page.description | default: site.description }}">
   <meta property="og:image" content="{{ '/assets/images/og-image.png' | absolute_url }}">
   <meta property="og:image:width" content="1200">
@@ -29,7 +38,11 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  {% if page.is_home %}
+  <meta name="twitter:title" content="{{ site.title }} - {{ site.tagline }}">
+  {% else %}
   <meta name="twitter:title" content="{{ page.title }} | {{ site.title }}">
+  {% endif %}
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <meta name="twitter:image" content="{{ '/assets/images/og-image.png' | absolute_url }}">
 
@@ -73,21 +86,95 @@
     });
   </script>
 
-  <!-- Structured Data -->
+  <!-- Structured Data for SEO & AI/LLM Discovery -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "{{ site.title }}",
+    "alternateName": ["MCAF", "Managed Code Coding AI Framework"],
     "description": "{{ site.description }}",
     "url": "{{ site.url }}",
     "publisher": {
       "@type": "Organization",
       "name": "ManagedCode",
       "url": "https://managed-code.com"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ site.url }}/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "MCAF - Managed Code Coding AI Framework",
+    "description": "Framework for building real production software with AI coding agents. Solves the problem of unpredictable AI output through structured context, automated tests as verification gates, and AGENTS.md instructions. Works with Claude Code, Codex, Gemini, ChatGPT, Cursor, GitHub Copilot.",
+    "codeRepository": "https://github.com/managedcode/MCAF",
+    "programmingLanguage": "Markdown",
+    "runtimePlatform": "AI Coding Agents",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "author": {
+      "@type": "Organization",
+      "name": "ManagedCode",
+      "url": "https://managed-code.com"
+    },
+    "keywords": ["MCAF", "Coding AI Framework", "AGENTS.md", "vibe coding", "AI-assisted development", "real software", "production code", "Claude Code", "Codex", "Gemini", "ChatGPT", "Cursor", "GitHub Copilot", "Windsurf", "Cline", "Aider"]
+  }
+  </script>
+  {% if page.is_home %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is MCAF?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MCAF (Managed Code Coding AI Framework) is a framework for building real production software with AI coding agents. Not prototypes - real products. It solves the problem of unpredictable AI output by defining structured context, using automated tests as verification gates, and encoding repository-specific rules in AGENTS.md."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What problem does MCAF solve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MCAF solves the problem of unpredictable and unreliable AI-generated code. Without structure, AI coding agents produce inconsistent results. MCAF provides three pillars: Context (all information in the repository), Verification (tests and static analysis as hard gates), and Instructions (AGENTS.md defines how AI agents work). This makes AI coding predictable, safe, and repeatable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is AGENTS.md?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AGENTS.md is a file at the repository root that defines how AI coding agents work in a specific codebase. It contains commands for build, test, format, and analyze, coding rules, testing discipline, and maintainer preferences. AI agents read AGENTS.md before making changes to ensure consistent behavior."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does MCAF enable safe vibe coding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MCAF makes vibe coding production-ready. While vibe coding means trusting AI and following the vibes, MCAF adds guardrails: automated tests verify behavior, static analysis catches issues, and AGENTS.md provides consistent instructions. You get the speed of vibe coding with the reliability needed for real software."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which AI coding agents work with MCAF?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MCAF works with any AI coding agent that can read repository files. Popular tools include Claude Code, Codex, Gemini, ChatGPT, Cursor, GitHub Copilot, Windsurf, Cline, Aider, and other LLM-based coding assistants. The framework is tool-agnostic - it defines how to work with AI, not which AI to use."
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
 </head>
 <body>
   <nav class="nav">

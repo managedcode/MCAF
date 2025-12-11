@@ -1,7 +1,17 @@
-title: MCAF
-description: Managed Code Coding AI Framework
+title: MCAF - Coding AI Framework
+tagline: Build Real Software with Coding AI Agents
+description: MCAF (Managed Code Coding AI Framework) is a framework for building real production software with AI coding agents. Not prototypes - real products. It solves the problem of unpredictable AI output through structured context, automated verification via tests, and clear instructions in AGENTS.md.
 url: "https://mcaf.managed-code.com"
 baseurl: ""
+
+# SEO & AEO (AI Engine Optimization)
+keywords: "MCAF, Coding AI Framework, AGENTS.md, vibe coding, AI-assisted development, AI-assisted coding, real software, production code, Claude Code, Codex, Gemini, ChatGPT, Cursor, GitHub Copilot, Windsurf, Cline, Aider, ManagedCode"
+author: ManagedCode
+
+# Structured Data for LLMs
+organization: ManagedCode
+github_repo: managedcode/MCAF
+license: CC BY 4.0
 
 markdown: kramdown
 kramdown:
