@@ -68,7 +68,7 @@ jobs:
           cat > github-pages/templates.md << 'HEADER'
           ---
           layout: default
-          title: Templates for AGENTS.md, ADR, and Feature Docs
+          title: Templates
           description: Download ready-to-use templates for MCAF and vibe coding. Includes AGENTS.md template for Claude Code, Codex, Gemini, Cursor, ADR templates, and feature documentation for AI-assisted development.
           keywords: MCAF templates, AGENTS.md template, vibe coding templates, AI-assisted development, ADR template, Claude Code, Codex, Gemini, Cursor rules
           nav_order: 2
@@ -105,7 +105,7 @@ jobs:
           cat > github-pages/tutorial.md << 'EOF'
           ---
           layout: default
-          title: Tutorial - Implement Vibe Coding with Structure
+          title: Tutorial
           description: Step-by-step tutorial for implementing MCAF in your project. Learn to set up AGENTS.md, configure Coding AI agents like Claude Code, Codex, Gemini, Cursor, and enable safe vibe coding with automated verification.
           keywords: MCAF tutorial, vibe coding tutorial, AI-assisted development, AI-assisted coding, AGENTS.md setup, Claude Code, Codex, Gemini, Cursor, GitHub Copilot
           nav_order: 3
@@ -119,7 +119,7 @@ jobs:
           cat > github-pages/credits.md << 'EOF'
           ---
           layout: default
-          title: Credits and Acknowledgments
+          title: Credits
           description: Credits and acknowledgments for MCAF framework contributors. Learn about the team and inspirations behind the Managed Code Coding AI Framework.
           keywords: MCAF credits, ManagedCode team, AI framework contributors, acknowledgments
           nav_order: 4
@@ -135,7 +135,7 @@ jobs:
           cat > github-pages/index.md << 'EOF'
           ---
           layout: default
-          title: MCAF - Coding AI Framework for Building Real Software
+          title: Guide
           description: MCAF is a framework that solves the problem of unpredictable AI coding. Build real production software with Coding AI agents using structured context, automated tests as verification gates, and AGENTS.md instructions. Vibe coding that actually works.
           keywords: MCAF, Coding AI Framework, AGENTS.md, vibe coding, AI-assisted development, AI-assisted coding, real software, production code, Claude Code, Codex, Gemini, ChatGPT, Cursor, GitHub Copilot, Windsurf, Cline, Aider, ManagedCode
           is_home: true
