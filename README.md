@@ -1,4 +1,4 @@
-# The MCAF Guide
+# MCAF Guide
 
 **Managed Code Coding AI Framework**
 
