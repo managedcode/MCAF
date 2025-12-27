@@ -1,9 +1,10 @@
-# Architecture Overview (Template)
+# Architecture Overview
 
-> Save this as: `docs/Architecture/Overview.md`  
-> Goal: in ~5 minutes, understand **what exists**, **where it lives**, and **how modules interact**.
+> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real `docs/Architecture/Overview.md`.
 
-## 1) TL;DR (fill this, keep it short)
+Goal: in ~5 minutes, understand **what exists**, **where it lives**, and **how modules interact**.
+
+## Summary (keep it short)
 
 - **System:**  
 - **Where is the code:**  
@@ -12,20 +13,16 @@
 
 ## 2) Module map (Mermaid)
 
+> TEMPLATE ONLY — model modules + boundaries (not every class/file). Add dependencies only if they exist. Remove this note in the real doc.
+
 ```mermaid
 flowchart LR
-  %% Model MODULES + BOUNDARIES, not every class/file.
-  %% Replace nodes with your real modules (or services) and label arrows.
-
   EP[Entry Points]
   A[Module A]
   B[Module B]
 
   EP --> A
   A --> B
-  %% Add dependencies only if they exist:
-  %% A --> D[(Data Store)]
-  %% A --> X[External Service]
 ```
 
 ## 3) Modules (catalog)

@@ -28,6 +28,7 @@ Before writing, make the ADR executable (no placeholders, no hand-waving):
    - what changes (and what does not)
    - what module(s) are affected
 2. Start from `docs/templates/ADR-Template.md`.
+   - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real ADR.
 3. Write the ADR as a decision record:
    - **Context**: constraints + why this is needed now
    - **Decision**: a short, direct statement

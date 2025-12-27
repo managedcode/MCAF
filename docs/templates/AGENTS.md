@@ -93,6 +93,10 @@ If no new rule is detected → do not update the file.
 
 - All docs live in `docs/` (or `.wiki/`)
 - Global architecture entry point: `docs/Architecture/Overview.md` (read first)
+- When creating docs from `docs/templates/*`:
+  - copy the template, then remove every `TEMPLATE ONLY` note
+  - replace all placeholder text (`TODO:`, `...`, “FeatureName”, “ADR-XXXX”, etc.)
+  - real docs must not contain template instructions or placeholder scaffolding
 - Update feature docs when behaviour changes
 - Update ADRs when architecture changes
 - Diagrams are mandatory in docs:

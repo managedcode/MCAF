@@ -1,5 +1,7 @@
 # Feature: FeatureName
 
+> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real feature doc under `docs/Features/`.
+
 Links:  
 Architecture: `docs/Architecture/Overview.md`  
 Modules:  
@@ -78,12 +80,13 @@ Short description of the business problem and value.
 ## Diagrams
 
 ```mermaid
-%% Mermaid diagram for the main flow (modules + interactions).
 ```
 
 ---
 
-## Verification (Mandatory: describe how to test)
+## Verification
+
+This section is mandatory: describe how to test (scenarios + commands).
 
 ### Test environment
 
@@ -126,7 +129,9 @@ Short description of the business problem and value.
 - Unit tests:  
 - Static analysis:  
 
-### Non-functional checks (delete section if not applicable)
+### Non-functional checks
+
+Include this section only if it applies to this feature; otherwise remove it.
 
 - Performance / load (tool, threshold, command):  
 - Security / privacy (threats to verify):  

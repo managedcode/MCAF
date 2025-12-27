@@ -1,5 +1,7 @@
 # ADR-XXXX: Title
 
+> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real ADR under `docs/ADR/`.
+
 Status: Proposed | Accepted | Implemented | Rejected | Superseded  
 Date: YYYY-MM-DD  
 Related Features: `docs/Features/...` (recommended)  
@@ -46,11 +48,11 @@ Key points:
 
 ---
 
-## Diagram (Mandatory)
+## Diagram
+
+This section is mandatory.
 
 ```mermaid
-%% Show the boundaries/modules that change, and how they interact.
-%% Prefer 1 clear diagram over many noisy ones.
 ```
 
 ---
@@ -108,7 +110,9 @@ Key points:
 
 ---
 
-## Verification (Mandatory: describe how to test this decision)
+## Verification
+
+This section is mandatory: describe how to prove the decision (tests + commands).
 
 ### Objectives
 
@@ -127,7 +131,7 @@ Key points:
 - build: (paste from `AGENTS.md`)
 - test: (paste from `AGENTS.md`)
 - format: (paste from `AGENTS.md`)
-- coverage: (paste from `AGENTS.md` if separate)
+- coverage: (paste from `AGENTS.md`; delete if none)
 
 ### New or changed tests
 
