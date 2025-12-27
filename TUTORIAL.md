@@ -7,12 +7,13 @@ A practical guide to implementing MCAF in your repository.
 Get MCAF running in your repository:
 
 1. Bootstrap AGENTS.md with AI analysis
-2. Create documentation structure in `docs/`
-3. Document existing features
-4. Create ADRs for existing decisions
-5. Write feature docs before coding (ongoing workflow)
-6. Set up test environment
-7. Configure CI pipeline
+2. Create documentation structure in `docs/` (including `docs/Architecture/Overview.md`)
+3. Add skills in `skills/`
+4. Document existing features
+5. Create ADRs for existing decisions
+6. Write feature docs before coding (ongoing workflow)
+7. Set up test environment
+8. Configure CI pipeline
 
 ---
 
@@ -20,9 +21,9 @@ Get MCAF running in your repository:
 
 Download templates from [Templates](/templates):
 - **AGENTS.md** — copy to repository root
-- **CLAUDE.md** — copy to repository root (for Claude Code users)
-
-CLAUDE.md references AGENTS.md, so Claude reads the same rules as other AI agents.
+- **Architecture-Template.md** — use for `docs/Architecture/Overview.md`
+- **ADR-Template.md** — use for `docs/ADR/ADR-*.md`
+- **Feature-Template.md** — use for `docs/Features/*.md`
 
 The AI agent will analyze your project and fill in the template with actual commands, patterns, and conventions found in your codebase.
 
@@ -39,6 +40,9 @@ Analyze this project and fill in AGENTS.md:
 4. Check git history — commit message format, branch naming, team patterns
 5. Find existing docs — README, comments with rules, ADRs if exist
 6. Analyze tests — structure, frameworks, how organized
+7. Ensure the workflow is **architecture-first** (no exceptions):
+   - always start from `docs/Architecture/Overview.md` to locate modules and boundaries
+   - do not add “file creation” logic into `AGENTS.md` (bootstrap creates docs; `AGENTS.md` governs work)
 
 Fill each AGENTS.md section:
 - Project name and detected stack
@@ -66,28 +70,90 @@ Create a `docs/` folder with subfolders for different types of documentation. Th
 Create documentation structure for this project:
 
 1. Create docs/ folder with subfolders:
+   - docs/Architecture/ — global architecture overview and module boundaries
    - docs/Features/ — for feature specifications
    - docs/ADR/ — for architecture decisions
-   - docs/Testing/ — for test strategy
-   - docs/Development/ — for setup and workflow
-   - docs/API/ — for API documentation (if applicable)
 
-2. Create docs/Development/setup.md with:
-   - How to clone and run the project
-   - Required tools and versions
-   - Environment setup steps
-
-3. Create docs/Testing/strategy.md with:
-   - Test structure found in project
-   - How to run tests
-   - Test categories (unit/integration/e2e)
+2. Create docs/Architecture/Overview.md with:
+   - At least one Mermaid diagram showing modules and interactions
+   - Module catalog (responsibilities + boundaries)
+   - Dependency rules (allowed/forbidden)
+   - Links to key ADRs/features (keep it link-based; no feature flows in the overview)
+   - Use template from docs/templates/Architecture-Template.md if it exists
 
 Report what you created.
 ```
 
 ---
 
-## Step 3: Document Existing Features
+## Step 3: Add Skills (repeatable agent workflows)
+
+Skills are part of MCAF: keep them in-repo so agents and humans share the same workflows, scripts, and standards.
+
+Install baseline templates + skills:
+
+```bash
+git clone https://github.com/managedcode/MCAF.git ../MCAF
+
+# Run in your repo root:
+bash ../MCAF/scripts/mcaf-install.sh
+```
+
+**Prompt:**
+
+```
+Add skills structure to this project:
+
+1. Create `skills/` at repo root.
+2. Add baseline MCAF skills (copy `skills/` from the MCAF repo and then adapt to your repo):
+   - `mcaf-architecture-overview`
+   - `mcaf-feature-spec`
+   - `mcaf-adr-writing`
+   - `mcaf-testing`
+   - `mcaf-formatting`
+   - `mcaf-memory`
+   - `mcaf-skill-curation`
+3. Ensure each skill is discoverable:
+   - folder name matches `name` (lowercase, digits, hyphens)
+   - `description` includes clear trigger contexts (this is what matching uses)
+4. Generate an “available skills” block for your agent runtime:
+   - include only metadata (name, description, location)
+   - prefer a simple XML `<available_skills>` block (easy to copy/paste and parse)
+   - generate from your repo (recommended): `python3 skills/mcaf-skill-curation/scripts/generate_available_skills.py skills --absolute`
+5. Validate skills and fix reported issues:
+   - `python3 skills/mcaf-skill-curation/scripts/validate_skills.py skills`
+
+Report what you created.
+```
+
+---
+
+## Updating an Existing Repo (Templates + Skills)
+
+If your project already uses MCAF and you want to see what changed upstream (without overwriting your customized files), fetch a snapshot first:
+
+```bash
+# Run in your repo root:
+bash ../MCAF/scripts/mcaf-upstream-snapshot.sh
+```
+
+Then review and merge what you want (example):
+
+```bash
+diff -ruN docs/templates .mcaf/upstream/<timestamp>/docs/templates | less
+diff -ruN skills .mcaf/upstream/<timestamp>/skills | less
+```
+
+After merging, validate skills and regenerate the metadata block:
+
+```bash
+python3 skills/mcaf-skill-curation/scripts/validate_skills.py skills
+python3 skills/mcaf-skill-curation/scripts/generate_available_skills.py skills --absolute
+```
+
+---
+
+## Step 4: Document Existing Features
 
 Scan the codebase for major features and modules, then create documentation for each. This captures current behavior so AI agents understand what already exists before making changes.
 
@@ -114,7 +180,7 @@ List all features you documented.
 
 ---
 
-## Step 4: Create ADRs for Existing Decisions
+## Step 5: Create ADRs for Existing Decisions
 
 Document architectural decisions that were already made in the project. This prevents AI agents from suggesting changes that conflict with existing architecture.
 
@@ -146,7 +212,7 @@ List all ADRs you created.
 
 ---
 
-## Step 5: Write Feature Docs (Ongoing Workflow)
+## Step 6: Write Feature Docs (Ongoing Workflow)
 
 For new features, write documentation before coding. This is your ongoing workflow after bootstrap.
 
@@ -167,7 +233,7 @@ Feature docs should be precise enough that:
 
 ---
 
-## Step 6: Set Up Tests
+## Step 7: Set Up Tests
 
 Integration tests are the backbone of MCAF. Configure your test environment to use real dependencies instead of mocks.
 
@@ -191,7 +257,7 @@ The specific tools matter less than the principle: test real behaviour with real
 
 ---
 
-## Step 7: Configure CI
+## Step 8: Configure CI
 
 Set up CI to run all tests automatically. This ensures every PR is verified before merge.
 

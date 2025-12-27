@@ -30,8 +30,8 @@ jobs:
         id: changes
         run: |
           git fetch origin main --depth=2
-          # Only these files trigger a release (actual documentation)
-          CONTENT_CHANGES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E '^(README\.md|TUTORIAL\.md|CREDITS\.md|docs/)' || true)
+          # Only these files trigger a release (docs + templates + skills + scripts)
+          CONTENT_CHANGES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E '^(README\.md|TUTORIAL\.md|CREDITS\.md|docs/|skills/|scripts/)' || true)
           # Release only if there are documentation changes
           if [ -n "$CONTENT_CHANGES" ]; then
             echo "Documentation changes detected:"
@@ -99,6 +99,41 @@ jobs:
           done
 
           echo "</div>" >> github-pages/templates.md
+
+      - name: Generate skills page
+        run: |
+          cat > github-pages/skills.md << 'HEADER'
+          ---
+          layout: default
+          title: Skills
+          description: Download baseline MCAF Agent Skills (SKILL.md) for repeatable agent workflows: architecture overview, feature specs, ADRs, testing (TDD), formatting, and skill curation.
+          keywords: MCAF skills, Agent Skills, SKILL.md, Claude Code skills, Codex skills, AI agent workflows, TDD, ADR, feature specs
+          nav_order: 5
+          ---
+
+          # Skills
+
+          Baseline MCAF skills in Agent Skills format. Each skill is a folder under `skills/` containing a required `SKILL.md`.
+
+          <div class="templates-list">
+          HEADER
+          sed -i 's/^          //' github-pages/skills.md
+
+          for file in skills/*/SKILL.md; do
+            if [ -f "$file" ]; then
+              skill_dir=$(basename "$(dirname "$file")")
+
+              echo "<div class=\"template-item\">" >> github-pages/skills.md
+              echo "<span class=\"template-name\">${skill_dir}</span>" >> github-pages/skills.md
+              echo "<div class=\"template-links\">" >> github-pages/skills.md
+              echo "<a href=\"https://github.com/managedcode/MCAF/blob/main/skills/${skill_dir}/SKILL.md\">View</a>" >> github-pages/skills.md
+              echo "<a href=\"https://raw.githubusercontent.com/managedcode/MCAF/main/skills/${skill_dir}/SKILL.md\" download>Download</a>" >> github-pages/skills.md
+              echo "</div>" >> github-pages/skills.md
+              echo "</div>" >> github-pages/skills.md
+            fi
+          done
+
+          echo "</div>" >> github-pages/skills.md
 
       - name: Copy TUTORIAL to github-pages
         run: |

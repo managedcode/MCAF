@@ -1,0 +1,69 @@
+---
+name: mcaf-testing
+description: Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in AGENTS.md. Use TDD (test fails → implement → pass) where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, collect coverage, and verify meaningful assertions for happy/negative/edge cases.
+compatibility: Requires the repository’s build/test tooling; uses commands from AGENTS.md.
+---
+
+# MCAF: Testing
+
+## Outputs
+
+- New/updated automated tests that encode **documented behaviour** (happy path + negative + edge), with integration/API/UI preferred
+- For new behaviour and bugfixes: tests drive the change (TDD: reproduce/specify → test fails → implement → test passes)
+- Updated verification sections in relevant docs (`docs/Features/*`, `docs/ADR/*`) when needed (tests + commands must match reality)
+- Evidence of verification: commands run (`build`/`test`/`coverage`/`analyze`) + result + the report/artifact path written by the tool (when applicable)
+
+## Workflow
+
+1. Read `AGENTS.md`:
+   - commands: `build`, `test`, `format`, `analyze`, and the repo’s coverage path (either a dedicated `coverage` command or a `test` command that generates coverage)
+   - testing rules (levels, mocks policy, suites to run, containers, etc.)
+2. Start from the docs that define behaviour (no guessing):
+   - `docs/Features/*` for user/system flows and business rules
+   - `docs/ADR/*` for architectural decisions and invariants that must remain true
+   - if the docs are missing/contradict, fix the docs first (or write a minimal spec + test plan in the task/PR)
+3. Build first (always):
+   - run the `build` command from `AGENTS.md`
+   - fix build breaks before writing tests
+4. Define the scenarios you must prove (map them back to docs):
+   - **positive** (happy path)
+   - **negative** (validation/forbidden/unauthorized/error paths)
+   - **edge** (limits, concurrency, retries/idempotency, time-sensitive behaviour)
+   - for ADRs: test the **invariants** and the “must not happen” behaviours the decision relies on
+5. Choose the highest meaningful test level:
+   - prefer integration/API/UI when the behaviour crosses boundaries
+   - use unit tests only when logic is isolated and higher-level coverage is impractical
+6. Implement via a TDD loop (per scenario):
+   - write the test first and make sure it fails for the **right reason**
+   - implement the minimum change to make it pass
+   - refactor safely (keep tests green)
+7. Write tests that assert outcomes (not “it runs”):
+   - assert returned values/responses
+   - assert DB state / emitted events / observable side effects
+   - include negative and edge cases when relevant
+8. Keep tests stable (treat flakiness as a bug):
+   - deterministic data/fixtures, no hidden dependencies
+   - avoid `sleep`-based timing; prefer “wait until condition”/polling with a timeout
+   - keep test setup/teardown reliable (reset state between tests)
+9. Run tests with coverage (always):
+   - run the repo’s coverage path as defined in `AGENTS.md` (either `coverage`, or `test` in coverage mode)
+   - capture where the report/artifacts were written (path, summary)
+10. If the repo has UI:
+   - run UI/E2E tests
+   - inspect screenshots/videos/traces produced by the runner for failures and obvious UI regressions
+11. Run verification in layers (as required by `AGENTS.md`):
+   - new/changed tests first
+   - then the related suite
+   - then broader regressions if required
+   - run `analyze` if required
+12. Keep docs and skills consistent:
+   - ensure `docs/Features/*` and `docs/ADR/*` verification sections point to the real tests and real commands
+   - if you change test/coverage commands or rules, update `AGENTS.md` and this skill in the same PR
+
+## Guardrails
+
+- Never delete or weaken a test to make it pass.
+- No mocks for internal systems in integration tests (DB/queues/caches should be real test instances/containers).
+- Tests must be meaningful: a test without assertions is not a test.
+- Coverage is for finding gaps, not a number to chase.
+- Flaky tests are failures: fix the test or the underlying behaviour, don’t “retry until green”.

@@ -1,7 +1,10 @@
 # AGENTS.md
 
-<!-- CUSTOMIZE (remove after): project name and stack -->
-{{ProjectName}} — {{Stack}}
+> TEMPLATE NOTE: Copy this file to the repository root as `AGENTS.md`, then **replace every `TODO:` and every `...`** with real, repo-specific values.  
+> Delete this note once the file is customized.
+
+Project: TODO
+Stack: TODO
 
 Follows [MCAF](https://mcaf.managed-code.com/)
 
@@ -14,7 +17,7 @@ Learn the user's habits, preferences, and working style. Extract rules from conv
 **Update requirement (core mechanism):**
 
 Before doing ANY task, evaluate the latest user message.  
-If you detect a new rule, correction, preference, or change → update `agents.md` first.  
+If you detect a new rule, correction, preference, or change → update `AGENTS.md` first.  
 Only after updating the file you may produce the task output.  
 If no new rule is detected → do not update the file.
 
@@ -64,37 +67,42 @@ If no new rule is detected → do not update the file.
 
 ### Commands
 
-<!-- CUSTOMIZE (remove after): your build/test/format commands -->
-
-- build: `dotnet build`
-- test: `dotnet test`
-- format: `dotnet format`
+- build: `...`
+- test: `...`
+- format: `...`
+- analyze: `...` (delete if not used)
+- coverage: `...` (delete if not used)
 
 ### Task Delivery (ALL TASKS)
 
-<!-- CUSTOMIZE (remove after): your task workflow -->
-
-- Read assignment, inspect code and docs before planning
+- Always start from the **architecture map** in `docs/Architecture/Overview.md`:
+  - confirm the Mermaid module/boundary diagram exists (if missing → create/update it first)
+  - identify the impacted boundary/module(s) and entry points
+  - follow the links to the relevant ADR(s) and Feature doc(s) (do not read everything)
+- Read assignment, then inspect only the relevant docs/code before planning
 - Write multi-step plan before implementation
 - Implement code and tests together
+- If `build` is separate from `test`, run `build` before `test`
 - Run tests in layers: new → related suite → broader regressions
-- After all tests pass: run format, then build
+- After tests pass: run format
+- After format: run build (final check)
 - Summarize changes and test results before marking complete
 - Always run required builds and tests yourself; do not ask the user to execute them (explicit user directive).
 
 ### Documentation (ALL TASKS)
 
-<!-- CUSTOMIZE (remove after): your docs location -->
-
 - All docs live in `docs/` (or `.wiki/`)
+- Global architecture entry point: `docs/Architecture/Overview.md` (read first)
 - Update feature docs when behaviour changes
 - Update ADRs when architecture changes
-- Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
+- Diagrams are mandatory in docs:
+  - `docs/Architecture/Overview.md`: at least one Mermaid module/boundary map
+  - `docs/Features/*`: at least one Mermaid diagram for the main flow
+  - `docs/ADR/*`: at least one Mermaid diagram for the decision
 
 ### Testing (ALL TASKS)
 
-<!-- CUSTOMIZE (remove after): your test structure -->
-
+- Prefer TDD for new behaviour and bugfixes: write a failing test first, then implement the smallest change to make it pass, then refactor safely.
 - Every behaviour change needs sufficient automated tests to cover its cases; one is the minimum, not the target
 - Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors
 - Integration tests must exercise real flows end-to-end, not just call endpoints in isolation
@@ -112,8 +120,6 @@ If no new rule is detected → do not update the file.
 - Report only when task is complete
 
 ### Code Style
-
-<!-- CUSTOMIZE (remove after): your language/framework -->
 
 - Style rules: `.editorconfig`
 - No magic literals — extract to constants, enums, config
@@ -135,8 +141,6 @@ If no new rule is detected → do not update the file.
 
 **Ask first:**
 
-<!-- CUSTOMIZE (remove after) -->
-
 - Changing public API contracts
 - Adding new dependencies
 - Modifying database schema
@@ -148,8 +152,4 @@ If no new rule is detected → do not update the file.
 
 ### Likes
 
-<!-- CUSTOMIZE (remove after) -->
-
 ### Dislikes
-
-<!-- CUSTOMIZE (remove after) -->

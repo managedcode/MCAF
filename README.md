@@ -45,6 +45,7 @@ In MCAF, repository context includes:
 - application code  
 - automated tests (unit, integration, API, UI/E2E)  
 - documentation for features, architecture, testing, development, and operations  
+- `skills/` packages (workflows + scripts + references) for repeatable agent tasks  
 - the repository’s root `AGENTS.md`  
 
 Anything that matters for development, testing, or operations lives in the repository.
@@ -57,13 +58,13 @@ A typical `docs/` layout:
   Feature descriptions, user flows, business rules, Definition of Done, diagrams, test flows.
 
 - `docs/ADR/`  
-  Architecture Decision Records: context, options, decision, consequences, links to features and code.
+  Architecture Decision Records: each ADR is isolated and self-contained (context + decision + alternatives + consequences) and includes at least one diagram (Mermaid). ADRs must stand alone and link to related features/modules.
 
 - `docs/API/`  
   Public endpoints, request/response models, error formats, versioning rules.
 
 - `docs/Architecture/`  
-  System and module diagrams, boundaries, deployment and runtime views.
+  System and module diagrams, boundaries, deployment and runtime views. Include a mandatory `docs/Architecture/Overview.md` as the global “read first” map (global architecture only: modules + boundaries, not feature-level behaviour).
 
 - `docs/Testing/`  
   Test strategy, levels, coverage goals, test environments, how to run each suite.
@@ -73,9 +74,6 @@ A typical `docs/` layout:
 
 - `docs/Operations/`  
   Deployment, monitoring, alerting, incident handling.
-
-- `docs/Home.md`  
-  Entry point with links to the most important docs and templates.
 
 This structure is a reference. A repository may adapt directory names, but keeps clear places for features, decisions, testing, development, and operations.
 
@@ -116,10 +114,33 @@ Links make it easy to navigate:
 ### 2.5 Hard rules for Context
 
 - All information that matters for understanding, changing, or running the system lives in the repository.  
+- The project has a global architecture overview (`docs/Architecture/Overview.md`) and it is kept up to date.  
+- Humans and agents start from the architecture overview before diving into modules, ADRs, or feature docs.  
 - Every non-trivial feature has a feature doc before heavy coding starts.  
 - Each feature doc includes test flows and a clear Definition of Done.  
 - Docs are written in English.  
 - Docs may reference other docs, code, diagrams, and relevant external resources.
+
+### 2.6 Skills (repeatable agent workflows)
+
+Skills are small, versioned workflow packages that make repetitive agent work predictable.
+
+A skill is a folder that contains:
+
+- `SKILL.md` (required) — metadata (`name`, `description`) + workflow steps  
+- `scripts/` — deterministic scripts for fragile or repetitive work  
+- `references/` — copy/paste templates and short references loaded only when needed (progressive disclosure)  
+- `assets/` — templates/boilerplate used in outputs
+
+Recommended layout:
+
+- `skills/<skill-name>/SKILL.md`
+
+Integration principle:
+
+- Keep only **skill metadata** in the agent’s working context at startup.
+- Load a skill’s `SKILL.md` body only when it matches the user request (or is explicitly requested).
+- Treat skills as versioned workflow code: when user feedback shows a skill is mis-triggering or out of date, update its YAML `description` (triggers) and workflow steps so the fix becomes permanent.
 
 ---
 
@@ -324,6 +345,19 @@ Review criteria for `AGENTS.md` changes:
 - Agents read `AGENTS.md` and relevant docs before editing code.
 - Stable patterns and lessons are recorded in `AGENTS.md` or docs; chat alone is not memory.
 - Automation and agent instructions rely only on documented `build`, `test`, `format`, and `analyze` commands.
+
+### 4.8 Advisor stance (direct, non-agreeable, quality-first)
+
+MCAF agents should be useful, not “polite”.
+
+Default stance:
+
+- Stop being agreeable. Act as a brutally honest, high-level advisor and mirror.
+- Do not flatter or validate. Do not soften the truth.
+- Challenge weak reasoning and expose missing assumptions.
+- If something is underspecified, contradictory, or risky — say so and list what must be clarified.
+- Never guess or invent. If unsure, say “I don’t know” and propose how to verify.
+- Quality and security first: tests + static analysis are gates; treat security regressions as blockers.
 
 ---
 
@@ -593,12 +627,13 @@ Used for:
 
 To adopt MCAF in a repository:
 
-1. A `docs/` directory exists with at least `Features/`, `ADR/`, `Testing`, and `Development`.  
-2. This Guide and a root `AGENTS.md` live at the repository root and are kept current.  
-3. Commands for `build`, `test`, `format`, and `analyze` are defined and documented.  
-4. Containerized or scripted environments exist for integration/API/UI tests.  
-5. Static analyzers are configured and treated as part of the Definition of Done.  
-6. Meaningful changes follow the MCAF development cycle:
+1. A `docs/` directory exists with at least `Architecture/`, `Features/`, `ADR/`, `Testing`, and `Development` (and a `docs/Architecture/Overview.md` entry point).  
+2. A `skills/` directory exists with skills used by your agents (each skill has `SKILL.md`).  
+3. This Guide and a root `AGENTS.md` live at the repository root and are kept current.  
+4. Commands for `build`, `test`, `format`, and `analyze` are defined and documented.  
+5. Containerized or scripted environments exist for integration/API/UI tests.  
+6. Static analyzers are configured and treated as part of the Definition of Done.  
+7. Meaningful changes follow the MCAF development cycle:
    - docs first  
    - explicit plan  
    - tests and code together  
@@ -618,6 +653,7 @@ MCAF is considered active only when these practices are followed in day-to-day w
 Every significant feature, document, and decision has an accountable owner:
 
 - Feature docs — owned by the feature owner (Product perspective).
+- Architecture overview — owned by an accountable maintainer; kept current as modules evolve.
 - ADRs — owned by the person who made the decision.
 - Test docs — owned by QA or the feature owner.
 - `AGENTS.md` — see governance rules in section 4.6.
@@ -626,4 +662,4 @@ Every significant feature, document, and decision has an accountable owner:
 
 - **Onboarding**: New team members read this Guide, the root `AGENTS.md`, and key docs before making changes.
 - **Regular review**: The team periodically reviews `AGENTS.md` and docs to ensure they reflect current practices.
-- **Feedback loops**: Issues with AI agent behaviour are tracked and lead to `AGENTS.md` or doc updates, not repeated chat corrections.
+- **Feedback loops**: Issues with AI agent behaviour are tracked and lead to updates in `AGENTS.md`, skills (`skills/*/SKILL.md`), and docs — not repeated chat corrections.

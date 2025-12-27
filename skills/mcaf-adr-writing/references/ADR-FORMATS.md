@@ -1,16 +1,32 @@
+# ADR Formats (templates)
+
+This file is for **copy/paste**. Pick one of the templates below and fill it with real repo facts.
+
+Rules (MCAF):
+
+- ADRs are self-contained (no “as discussed”).
+- At least one Mermaid diagram is mandatory.
+- ADRs define testable invariants + verification commands (not vibes).
+
+---
+
+## Template 1: MCAF ADR (full)
+
+Use this as the default template. Save as `docs/ADR/ADR-XXXX-title-in-kebab-case.md`.
+
+````md
 # ADR-XXXX: Title
 
-Status: Proposed | Accepted | Implemented | Rejected | Superseded  
-Date: YYYY-MM-DD  
-Related Features: `docs/Features/...` (recommended)  
-Supersedes: `docs/ADR/ADR-....md` (delete if none)  
+Status: Proposed | Accepted | Implemented | Rejected | Superseded
+Date: YYYY-MM-DD
+Related Features: `docs/Features/...` (recommended)
+Supersedes: `docs/ADR/ADR-....md` (delete if none)
 Superseded by: `docs/ADR/ADR-....md` (delete if none)
 
 Rules:
 
 - This ADR is **self-contained** — avoid “as discussed”; include all critical context and links.
 - At least **one Mermaid diagram is mandatory** (boundaries/modules/interactions for this decision).
-- Once accepted, save as `docs/ADR/ADR-XXXX-title-in-kebab-case.md` (English, kebab-case). Keep `docs/templates/ADR-Template.md` unchanged.
 
 ---
 
@@ -59,14 +75,14 @@ Key points:
 
 ### Option A
 
-- Pros:  
-- Cons:  
+- Pros:
+- Cons:
 - Rejected because:
 
 ### Option B
 
-- Pros:  
-- Cons:  
+- Pros:
+- Cons:
 - Rejected because:
 
 ---
@@ -79,7 +95,7 @@ Key points:
 
 ### Negative / risks
 
-- Risk  
+- Risk
 - Mitigation:
 
 ---
@@ -88,22 +104,22 @@ Key points:
 
 ### Code
 
-- Affected modules / services:  
-- New boundaries / responsibilities:  
+- Affected modules / services:
+- New boundaries / responsibilities:
 - Feature flags / toggles (names, defaults, removal plan):
 
 ### Data / configuration
 
-- Data model / schema changes:  
-- Config changes (keys, defaults, secrets handling):  
+- Data model / schema changes:
+- Config changes (keys, defaults, secrets handling):
 - Backwards compatibility strategy:
 
 ### Documentation
 
-- Feature docs to update:  
-- Testing docs to update:  
-- Architecture docs to update:  
-- `docs/Architecture/Overview.md` updates (what must change):  
+- Feature docs to update:
+- Testing docs to update:
+- Architecture docs to update:
+- `docs/Architecture/Overview.md` updates (what must change):
 - Notes for `AGENTS.md` (new rules/patterns):
 
 ---
@@ -118,8 +134,8 @@ Key points:
 
 ### Test environment
 
-- Environment (local compose / staging / prod-like):  
-- Data and reset strategy (seed data, migrations, rollback plan):  
+- Environment (local compose / staging / prod-like):
+- Data and reset strategy (seed data, migrations, rollback plan):
 - External dependencies (real / sandbox / fake services required):
 
 ### Test commands
@@ -127,7 +143,7 @@ Key points:
 - build: (paste from `AGENTS.md`)
 - test: (paste from `AGENTS.md`)
 - format: (paste from `AGENTS.md`)
-- coverage: (paste from `AGENTS.md` if separate)
+- coverage: (paste from `AGENTS.md` if separate; otherwise delete)
 
 ### New or changed tests
 
@@ -137,24 +153,24 @@ Key points:
 
 ### Regression and analysis
 
-- Regression suites to run (must stay green):  
-- Static analysis (tools/configs that must pass):  
+- Regression suites to run (must stay green):
+- Static analysis (tools/configs that must pass):
 - Monitoring during rollout (logs/metrics/alerts to watch):
 
 ---
 
 ## Rollout and migration
 
-- Migration steps:  
-- Backwards compatibility:  
+- Migration steps:
+- Backwards compatibility:
 - Rollback:
 
 ---
 
 ## References
 
-- Issues / tickets:  
-- External docs / specs:  
+- Issues / tickets:
+- External docs / specs:
 - Related ADRs:
 
 ---
@@ -166,3 +182,88 @@ Key points:
 - [ ] Links to related features, tests, and ADRs are filled in.
 - [ ] Diagram section contains at least one Mermaid diagram.
 - [ ] `docs/Architecture/Overview.md` updated if module boundaries or interactions changed.
+````
+
+---
+
+## Template 2: Mini ADR (small, safe decision)
+
+Use this when the decision is real but the scope is contained (still needs a diagram + verification).
+
+````md
+# ADR-XXXX: Title
+
+Status: Proposed | Accepted | Implemented | Rejected | Superseded
+Date: YYYY-MM-DD
+Related Features: `docs/Features/...` (delete if none)
+
+## Decision
+
+- One sentence.
+
+## Why (context + constraints)
+
+- Why now:
+- Constraints:
+
+## Diagram (Mandatory)
+
+```mermaid
+%% Boundaries/modules that change + their interaction.
+```
+
+## Alternatives (at least one)
+
+- Alternative A (why not):
+
+## Consequences
+
+- Positive:
+- Negative / risks + mitigations:
+
+## Verification (Mandatory)
+
+- Invariants to test:
+- Tests to add/update:
+- Commands to run (from `AGENTS.md`):
+````
+
+---
+
+## Template 3: Options Matrix ADR (when choosing between 2–4 options)
+
+Use this when you need to evaluate trade-offs explicitly and keep the decision auditable.
+
+````md
+# ADR-XXXX: Title
+
+Status: Proposed | Accepted | Implemented | Rejected | Superseded
+Date: YYYY-MM-DD
+
+## Decision
+
+- One sentence.
+
+## Decision drivers (what matters)
+
+- Driver 1:
+- Driver 2:
+
+## Options
+
+| Option | Summary | Pros | Cons | Risk | Why/why not |
+| --- | --- | --- | --- | --- | --- |
+| A | | | | | |
+| B | | | | | |
+
+## Diagram (Mandatory)
+
+```mermaid
+%% Diagram the chosen option (and the most important alternative if helpful).
+```
+
+## Verification (Mandatory)
+
+- Invariants to protect:
+- Test plan:
+````

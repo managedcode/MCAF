@@ -1,15 +1,26 @@
-# Feature: {{FeatureName}}
+# Feature: FeatureName
 
-Status: {{Draft / In Progress / Implemented / Deprecated}}  
-Owner: {{Owner or team}}  
-Created: {{YYYY-MM-DD}}  
-Links: {{Issues / tickets}}
+Links:  
+Architecture: `docs/Architecture/Overview.md`  
+Modules:  
+ADRs: `docs/ADR/...`  
 
 ---
 
 ## Purpose
 
-{{Short description of the business problem and value.}}
+Short description of the business problem and value.
+
+---
+
+## Stakeholders (who needs this to be clear)
+
+| Role | What they need from this spec |
+| --- | --- |
+| Product / Owner | Scope, acceptance criteria, user-visible behaviour |
+| Engineering | Modules, contracts, data, error handling, edge cases |
+| DevOps / SRE | Config, rollout plan, monitoring/alerts, rollback |
+| QA | Executable test flows (positive/negative/edge) + environment |
 
 ---
 
@@ -17,19 +28,19 @@ Links: {{Issues / tickets}}
 
 ### In scope
 
-- {{Item}}
+- Item
 
 ### Out of scope
 
-- {{Item}}
+- Item
 
 ---
 
 ## Business Rules
 
-- {{Rule 1}}
-- {{Rule 2}}
-- {{Rule 3}}
+- Rule 1
+- Rule 2
+- Rule 3
 
 ---
 
@@ -37,37 +48,37 @@ Links: {{Issues / tickets}}
 
 ### Primary flows
 
-1. {{Flow name}}  
-   - Actor: {{User / Service}}  
-   - Trigger: {{Trigger}}  
-   - Steps: {{Short list}}  
-   - Result: {{Outcome}}
+1. Flow name  
+   - Actor: User / Service  
+   - Trigger:  
+   - Steps:  
+   - Result:  
 
 ### Edge cases
 
-- {{Edge case}} → {{Expected behaviour}}
+- Edge case → Expected behaviour
 
 ---
 
 ## System Behaviour
 
-- Entry points: {{API endpoints / UI / events / scheduled jobs}}  
-- Reads from: {{DB / service / cache}}  
-- Writes to: {{DB / service / queue}}  
-- Side effects / emitted events: {{List}}  
-- Idempotency: {{Yes/No, conditions}}  
-- Error handling: {{Rules and user-facing messages}}  
-- Security / permissions: {{AuthZ rules}}  
-- Feature flags / toggles: {{Name and defaults}}  
-- Performance / SLAs: {{If relevant}}  
-- Observability: {{Logs / metrics / traces that must exist}}
+- Entry points: API endpoints / UI / events / scheduled jobs  
+- Reads from: DB / service / cache  
+- Writes to: DB / service / queue  
+- Side effects / emitted events:  
+- Idempotency: Yes/No + conditions  
+- Error handling: rules + user-facing messages  
+- Security / permissions: AuthZ rules  
+- Feature flags / toggles: names + defaults  
+- Performance / SLAs:  
+- Observability: logs/metrics/traces that must exist  
 
 ---
 
 ## Diagrams
 
 ```mermaid
-{{Mermaid diagram for main flow}}
+%% Mermaid diagram for the main flow (modules + interactions).
 ```
 
 ---
@@ -76,15 +87,16 @@ Links: {{Issues / tickets}}
 
 ### Test environment
 
-- Environment / stack: {{local compose / staging / cloud env}}  
-- Data and reset strategy: {{Seed data, fixtures, migration steps}}  
-- External dependencies: {{Real / sandbox / fake services required}}
+- Environment / stack (local compose / staging / cloud env):  
+- Data and reset strategy (seed data, fixtures, migration steps):  
+- External dependencies (real / sandbox / fake services required):  
 
 ### Test commands
 
-- build: `{{build command from AGENTS.md}}`
-- test: `{{test command from AGENTS.md}}`
-- format: `{{format command from AGENTS.md}}`
+- build: (paste from `AGENTS.md`)
+- test: (paste from `AGENTS.md`)
+- format: (paste from `AGENTS.md`)
+- coverage: (paste from `AGENTS.md`; delete if none)
 
 ### Test flows
 
@@ -92,33 +104,33 @@ Links: {{Issues / tickets}}
 
 | ID | Description | Level (Unit / Int / API / UI) | Expected result | Data / Notes |
 | --- | --- | --- | --- | --- |
-| POS-001 | {{Happy path}} | {{Integration}} | {{Outcome observed via public interface}} | {{Data / fixtures}} |
+| POS-001 | Happy path | Integration | Outcome observed via public interface | Data / fixtures |
 
 **Negative scenarios**
 
 | ID | Description | Level (Unit / Int / API / UI) | Expected result | Data / Notes |
 | --- | --- | --- | --- | --- |
-| NEG-001 | {{Validation failure}} | {{API}} | {{Error response / code}} | {{Invalid input example}} |
+| NEG-001 | Validation failure | API | Error response / code | Invalid input example |
 
 **Edge cases**
 
 | ID | Description | Level (Unit / Int / API / UI) | Expected result | Data / Notes |
 | --- | --- | --- | --- | --- |
-| EDGE-001 | {{Boundary condition}} | {{Integration}} | {{Expected behaviour at boundary}} | {{Data / timing notes}} |
+| EDGE-001 | Boundary condition | Integration | Expected behaviour at boundary | Data / timing notes |
 
 ### Test mapping
 
-- Integration tests: {{Project / namespace / classes}}  
-- API tests: {{Project / suites}}  
-- UI / E2E tests: {{Project / suites}}  
-- Unit tests: {{Project / namespaces}}  
-- Static analysis: {{Tools / configs to run}}
+- Integration tests:  
+- API tests:  
+- UI / E2E tests:  
+- Unit tests:  
+- Static analysis:  
 
-### Non-functional checks (if applicable)
+### Non-functional checks (delete section if not applicable)
 
-- Performance / load: {{Tool, threshold, command}}  
-- Security / privacy: {{Threats to verify}}  
-- Observability: {{Log / metric assertions}}
+- Performance / load (tool, threshold, command):  
+- Security / privacy (threats to verify):  
+- Observability (log/metric assertions):  
 
 ---
 
@@ -135,8 +147,8 @@ Links: {{Issues / tickets}}
 
 ## References
 
-- ADRs: {{Links to docs/ADR/*}}  
-- API: {{Links to docs/API/*}}  
-- Architecture: {{Links to docs/Architecture/*}}  
-- Testing: {{Links to docs/Testing/*}}  
-- Code: {{Main modules / namespaces}}
+- ADRs: `docs/ADR/...`  
+- API: `docs/API/...`  
+- Architecture: `docs/Architecture/...`  
+- Testing: `docs/Testing/...`  
+- Code: modules / namespaces  
