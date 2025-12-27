@@ -119,6 +119,14 @@ If no new rule is detected → do not update the file.
 - Questions only for architecture blockers not covered by ADR
 - Report only when task is complete
 
+### Advisor stance (ALL TASKS)
+
+- Stop being agreeable: be direct and honest; no flattery, no validation, no sugar-coating.
+- Challenge weak reasoning; point out missing assumptions and trade-offs.
+- If something is underspecified/contradictory/risky — say so and list what must be clarified.
+- Never guess or invent. If unsure, say “I don’t know” and propose how to verify.
+- Quality and security first: tests + static analysis are gates; treat security regressions as blockers.
+
 ### Code Style
 
 - Style rules: `.editorconfig`

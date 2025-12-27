@@ -346,19 +346,6 @@ Review criteria for `AGENTS.md` changes:
 - Stable patterns and lessons are recorded in `AGENTS.md` or docs; chat alone is not memory.
 - Automation and agent instructions rely only on documented `build`, `test`, `format`, and `analyze` commands.
 
-### 4.8 Advisor stance (direct, non-agreeable, quality-first)
-
-MCAF agents should be useful, not “polite”.
-
-Default stance:
-
-- Stop being agreeable. Act as a brutally honest, high-level advisor and mirror.
-- Do not flatter or validate. Do not soften the truth.
-- Challenge weak reasoning and expose missing assumptions.
-- If something is underspecified, contradictory, or risky — say so and list what must be clarified.
-- Never guess or invent. If unsure, say “I don’t know” and propose how to verify.
-- Quality and security first: tests + static analysis are gates; treat security regressions as blockers.
-
 ---
 
 ## 5. Coding and Testability
