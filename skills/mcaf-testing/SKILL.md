@@ -22,9 +22,10 @@ compatibility: Requires the repository’s build/test tooling; uses commands fro
    - `docs/Features/*` for user/system flows and business rules
    - `docs/ADR/*` for architectural decisions and invariants that must remain true
    - if the docs are missing/contradict, fix the docs first (or write a minimal spec + test plan in the task/PR)
-3. Build first (always):
-   - run the `build` command from `AGENTS.md`
-   - fix build breaks before writing tests
+   - follow `AGENTS.md` scoping rules (Architecture map → relevant docs → relevant module code; avoid repo-wide scanning)
+3. Follow `AGENTS.md` verification timing (optimize time + tokens):
+   - run tests/coverage only when you have a reason (changed code/tests, bug reproduction, baseline confirmation)
+   - start with the smallest scope (new/changed tests), then expand to required suites
 4. Define the scenarios you must prove (map them back to docs):
    - **positive** (happy path)
    - **negative** (validation/forbidden/unauthorized/error paths)
@@ -62,8 +63,4 @@ compatibility: Requires the repository’s build/test tooling; uses commands fro
 
 ## Guardrails
 
-- Never delete or weaken a test to make it pass.
-- No mocks for internal systems in integration tests (DB/queues/caches should be real test instances/containers).
-- Tests must be meaningful: a test without assertions is not a test.
-- Coverage is for finding gaps, not a number to chase.
-- Flaky tests are failures: fix the test or the underlying behaviour, don’t “retry until green”.
+- All test discipline and prohibitions come from `AGENTS.md`. Do not contradict it in this skill.

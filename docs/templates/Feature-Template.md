@@ -9,6 +9,19 @@ ADRs: `docs/ADR/...`
 
 ---
 
+## Implementation plan (step-by-step)
+
+> TEMPLATE ONLY — replace these checkboxes with real implementation steps for this feature and keep them updated while implementing.
+
+- [ ] Analyze current behaviour (facts)
+- [ ] Finalize spec (rules/flows/diagram/verification)
+- [ ] Implement the feature (smallest safe increments)
+- [ ] Add/update automated tests for each scenario (happy + negative + edge)
+- [ ] Run verification commands (build/test/format/analyze/coverage) and record results
+- [ ] Update docs (Feature/ADRs/Architecture overview) and close the checklist
+
+---
+
 ## Purpose
 
 Short description of the business problem and value.
@@ -78,6 +91,8 @@ Short description of the business problem and value.
 ---
 
 ## Diagrams
+
+> TEMPLATE ONLY — Mermaid often breaks with fancy syntax. Keep it simple and make sure it renders in the repo.
 
 ```mermaid
 ```

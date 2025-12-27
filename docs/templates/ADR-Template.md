@@ -16,6 +16,19 @@ Rules:
 
 ---
 
+## Implementation plan (step-by-step)
+
+> TEMPLATE ONLY — replace these checkboxes with real implementation steps for this ADR and keep them updated while implementing.
+
+- [ ] Analyze current state (facts)
+- [ ] Plan the change (steps, files/modules, tests, docs)
+- [ ] Implement the change (smallest safe increments)
+- [ ] Add/update automated tests (happy + negative + edge; protect invariants)
+- [ ] Run verification commands (build/test/format/analyze/coverage) and record results
+- [ ] Update docs (ADR/Features/Architecture overview) and close the checklist
+
+---
+
 ## Context
 
 - Current situation (what exists today).
@@ -51,6 +64,8 @@ Key points:
 ## Diagram
 
 This section is mandatory.
+
+> TEMPLATE ONLY — Mermaid often breaks with fancy syntax. Keep it simple and make sure it renders in the repo.
 
 ```mermaid
 ```

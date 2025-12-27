@@ -27,6 +27,7 @@ Write a spec that can be implemented and verified **without guessing**:
 1. Start from `docs/Architecture/Overview.md` to pick the affected module(s).
 2. Create/update the feature doc using `docs/templates/Feature-Template.md`.
    - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real spec.
+   - follow `AGENTS.md` scoping rules (do not scan the whole repo; use the architecture map to stay focused)
 3. Define behaviour precisely:
    - purpose and scope (in/out)
    - business rules (numbered, testable)

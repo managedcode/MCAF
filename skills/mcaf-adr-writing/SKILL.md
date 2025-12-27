@@ -27,6 +27,7 @@ Before writing, make the ADR executable (no placeholders, no hand-waving):
 1. Confirm the decision scope:
    - what changes (and what does not)
    - what module(s) are affected
+   - follow `AGENTS.md` scoping rules: Architecture map → linked ADR/Feature → entry points (do not scan everything)
 2. Start from `docs/templates/ADR-Template.md`.
    - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real ADR.
 3. Write the ADR as a decision record:
@@ -36,6 +37,7 @@ Before writing, make the ADR executable (no placeholders, no hand-waving):
    - **Alternatives**: 1–3 realistic options with pros/cons
    - **Consequences**: trade-offs, risks, mitigations
 4. Make it executable for the team:
+   - follow `AGENTS.md` Task Delivery rules (analysis → plan → execute → verify)
    - include the invariants that must be proven by tests
    - include verification commands copied from `AGENTS.md`
    - include rollout/rollback and “how we know it’s safe”

@@ -11,6 +11,15 @@ Goal: in ~5 minutes, understand **what exists**, **where it lives**, and **how m
 - **Entry points:**  
 - **Dependencies:**  
 
+## Scoping (read first)
+
+- **In scope:** …
+- **Out of scope:** …
+- Pick impacted module(s) from the diagram + modules table.
+- Pick entry point(s): API / UI / CLI / job / event.
+- Read only: linked ADR/Feature doc(s) → entry-point file(s) → minimum dependencies.
+- Stop if scope can’t be mapped to this doc → update this doc (or ask 1 clarifying question).
+
 ## 2) Module map (Mermaid)
 
 > TEMPLATE ONLY — model modules + boundaries (not every class/file). Add dependencies only if they exist. Remove this note in the real doc.

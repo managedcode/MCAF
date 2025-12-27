@@ -79,11 +79,26 @@ If no new rule is detected → do not update the file.
   - confirm the Mermaid module/boundary diagram exists (if missing → create/update it first)
   - identify the impacted boundary/module(s) and entry points
   - follow the links to the relevant ADR(s) and Feature doc(s) (do not read everything)
-- Read assignment, then inspect only the relevant docs/code before planning
-- Write multi-step plan before implementation
+- Scope first (prevent context overload):
+  - use `docs/Architecture/Overview.md` → “Scoping (read first)”
+  - write **in scope / out of scope** (what will change and what must not change)
+  - if you cannot identify scope from the architecture map → stop and fix the map (or ask one clarifying question)
+- Analyze first (no coding yet):
+  - what exists today (facts only)
+  - what must change / must not change
+  - unknowns and risks (what must be clarified)
+- Create a written plan before implementation:
+  - for architecture/decision work: keep the plan as `## Implementation plan (step-by-step)` in the ADR
+  - for behaviour work: keep the plan as `## Implementation plan (step-by-step)` in the Feature doc
+  - update the plan while executing (tick items / update statuses as work is completed)
 - Implement code and tests together
 - If `build` is separate from `test`, run `build` before `test`
-- Run tests in layers: new → related suite → broader regressions
+- Verification timing (optimize time + tokens):
+  - do not run `test`/`coverage` “just because” before you wrote/changed code or tests (exception: reproducing a bug / confirming baseline)
+  - while iterating, run the smallest meaningful scope (new/changed tests first)
+  - run broader suites only when you have something real to verify (avoid re-running the same command without changes)
+  - run coverage once per change (it is heavier than tests)
+- Run tests in layers: new/changed → related suite → broader regressions
 - After tests pass: run format
 - After format: run build (final check)
 - Summarize changes and test results before marking complete
@@ -103,6 +118,10 @@ If no new rule is detected → do not update the file.
   - `docs/Architecture/Overview.md`: at least one Mermaid module/boundary map
   - `docs/Features/*`: at least one Mermaid diagram for the main flow
   - `docs/ADR/*`: at least one Mermaid diagram for the decision
+- Mermaid hygiene (Mermaid often breaks if you freestyle it):
+  - diagrams must render in repo Markdown preview (broken Mermaid is treated as broken documentation)
+  - prefer simple Mermaid syntax (`flowchart` / `sequenceDiagram`) and short ASCII-only IDs
+  - if a diagram doesn’t render, simplify it until it does (no “close enough”)
 
 ### Testing (ALL TASKS)
 
@@ -116,6 +135,7 @@ If no new rule is detected → do not update the file.
 - Never delete or weaken a test to make it pass
 - Each test verifies a real flow or scenario, not just calls a function — tests without meaningful assertions are forbidden
 - Check code coverage to see which functionality is actually tested; coverage is for finding gaps, not a number to chase
+- Flaky tests are failures: fix the test or the underlying behaviour, don’t “retry until green”
 
 ### Autonomy
 
