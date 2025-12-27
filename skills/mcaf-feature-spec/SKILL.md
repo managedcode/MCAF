@@ -1,7 +1,7 @@
 ---
 name: mcaf-feature-spec
-description: Create or update a feature document under `docs/Features/` using `docs/templates/Feature-Template.md`, including business rules, user flows, system behaviour, Mermaid diagram, verification plan, and Definition of Done. Use before implementing a non-trivial feature or when behaviour changes; make the spec executable (test flows + traceability to tests).
-compatibility: Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps.
+description: "Create or update a feature document under `docs/Features/` using `docs/templates/Feature-Template.md`, including business rules, user flows, system behaviour, Mermaid diagram, verification plan, and Definition of Done. Use before implementing a non-trivial feature or when behaviour changes; make the spec executable (test flows + traceability to tests)."
+compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps."
 ---
 
 # MCAF: Feature Spec
@@ -26,8 +26,8 @@ Write a spec that can be implemented and verified **without guessing**:
 
 1. Start from `docs/Architecture/Overview.md` to pick the affected module(s).
 2. Create/update the feature doc using `docs/templates/Feature-Template.md`.
-   - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real spec.
    - follow `AGENTS.md` scoping rules (do not scan the whole repo; use the architecture map to stay focused)
+   - keep the feature’s `## Implementation plan (step-by-step)` updated while executing
 3. Define behaviour precisely:
    - purpose and scope (in/out)
    - business rules (numbered, testable)

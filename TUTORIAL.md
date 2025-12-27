@@ -8,7 +8,7 @@ Get MCAF running in your repository:
 
 1. Bootstrap AGENTS.md with AI analysis
 2. Create documentation structure in `docs/` (including `docs/Architecture/Overview.md`)
-3. Add skills in `skills/`
+3. Add skills (agent-specific directory)
 4. Document existing features
 5. Create ADRs for existing decisions
 6. Write feature docs before coding (ongoing workflow)
@@ -90,7 +90,15 @@ Report what you created.
 
 Skills are part of MCAF: keep them in-repo so agents and humans share the same workflows, scripts, and standards.
 
-Install baseline templates + skills:
+Where to put skills depends on your agent:
+
+- **Codex (OpenAI)**: `.codex/skills/`
+- **Claude Code (Anthropic)**: `.claude/skills/`
+- **Gemini Code Assist (Google)**: no documented Agent Skills folders (`SKILL.md`) like Codex/Claude; use `AGENTS.md` + docs, and control context with `.aiexclude`/`.gitignore` (Gemini CLI: `.geminiignore`)
+
+Baseline skills in this MCAF repo live under `skills/` (templates). The installer copies them into your chosen skills directory.
+
+Install baseline templates + skills (defaults to Codex: `.codex/skills/`):
 
 ```bash
 git clone https://github.com/managedcode/MCAF.git ../MCAF
@@ -99,13 +107,21 @@ git clone https://github.com/managedcode/MCAF.git ../MCAF
 bash ../MCAF/scripts/mcaf-install.sh
 ```
 
+Install skills for Claude Code instead:
+
+```bash
+bash ../MCAF/scripts/mcaf-install.sh --skills-dir .claude/skills
+```
+
 **Prompt:**
 
 ```
 Add skills structure to this project:
 
-1. Create `skills/` at repo root.
-2. Add baseline MCAF skills (copy `skills/` from the MCAF repo and then adapt to your repo):
+1. Create the agent skills directory at repo root:
+   - Codex: `.codex/skills/`
+   - Claude Code: `.claude/skills/`
+2. Add baseline MCAF skills (copy from the MCAF repo and then adapt to your repo):
    - `mcaf-architecture-overview`
    - `mcaf-feature-spec`
    - `mcaf-adr-writing`
@@ -119,9 +135,9 @@ Add skills structure to this project:
 4. Generate an “available skills” block for your agent runtime:
    - include only metadata (name, description, location)
    - prefer a simple XML `<available_skills>` block (easy to copy/paste and parse)
-   - generate from your repo (recommended): `python3 skills/mcaf-skill-curation/scripts/generate_available_skills.py skills --absolute`
+   - generate from your repo (example for Codex): `python3 .codex/skills/mcaf-skill-curation/scripts/generate_available_skills.py .codex/skills --absolute`
 5. Validate skills and fix reported issues:
-   - `python3 skills/mcaf-skill-curation/scripts/validate_skills.py skills`
+   - (example for Codex) `python3 .codex/skills/mcaf-skill-curation/scripts/validate_skills.py .codex/skills`
 
 Report what you created.
 ```
@@ -137,19 +153,27 @@ If your project already uses MCAF and you want to see what changed upstream (wit
 bash ../MCAF/scripts/mcaf-upstream-snapshot.sh
 ```
 
+For Claude Code repos (skills in `.claude/skills/`):
+
+```bash
+bash ../MCAF/scripts/mcaf-upstream-snapshot.sh --skills-dir .claude/skills
+```
+
 Then review and merge what you want (example):
 
 ```bash
 diff -ruN docs/templates .mcaf/upstream/<timestamp>/docs/templates | less
-diff -ruN skills .mcaf/upstream/<timestamp>/skills | less
+diff -ruN .codex/skills .mcaf/upstream/<timestamp>/.codex/skills | less
 ```
 
 After merging, validate skills and regenerate the metadata block:
 
 ```bash
-python3 skills/mcaf-skill-curation/scripts/validate_skills.py skills
-python3 skills/mcaf-skill-curation/scripts/generate_available_skills.py skills --absolute
+python3 .codex/skills/mcaf-skill-curation/scripts/validate_skills.py .codex/skills
+python3 .codex/skills/mcaf-skill-curation/scripts/generate_available_skills.py .codex/skills --absolute
 ```
+
+If you use a different skills directory, replace `.codex/skills` with your chosen path (for example `.claude/skills`).
 
 ---
 

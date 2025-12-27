@@ -6,11 +6,12 @@ usage() {
 Install MCAF baseline templates + skills into the CURRENT directory (target repo root).
 
 Usage:
-  mcaf-install.sh [--force] [--repo <git-url>] [--ref <ref>]
+  mcaf-install.sh [--force] [--repo <git-url>] [--ref <ref>] [--skills-dir <path>]
 
 Defaults:
   --repo https://github.com/managedcode/MCAF.git
   --ref  main
+  --skills-dir .codex/skills
 
 Behaviour:
   - Without --force: do NOT overwrite existing files.
@@ -19,7 +20,7 @@ Behaviour:
 Output:
   - docs/templates/*
   - docs/Architecture/Overview.md (from template if missing)
-  - skills/* (baseline skills)
+  - <skills-dir>/* (baseline skills)
   - AGENTS.md (from template if missing)
 EOF
 }
@@ -27,6 +28,7 @@ EOF
 FORCE=0
 MCAF_REPO="https://github.com/managedcode/MCAF.git"
 MCAF_REF="main"
+SKILLS_DIR=".codex/skills"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -40,6 +42,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --ref)
       MCAF_REF="${2:-}"
+      shift 2
+      ;;
+    --skills-dir)
+      SKILLS_DIR="${2:-}"
       shift 2
       ;;
     -h|--help)
@@ -70,20 +76,18 @@ mkdir -p \
   docs/Architecture \
   docs/ADR \
   docs/Features \
-  docs/Testing \
-  docs/Development \
-  skills
+  "$SKILLS_DIR"
 
 if [[ $FORCE -eq 1 ]]; then
   echo "Copying templates (overwrite enabled) ..."
   cp -R "$tmp_dir/mcaf/docs/templates/." docs/templates/
   echo "Copying skills (overwrite enabled) ..."
-  cp -R "$tmp_dir/mcaf/skills/." skills/
+  cp -R "$tmp_dir/mcaf/skills/." "$SKILLS_DIR/"
 else
   echo "Copying templates (no overwrite) ..."
   cp -R -n "$tmp_dir/mcaf/docs/templates/." docs/templates/ || true
   echo "Copying skills (no overwrite) ..."
-  cp -R -n "$tmp_dir/mcaf/skills/." skills/ || true
+  cp -R -n "$tmp_dir/mcaf/skills/." "$SKILLS_DIR/" || true
 fi
 
 if [[ ! -f AGENTS.md || $FORCE -eq 1 ]]; then
@@ -105,4 +109,5 @@ echo "Done."
 echo "Next:"
 echo "  1) Customize AGENTS.md with REAL commands and rules."
 echo "  2) Fill docs/Architecture/Overview.md (modules/boundaries + ADR links)."
-echo "  3) Run build/test/format commands from AGENTS.md to verify."
+echo "  3) Restart your agent so it reloads skills from: $SKILLS_DIR"
+echo "  4) Run build/test/format commands from AGENTS.md to verify."

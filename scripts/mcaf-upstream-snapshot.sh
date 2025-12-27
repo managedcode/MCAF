@@ -6,22 +6,24 @@ usage() {
 Fetch the latest MCAF templates + skills into a snapshot folder (safe for updating existing repos).
 
 Usage:
-  mcaf-upstream-snapshot.sh [--repo <git-url>] [--ref <ref>] [--out <dir>]
+  mcaf-upstream-snapshot.sh [--repo <git-url>] [--ref <ref>] [--out <dir>] [--skills-dir <path>]
 
 Defaults:
   --repo https://github.com/managedcode/MCAF.git
   --ref  main
   --out  .mcaf/upstream/<timestamp>/
+  --skills-dir .codex/skills
 
 Notes:
   - Run this from the TARGET repo root.
-  - This does NOT overwrite your current docs/templates or skills.
+  - This does NOT overwrite your current docs/templates or skills dir.
 EOF
 }
 
 MCAF_REPO="https://github.com/managedcode/MCAF.git"
 MCAF_REF="main"
 OUT_DIR=""
+SKILLS_DIR=".codex/skills"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -35,6 +37,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --out)
       OUT_DIR="${2:-}"
+      shift 2
+      ;;
+    --skills-dir)
+      SKILLS_DIR="${2:-}"
       shift 2
       ;;
     -h|--help)
@@ -70,7 +76,8 @@ git -C "$tmp_dir/mcaf" rev-parse HEAD > "$OUT_DIR/mcaf.commit"
 
 mkdir -p "$OUT_DIR/docs"
 cp -R "$tmp_dir/mcaf/docs/templates" "$OUT_DIR/docs/"
-cp -R "$tmp_dir/mcaf/skills" "$OUT_DIR/"
+mkdir -p "$OUT_DIR/$SKILLS_DIR"
+cp -R "$tmp_dir/mcaf/skills/." "$OUT_DIR/$SKILLS_DIR/"
 
 echo ""
 echo "Upstream snapshot written to: $OUT_DIR"
@@ -78,4 +85,4 @@ echo "Commit: $(cat "$OUT_DIR/mcaf.commit")"
 echo ""
 echo "Review diffs:"
 echo "  diff -ruN docs/templates \"$OUT_DIR/docs/templates\" | less"
-echo "  diff -ruN skills \"$OUT_DIR/skills\" | less"
+echo "  diff -ruN \"$SKILLS_DIR\" \"$OUT_DIR/$SKILLS_DIR\" | less"

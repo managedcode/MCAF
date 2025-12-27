@@ -1,7 +1,7 @@
 ---
 name: mcaf-formatting
-description: Format code and keep style consistent using the repository’s canonical formatting/lint commands from AGENTS.md. Use after implementing changes or when formatting drift causes noisy diffs; keep formatting changes intentional and verified with build/tests.
-compatibility: Requires the repository’s formatter/linter tools; uses commands from AGENTS.md.
+description: "Format code and keep style consistent using the repository’s canonical formatting/lint commands from AGENTS.md. Use after implementing changes or when formatting drift causes noisy diffs; keep formatting changes intentional and verified with build/tests."
+compatibility: "Requires the repository’s formatter/linter tools; uses commands from AGENTS.md."
 ---
 
 # MCAF: Formatting
@@ -18,10 +18,9 @@ compatibility: Requires the repository’s formatter/linter tools; uses commands
 3. Review the diff:
    - ensure changes are formatting-only
    - if the formatter touched many files, separate the change or confirm it was explicitly requested
-4. Verify after formatting (use `AGENTS.md` commands):
-   - run `test` (at least new/related suites)
-   - run `build` if required by `AGENTS.md`
-   - run `analyze` if required by `AGENTS.md`
+4. Verify (follow `AGENTS.md` for sequencing + required commands):
+   - for formatting-only changes: run the smallest meaningful verification the repo requires (build/tests/analyze as applicable)
+   - for formatting as part of a behaviour change: follow the repo’s normal order (don’t reorder the pipeline)
 5. If `format`/linters are missing or flaky:
    - fix `AGENTS.md` to point to a real, repeatable command
    - only then rerun formatting

@@ -1,7 +1,7 @@
 ---
 name: mcaf-adr-writing
-description: Create or update an ADR under `docs/ADR/` using `docs/templates/ADR-Template.md`, capturing context, decision, alternatives, consequences, rollout, and verification. Use when changing architecture, boundaries, dependencies, data model, or cross-cutting patterns; ensure the ADR is self-contained, has a Mermaid diagram, and defines testable invariants.
-compatibility: Requires repository write access; produces Markdown docs with Mermaid diagrams.
+description: "Create or update an ADR under `docs/ADR/` using `docs/templates/ADR-Template.md`, capturing context, decision, alternatives, consequences, rollout, and verification. Use when changing architecture, boundaries, dependencies, data model, or cross-cutting patterns; ensure the ADR is self-contained, has a Mermaid diagram, and defines testable invariants."
+compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
 # MCAF: ADR Writing
@@ -29,7 +29,7 @@ Before writing, make the ADR executable (no placeholders, no hand-waving):
    - what module(s) are affected
    - follow `AGENTS.md` scoping rules: Architecture map → linked ADR/Feature → entry points (do not scan everything)
 2. Start from `docs/templates/ADR-Template.md`.
-   - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real ADR.
+   - keep the ADR’s `## Implementation plan (step-by-step)` updated while executing
 3. Write the ADR as a decision record:
    - **Context**: constraints + why this is needed now
    - **Decision**: a short, direct statement

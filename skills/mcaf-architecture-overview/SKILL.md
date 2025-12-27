@@ -1,7 +1,7 @@
 ---
 name: mcaf-architecture-overview
-description: Create or update `docs/Architecture/Overview.md` for a repository: map modules and boundaries, add a Mermaid module diagram, document dependency rules, and link to ADRs/features. Use when onboarding, refactoring, adding modules, or when the repo lacks a clear global architecture map.
-compatibility: Requires repository write access; produces Markdown docs with Mermaid diagrams.
+description: "Create or update `docs/Architecture/Overview.md` for a repository: map modules and boundaries, add a Mermaid module diagram, document dependency rules, and link to ADRs/features. Use when onboarding, refactoring, adding modules, or when the repo lacks a clear global architecture map."
+compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
 # MCAF: Architecture Overview
@@ -25,12 +25,12 @@ This doc is the **global map**: boundaries, modules, and dependency rules.
 ## Workflow
 
 1. Open `docs/Architecture/Overview.md` if it exists; otherwise start from `docs/templates/Architecture-Template.md`.
-   - Remove every `TEMPLATE ONLY` note and replace placeholder text before treating it as a real doc.
+   - Ensure it contains a short `## Scoping (read first)` section (this is how we prevent “scan everything” behaviour).
 2. Identify the **real** top-level boundaries:
    - entry points (HTTP/API, CLI, UI, jobs, events)
    - modules/layers (group by folders/namespaces, not individual files)
    - external dependencies (only those that actually exist)
-3. Fill the **TL;DR** so a new engineer can orient in ~1 minute.
+3. Fill the **Summary** so a new engineer can orient in ~1 minute.
 4. Draw the Mermaid diagram as a **module map**:
    - keep it small (roughly 8–15 nodes)
    - label arrows with meaning (calls, events, reads/writes)

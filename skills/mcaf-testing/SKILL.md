@@ -1,7 +1,7 @@
 ---
 name: mcaf-testing
-description: Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in AGENTS.md. Use TDD (test fails → implement → pass) where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, collect coverage, and verify meaningful assertions for happy/negative/edge cases.
-compatibility: Requires the repository’s build/test tooling; uses commands from AGENTS.md.
+description: "Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in AGENTS.md. Use TDD (test fails → implement → pass) where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, collect coverage, and verify meaningful assertions for happy/negative/edge cases."
+compatibility: "Requires the repository’s build/test tooling; uses commands from AGENTS.md."
 ---
 
 # MCAF: Testing
@@ -46,9 +46,10 @@ compatibility: Requires the repository’s build/test tooling; uses commands fro
    - deterministic data/fixtures, no hidden dependencies
    - avoid `sleep`-based timing; prefer “wait until condition”/polling with a timeout
    - keep test setup/teardown reliable (reset state between tests)
-9. Run tests with coverage (always):
-   - run the repo’s coverage path as defined in `AGENTS.md` (either `coverage`, or `test` in coverage mode)
-   - capture where the report/artifacts were written (path, summary)
+9. Coverage (follow `AGENTS.md`, optimize time/tokens):
+   - run coverage only if it’s part of the repo’s required verification path or if you need it to find gaps
+   - run coverage once per change (it is heavier than tests)
+   - capture where the report/artifacts were written (path, summary) if generated
 10. If the repo has UI:
    - run UI/E2E tests
    - inspect screenshots/videos/traces produced by the runner for failures and obvious UI regressions

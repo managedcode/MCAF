@@ -1,14 +1,14 @@
 ---
 name: mcaf-memory
-description: Maintain a persistent project memory file (`skills/mcaf-memory/references/memory.md`) with stable facts, constraints, preferences, and glossary so agents don’t re-learn the same context every chat. Use when the user says “remember”, gives repeating feedback, or when important project constraints are discovered.
-compatibility: Requires repository write access; stores memory in Markdown.
+description: "Maintain a persistent project memory file (`references/memory.md` in this skill folder) with stable facts, constraints, preferences, and glossary so agents don’t re-learn the same context every chat. Use when the user says “remember”, gives repeating feedback, or when important project constraints are discovered."
+compatibility: "Requires repository write access; stores memory in Markdown."
 ---
 
 # MCAF: Memory
 
 ## Output
 
-- `skills/mcaf-memory/references/memory.md` (create/update)
+- `references/memory.md` (create/update)
 
 ## When to use (triggers)
 
@@ -19,7 +19,7 @@ compatibility: Requires repository write access; stores memory in Markdown.
 
 ## Workflow
 
-1. Open `skills/mcaf-memory/references/memory.md`.
+1. Open `references/memory.md`.
 2. Keep the “7 Questions (profile)” up to date:
    - fill the answers as short bullets
    - these answers must reflect the real workflow (TDD, docs, release discipline)
@@ -37,7 +37,7 @@ compatibility: Requires repository write access; stores memory in Markdown.
    - **Rules/commands for agents** → `AGENTS.md`
    - **Architecture decisions** → `docs/ADR/*`
    - **Behaviour/flows** → `docs/Features/*`
-   - **Long-lived context & preferences** → `skills/mcaf-memory/references/memory.md`
+   - **Long-lived context & preferences** → `references/memory.md`
 6. Never store secrets or personal data.
 
 ## Guardrails

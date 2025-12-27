@@ -45,7 +45,9 @@ In MCAF, repository context includes:
 - application code  
 - automated tests (unit, integration, API, UI/E2E)  
 - documentation for features, architecture, testing, development, and operations  
-- `skills/` packages (workflows + scripts + references) for repeatable agent tasks  
+- Agent Skills packages (workflows + scripts + references) for repeatable agent tasks  
+  - Codex: `.codex/skills/`  
+  - Claude Code: `.claude/skills/`  
 - the repository’s root `AGENTS.md`  
 
 Anything that matters for development, testing, or operations lives in the repository.
@@ -134,7 +136,8 @@ A skill is a folder that contains:
 
 Recommended layout:
 
-- `skills/<skill-name>/SKILL.md`
+- Codex: `.codex/skills/<skill-name>/SKILL.md`
+- Claude Code: `.claude/skills/<skill-name>/SKILL.md`
 
 Integration principle:
 
@@ -615,7 +618,9 @@ Used for:
 To adopt MCAF in a repository:
 
 1. A `docs/` directory exists with at least `Architecture/`, `Features/`, `ADR/`, `Testing`, and `Development` (and a `docs/Architecture/Overview.md` entry point).  
-2. A `skills/` directory exists with skills used by your agents (each skill has `SKILL.md`).  
+2. A skills directory exists in your agent’s supported location (each skill has `SKILL.md`):
+   - Codex: `.codex/skills/`
+   - Claude Code: `.claude/skills/`
 3. This Guide and a root `AGENTS.md` live at the repository root and are kept current.  
 4. Commands for `build`, `test`, `format`, and `analyze` are defined and documented.  
 5. Containerized or scripted environments exist for integration/API/UI tests.  
@@ -649,4 +654,4 @@ Every significant feature, document, and decision has an accountable owner:
 
 - **Onboarding**: New team members read this Guide, the root `AGENTS.md`, and key docs before making changes.
 - **Regular review**: The team periodically reviews `AGENTS.md` and docs to ensure they reflect current practices.
-- **Feedback loops**: Issues with AI agent behaviour are tracked and lead to updates in `AGENTS.md`, skills (`skills/*/SKILL.md`), and docs — not repeated chat corrections.
+- **Feedback loops**: Issues with AI agent behaviour are tracked and lead to updates in `AGENTS.md`, skills (`*/SKILL.md` in your skills directory), and docs — not repeated chat corrections.
