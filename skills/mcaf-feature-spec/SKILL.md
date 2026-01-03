@@ -1,6 +1,6 @@
 ---
 name: mcaf-feature-spec
-description: "Create or update a feature document under `docs/Features/` using `docs/templates/Feature-Template.md`, including business rules, user flows, system behaviour, Mermaid diagram, verification plan, and Definition of Done. Use before implementing a non-trivial feature or when behaviour changes; make the spec executable (test flows + traceability to tests)."
+description: "Create or update a feature spec under `docs/Features/` using `docs/templates/Feature-Template.md`: business rules, user flows, system behaviour, Mermaid diagram(s), verification plan, and Definition of Done. Use before implementing a non-trivial feature or when behaviour changes; keep the spec executable (test flows + traceability to tests)."
 compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps."
 ---
 

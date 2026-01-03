@@ -1,6 +1,6 @@
 ---
 name: mcaf-adr-writing
-description: "Create or update an ADR under `docs/ADR/` using `docs/templates/ADR-Template.md`, capturing context, decision, alternatives, consequences, rollout, and verification. Use when changing architecture, boundaries, dependencies, data model, or cross-cutting patterns; ensure the ADR is self-contained, has a Mermaid diagram, and defines testable invariants."
+description: "Create or update an ADR (Architecture Decision Record) under `docs/ADR/` using `docs/templates/ADR-Template.md`: context, decision, alternatives, consequences, rollout, and verification. Use when changing architecture, boundaries, dependencies, data model, or cross-cutting patterns; ensure it is self-contained, has a Mermaid diagram, and defines testable invariants."
 compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 

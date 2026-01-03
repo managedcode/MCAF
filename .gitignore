@@ -42,6 +42,10 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Python
+__pycache__/
+*.pyc
+
 # Build outputs
 _site/
 .bundle/

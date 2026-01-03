@@ -76,13 +76,27 @@ If no new rule is detected → do not update the file.
 ### Task Delivery (ALL TASKS)
 
 - Always start from the **architecture map** in `docs/Architecture/Overview.md`:
-  - confirm the Mermaid module/boundary diagram exists (if missing → create/update it first)
+  - confirm the Mermaid diagrams exist and are up to date (if missing/outdated → update them first):
+    - system/module map (blocks/modules + dependency direction)
+    - interfaces/contracts map (APIs/events/interfaces between modules)
+    - key classes/types map (high-signal types only; not an inventory)
+  - `docs/Architecture/Overview.md` is the primary “start here” card for humans and AI agents:
+    - diagram elements must use real names (no placeholders like “Module A”)
+    - every diagram element must be anchored to reality via links in the same file (feature docs, ADRs, code paths, or entry-point files)
+    - keep diagrams readable; if a diagram becomes “spaghetti”, split by boundary and link out
+    - keep the file short: prefer diagrams + a tiny link index over large tables or inventories (optimize token footprint)
   - identify the impacted boundary/module(s) and entry points
   - follow the links to the relevant ADR(s) and Feature doc(s) (do not read everything)
 - Scope first (prevent context overload):
   - use `docs/Architecture/Overview.md` → “Scoping (read first)”
   - write **in scope / out of scope** (what will change and what must not change)
   - if you cannot identify scope from the architecture map → stop and fix the map (or ask one clarifying question)
+- Context engineering (hard requirement):
+  - keep only the context needed for the task (avoid repo-wide scanning and “read everything”)
+  - if you need a doc/module that isn’t reachable from `docs/Architecture/Overview.md`, update the overview to link it
+- Skills (workflow packages):
+  - if the task matches an existing skill’s description, follow that skill’s workflow instead of improvising
+  - if a skill is missing or drifting from reality, update the skill so the fix is permanent
 - Analyze first (no coding yet):
   - what exists today (facts only)
   - what must change / must not change
@@ -108,18 +122,25 @@ If no new rule is detected → do not update the file.
 
 - All docs live in `docs/` (or `.wiki/`)
 - Global architecture entry point: `docs/Architecture/Overview.md` (read first)
+- Single source of truth (no duplication):
+  - each important fact/rule/diagram lives in exactly one canonical place; other docs should link, not copy
+  - `docs/Architecture/Overview.md` is coarse and navigational (diagrams + links), not the place for detailed behaviour
+  - detailed behaviour belongs in `docs/Features/*`; detailed decisions/invariants belong in `docs/ADR/*`
+  - if you need detail, follow the link; only add new text when there is no canonical place yet
 - When creating docs from templates:
   - copy the template into its real docs location
   - replace all placeholders and remove all template notes (real docs must be clean: no `TEMPLATE ONLY`, `TODO:`, `...`)
 - Update feature docs when behaviour changes
 - Update ADRs when architecture changes
 - Diagrams are mandatory in docs:
-  - `docs/Architecture/Overview.md`: at least one Mermaid module/boundary map
+  - `docs/Architecture/Overview.md`: Mermaid diagrams for system/modules + interfaces/contracts + key classes/types (must render)
+    - every diagram element has a real reference link in the same file (docs/code), so an agent can navigate without repo-wide scanning
   - `docs/Features/*`: at least one Mermaid diagram for the main flow
   - `docs/ADR/*`: at least one Mermaid diagram for the decision
 - Mermaid hygiene (Mermaid often breaks if you freestyle it):
   - diagrams must render in repo Markdown preview (broken Mermaid is treated as broken documentation)
-  - prefer simple Mermaid syntax (`flowchart` / `sequenceDiagram`) and short ASCII-only IDs
+  - prefer simple Mermaid syntax (`flowchart` / `sequenceDiagram`); use short ASCII-only IDs
+  - if `classDiagram` is flaky in your renderer, replace it with a `flowchart` that shows the same relationships
   - if a diagram doesn’t render, simplify it until it does (no “close enough”)
 
 ### Testing (ALL TASKS)
@@ -129,6 +150,7 @@ If no new rule is detected → do not update the file.
 - Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors
 - Integration tests must exercise real flows end-to-end, not just call endpoints in isolation
 - Prefer integration/API/UI tests over unit tests
+- Prefer the minimum set of high-value tests that proves behaviour; invest in diagrams for understanding and safe change
 - No mocks for internal systems (DB, queues, caches) — use containers
 - Mocks only for external third-party systems
 - Never delete or weaken a test to make it pass

@@ -1,6 +1,6 @@
 ---
 name: mcaf-skill-curation
-description: "Create, update, and validate repository skills under your agent’s skills directory (Codex: `.codex/skills/`, Claude Code: `.claude/skills/`) so they match the real codebase and `AGENTS.md` rules. Tune YAML `description` triggers, apply user feedback to skills, and generate `<available_skills>` metadata blocks for agent runtimes."
+description: "Create, update, and validate repository skills under your agent’s skills directory (Codex: `.codex/skills/`, Claude: `.claude/skills/`) so they match the real codebase and `AGENTS.md` rules; tune YAML `description` triggers, apply feedback, and generate `<available_skills>` metadata blocks."
 compatibility: "Requires repository write access; uses a shell and Python 3 for validation/scripts."
 ---
 

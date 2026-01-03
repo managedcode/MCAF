@@ -127,7 +127,6 @@ Add skills structure to this project:
    - `mcaf-adr-writing`
    - `mcaf-testing`
    - `mcaf-formatting`
-   - `mcaf-memory`
    - `mcaf-skill-curation`
 3. Ensure each skill is discoverable:
    - folder name matches `name` (lowercase, digits, hyphens)

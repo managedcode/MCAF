@@ -1,6 +1,6 @@
 ---
 name: mcaf-formatting
-description: "Format code and keep style consistent using the repository’s canonical formatting/lint commands from AGENTS.md. Use after implementing changes or when formatting drift causes noisy diffs; keep formatting changes intentional and verified with build/tests."
+description: "Format code and keep style consistent using the repository’s canonical formatting/lint commands from `AGENTS.md`. Use after implementing changes or when formatting drift causes noisy diffs; keep formatting changes intentional and verified with build/tests."
 compatibility: "Requires the repository’s formatter/linter tools; uses commands from AGENTS.md."
 ---
 

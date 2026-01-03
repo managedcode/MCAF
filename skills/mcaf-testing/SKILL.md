@@ -1,6 +1,6 @@
 ---
 name: mcaf-testing
-description: "Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in AGENTS.md. Use TDD (test fails → implement → pass) where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, collect coverage, and verify meaningful assertions for happy/negative/edge cases."
+description: "Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in `AGENTS.md`. Use TDD where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, and verify meaningful assertions for happy/negative/edge cases."
 compatibility: "Requires the repository’s build/test tooling; uses commands from AGENTS.md."
 ---
 
