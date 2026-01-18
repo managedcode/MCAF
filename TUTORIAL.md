@@ -98,19 +98,28 @@ Where to put skills depends on your agent:
 
 Baseline skills in this MCAF repo live under `skills/` (templates). The installer copies them into your chosen skills directory.
 
-Install baseline templates + skills (defaults to Codex: `.codex/skills/`):
+One-line remote installer (no local clone required). It will prompt for agent selection; you can also pin it:
 
 ```bash
-git clone https://github.com/managedcode/MCAF.git ../MCAF
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s --
+```
 
-# Run in your repo root:
-bash ../MCAF/scripts/mcaf-install.sh
+For Claude Code (no prompt):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s -- --agent claude
+```
+
+If you already have this repo locally, run the installer from your repo root:
+
+```bash
+bash scripts/mcaf-install.sh
 ```
 
 Install skills for Claude Code instead:
 
 ```bash
-bash ../MCAF/scripts/mcaf-install.sh --skills-dir .claude/skills
+bash scripts/mcaf-install.sh --skills-dir .claude/skills
 ```
 
 **Prompt:**

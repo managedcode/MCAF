@@ -122,6 +122,7 @@ If no new rule is detected → do not update the file.
 
 - All docs live in `docs/` (or `.wiki/`)
 - Global architecture entry point: `docs/Architecture/Overview.md` (read first)
+- Installer sync: if `scripts/mcaf-install.sh`, `docs/templates/`, or `skills/` change in a way that affects installation, update `scripts/mcaf-remote-install.sh` and any docs that reference its raw GitHub URL.
 - Single source of truth (no duplication):
   - each important fact/rule/diagram lives in exactly one canonical place; other docs should link, not copy
   - `docs/Architecture/Overview.md` is coarse and navigational (diagrams + links), not the place for detailed behaviour

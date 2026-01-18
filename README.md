@@ -33,6 +33,20 @@ The root `AGENTS.md` in each repository applies it to that codebase.
 
 ---
 
+### 1.1 Quick install (one-liner)
+
+Remote installer (no local clone required). It will prompt for agent selection; you can also pin it:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s --
+```
+
+For Claude Code (no prompt):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s -- --agent claude
+```
+
 ## 2. Context
 
 Context is everything needed to understand, change, and run the system.  
