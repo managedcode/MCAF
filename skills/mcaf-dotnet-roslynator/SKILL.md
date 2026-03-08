@@ -51,6 +51,26 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
    - rebuild
    - rerun tests
 
+## Bootstrap When Missing
+
+If `Roslynator` is not configured yet:
+
+1. Detect current state:
+   - `rg -n "Roslynator\\.Analyzers" -g '*.csproj' .`
+   - `rg --files -g '.config/dotnet-tools.json'`
+   - `dotnet tool list --local`
+   - `dotnet tool list --global`
+   - `command -v roslynator`
+2. Choose the install path deliberately:
+   - analyzer package: `dotnet add <project>.csproj package Roslynator.Analyzers`
+   - optional CLI: `dotnet new tool-manifest` (if missing) and `dotnet tool install roslynator.dotnet.cli`
+3. Configure ownership in root `.editorconfig` so Roslynator does not fight SDK analyzers, StyleCop, or Meziantou.
+4. If the CLI is adopted, add exact commands in `AGENTS.md` and CI, such as:
+   - `dotnet tool run roslynator analyze <solution-or-project>`
+   - `dotnet tool run roslynator fix <solution-or-project>`
+5. Run `dotnet build <solution-or-project>` and the selected Roslynator command, then return `status: configured` or `status: improved`.
+6. If the repo wants only the current analyzer baseline and no Roslynator-specific CLI workflow, return `status: not_applicable`.
+
 ## Deliver
 
 - Roslynator package or CLI setup that fits the repo

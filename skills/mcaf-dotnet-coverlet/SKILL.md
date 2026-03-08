@@ -45,6 +45,26 @@ compatibility: "Requires a .NET test project or solution; respects the repo's `A
 3. Do not mix `coverlet.collector` and `coverlet.msbuild` in the same test project.
 4. Pair raw coverage collection with `ReportGenerator` only when humans need rendered reports.
 
+## Bootstrap When Missing
+
+If coverage is not configured yet:
+
+1. Detect current state:
+   - `rg -n "coverlet\\.(collector|msbuild)|CollectCoverage|XPlat Code Coverage" -g '*.csproj' -g '*.props' -g '*.targets' .`
+   - `dotnet tool list --local`
+   - `dotnet tool list --global`
+   - `command -v coverlet`
+2. Install exactly one driver path:
+   - VSTest collector: `dotnet add <test-project>.csproj package coverlet.collector`
+   - MSBuild driver: `dotnet add <test-project>.csproj package coverlet.msbuild`
+   - Console tool: `dotnet new tool-manifest` (if missing) and `dotnet tool install coverlet.console`
+3. Record one concrete local and CI command in `AGENTS.md`:
+   - collector: `dotnet test <test-project>.csproj --collect:"XPlat Code Coverage"`
+   - msbuild: `dotnet test <test-project>.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura`
+   - console: `dotnet tool run coverlet <test-assembly.dll> --target "dotnet" --targetargs "test <test-project>.csproj --no-build"`
+4. Run the chosen command once and return `status: configured` or `status: improved`.
+5. If another coverage engine already owns coverage for this repo, return `status: not_applicable`.
+
 ## Deliver
 
 - explicit coverage driver selection

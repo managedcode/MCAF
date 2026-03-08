@@ -134,10 +134,24 @@ The intended flow is:
 - the framework-specific test skill handles xUnit, TUnit, or MSTest mechanics
 - after code changes, agents run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
 
+The baseline above is intentionally small.
 Add tool-specific .NET skills only when the repo standardizes on them:
 
 <!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->
-- Generated during site build from current `mcaf-dotnet-*` folders in `skills/`.
+- `mcaf-dotnet-analyzer-config`
+- `mcaf-dotnet-archunitnet`
+- `mcaf-dotnet-code-analysis`
+- `mcaf-dotnet-codeql`
+- `mcaf-dotnet-coverlet`
+- `mcaf-dotnet-csharpier`
+- `mcaf-dotnet-format`
+- `mcaf-dotnet-meziantou-analyzer`
+- `mcaf-dotnet-netarchtest`
+- `mcaf-dotnet-reportgenerator`
+- `mcaf-dotnet-roslynator`
+- `mcaf-dotnet-semgrep`
+- `mcaf-dotnet-stryker`
+- `mcaf-dotnet-stylecop-analyzers`
 <!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->
 
 ### 4.1 Current Skill Catalog (Generated)

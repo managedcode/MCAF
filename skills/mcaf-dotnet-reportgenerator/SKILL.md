@@ -45,6 +45,23 @@ compatibility: "Requires coverage artifacts such as Cobertura, OpenCover, or lco
    - badges
 4. Merge multiple reports only when the repo really needs a consolidated view.
 
+## Bootstrap When Missing
+
+If `ReportGenerator` is not configured yet:
+
+1. Detect current state:
+   - `rg --files -g '.config/dotnet-tools.json'`
+   - `dotnet tool list --local`
+   - `dotnet tool list --global`
+   - `command -v reportgenerator`
+2. Prefer local tool installation for reproducible CI:
+   - `dotnet new tool-manifest` (if missing)
+   - `dotnet tool install dotnet-reportgenerator-globaltool`
+3. Add one explicit render command to `AGENTS.md` and CI, for example:
+   - `dotnet tool run reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"artifacts/coverage" -reporttypes:"HtmlSummary;Cobertura"`
+4. Run the report command once and return `status: configured` or `status: improved`.
+5. If raw coverage outputs are already sufficient and no rendered artifacts are needed, return `status: not_applicable`.
+
 ## Deliver
 
 - readable coverage artifacts for humans and CI systems
