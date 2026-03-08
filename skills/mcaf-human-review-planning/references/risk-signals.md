@@ -11,6 +11,8 @@ Generated code deserves earlier human review when it sits at one of these seams.
 - external integrations such as email, storage, queues, or APIs
 - cross-aggregate invariants
 - retry, idempotency, and background job flows
+- places where generated code should mirror an existing entity or workflow but may have drifted
+- seams where the new feature reuses assumptions from older domains with slightly different rules
 
 ## Lower-Value Early Review Targets
 
@@ -24,3 +26,4 @@ These often matter less in the first review pass:
 ## Practical Rule
 
 Start where a wrong decision would corrupt state, bypass a rule, or trigger the wrong side effect.
+Also start where the generated code is most likely to disagree with the architecture knowledge already in the human reviewer's head.

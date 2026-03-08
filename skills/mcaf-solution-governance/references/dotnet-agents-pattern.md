@@ -29,6 +29,8 @@ Coverage command depends on the runner model:
 
 In `Global Skills`, list:
 
+- `mcaf-dotnet`
+- `mcaf-dotnet-features` when modern C# feature choice matters in this repo
 - `mcaf-testing`
 - exactly one of:
   - `mcaf-dotnet-xunit`
@@ -38,14 +40,30 @@ In `Global Skills`, list:
 - `mcaf-dotnet-complexity` when complexity gates are active
 - `mcaf-ci-cd`
 - `mcaf-solid-maintainability`
+- `mcaf-architecture-overview` when the repo keeps a maintained architecture map
 
 ## .NET Rules Worth Making Explicit
 
 - the repo-root lowercase `.editorconfig` is the source of truth for formatting, naming, style, and analyzer severity.
 - `Directory.Build.props` or project files own bulk analysis switches such as `EnableNETAnalyzers`, `AnalysisLevel`, `TreatWarningsAsErrors`, and runner choice.
+- the root or local `AGENTS.md` should say which modern C# features are allowed if the repo is pinned away from the SDK default.
 - The repo must document whether tests run on `VSTest` or `Microsoft.Testing.Platform`.
 - Do not mix VSTest-only arguments or `.runsettings` assumptions into Microsoft.Testing.Platform commands.
 - `.editorconfig` comments must be standalone lines, not inline suffixes on key-value pairs.
+
+## Post-Change Quality Flow
+
+When a `.NET` code task changes production code, the agent should run the repo's exact quality commands, not just `dotnet test`.
+
+The normal flow is:
+
+- `format`
+- `build`
+- `analyze`
+- focused `test`
+- broader `test`
+- `coverage` when configured
+- extra configured gates such as Roslynator, StyleCop, Meziantou, architecture tests, security scanning, or mutation testing
 
 ## Local Project AGENTS.md Expectations
 
@@ -53,6 +71,7 @@ For each .NET project or module, record:
 
 - entry points and boundaries
 - exact local `build`, `test`, `format`, and `analyze` commands when they differ from the root
+- explicit `LangVersion` only when the project intentionally differs from the SDK default
 - the active test framework
 - the active runner model
 - the coverage driver if the module runs coverage in isolation

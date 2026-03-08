@@ -81,6 +81,22 @@ dotnet test MySolution.sln --no-build
 dotnet format MySolution.sln --verify-no-changes
 ```
 
+## Agent Post-Change Flow
+
+When an agent writes or refactors `.NET` code, do not stop after `dotnet test`.
+
+Use the exact commands from `AGENTS.md`. The usual checked-in flow is:
+
+1. `format`
+2. `build`
+3. `analyze`
+4. focused `test`
+5. broader `test`
+6. `coverage` and report generation when configured
+7. extra configured gates such as Roslynator, StyleCop, Meziantou, architecture tests, Semgrep, CodeQL, CSharpier, or Stryker
+
+Run only the gates the repo actually enabled.
+
 Then add the runner-specific extras:
 
 - VSTest coverage:

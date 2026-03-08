@@ -31,14 +31,15 @@ compatibility: "Requires the repository’s build and test tooling; uses command
    - new or changed tests
    - related suite
    - broader regressions
-4. When the stack is .NET, route framework mechanics through exactly one matching skill:
+4. When the stack is .NET, use `mcaf-dotnet` as the orchestration skill when the task spans code, tests, and verification, and route framework mechanics through exactly one matching skill:
    - `mcaf-dotnet-xunit`
    - `mcaf-dotnet-tunit`
    - `mcaf-dotnet-mstest`
 5. Prefer integration, API, or UI coverage when behaviour crosses boundaries.
 6. Prove the user flow or caller-visible system flow, not just internal details.
 7. Add a regression test for every bug that can be captured reliably.
-8. Use deeper testing references only when the repo’s current strategy is unclear.
+8. If the stack is .NET and production code changed, do not stop at tests only. Finish with the repo-defined format and analyzer pass as well.
+9. Use deeper testing references only when the repo’s current strategy is unclear.
 
 ## Deliver
 
@@ -52,12 +53,14 @@ compatibility: "Requires the repository’s build and test tooling; uses command
 - tests assert meaningful outcomes, not implementation trivia
 - coverage expectations from `AGENTS.md` are met, or the exception is documented
 - the verification sequence matches `AGENTS.md`
+- for .NET changes, tests were not treated as a substitute for formatting or analyzer gates
 - broader suites are run after there is something real to verify
 
 ## Load References
 
 - read `references/test-planning.md` first
 - open `references/automated-testing.md` for deeper strategy and trade-offs
+- for broader .NET implementation flow, use `mcaf-dotnet`
 - for .NET framework-specific mechanics, use exactly one of `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
 
 ## Example Requests

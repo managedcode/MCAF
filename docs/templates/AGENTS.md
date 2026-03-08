@@ -94,9 +94,15 @@ Do not paste the whole framework catalog here.
 
 If the stack is `.NET`, this usually includes:
 
+- `mcaf-dotnet`
+- `mcaf-dotnet-features`
 - `mcaf-testing`
 - exactly one of `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
 - `mcaf-dotnet-quality-ci`
+- `mcaf-dotnet-complexity`
+- `mcaf-solid-maintainability`
+- `mcaf-architecture-overview` if the repo keeps a maintained architecture map
+- `mcaf-ci-cd`
 
 ## Rules to Follow (Mandatory)
 
@@ -113,6 +119,7 @@ If the stack is `.NET`, also document:
 - whether tests run on `VSTest` or `Microsoft.Testing.Platform`
 - whether `format` is `dotnet format --verify-no-changes` or a checked-in wrapper over it
 - whether coverage uses a VSTest collector, `coverlet.MTP`, or an MSTest SDK extension
+- explicit `LangVersion` only when the repo intentionally differs from the SDK default
 
 ### Project AGENTS Policy
 
@@ -194,6 +201,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Repository or module coverage must not decrease without an explicit written exception.
 - Coverage is for finding gaps, not gaming a number. Coverage numbers do not replace scenario coverage or user-flow verification.
 - If the stack is `.NET`, document the active framework and runner model explicitly so agents do not mix VSTest and Microsoft.Testing.Platform assumptions.
+- If the stack is `.NET`, after changing production code run the repo-defined quality pass: format, build, analyze, focused tests, broader tests, coverage, and any configured extra gates such as architecture, security, or mutation checks.
 
 ### Code and Design
 

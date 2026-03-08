@@ -81,6 +81,8 @@ This keeps install deterministic without requiring manifests or archives.
 
 For a .NET repository, the usual baseline is:
 
+- `mcaf-dotnet`
+- `mcaf-dotnet-features`
 - `mcaf-solution-governance`
 - `mcaf-testing`
 - exactly one of:
@@ -88,7 +90,9 @@ For a .NET repository, the usual baseline is:
   - `mcaf-dotnet-tunit`
   - `mcaf-dotnet-mstest`
 - `mcaf-dotnet-quality-ci`
+- `mcaf-dotnet-complexity`
 - `mcaf-solid-maintainability`
+- `mcaf-architecture-overview`
 - `mcaf-ci-cd`
 
 For .NET repositories, also make these repo-native artifacts explicit:
@@ -96,7 +100,15 @@ For .NET repositories, also make these repo-native artifacts explicit:
 - a repo-root `.editorconfig` as the analyzer and formatting source of truth
 - project-specific nested `.editorconfig` files when a subtree has a clear different purpose or policy
 - `Directory.Build.props` or project files for bulk analyzer and runner settings
+- target `TFM` and explicit `LangVersion` only when the repo intentionally differs from the SDK default
 - whether the solution uses `VSTest` or `Microsoft.Testing.Platform`
+
+The intended flow is:
+
+- `mcaf-dotnet` is the entry skill for normal C# or .NET work
+- `mcaf-dotnet-features` decides which modern language features are safe to use, especially for C# 13 on `.NET 9` and C# 14 on `.NET 10`
+- the framework-specific test skill handles xUnit, TUnit, or MSTest mechanics
+- after code changes, agents run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
 
 Add tool-specific .NET skills only when the repo standardizes on them:
 

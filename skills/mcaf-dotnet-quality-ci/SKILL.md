@@ -53,20 +53,29 @@ compatibility: "Requires a .NET solution or project; may update `AGENTS.md`, CI 
    - which command analyzes
    - which command measures coverage
    - which runner model the tests use
-6. Route tool-specific setup through dedicated skills where possible:
+6. After any .NET code change, the repo's quality pass must be runnable by agents:
+   - format
+   - build
+   - analyze
+   - focused tests
+   - broader tests
+   - coverage and report generation when configured
+   - extra configured gates only when the repo actually enabled them
+7. Route tool-specific setup through dedicated skills where possible:
    - `mcaf-dotnet-format`
    - `mcaf-dotnet-code-analysis`
    - `mcaf-dotnet-analyzer-config`
    - analyzer-pack skills such as `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-roslynator`, and `mcaf-dotnet-meziantou-analyzer`
    - coverage/reporting skills such as `mcaf-dotnet-coverlet` and `mcaf-dotnet-reportgenerator`
    - architecture/security skills such as `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, `mcaf-dotnet-codeql`, and `mcaf-dotnet-semgrep`
-7. Avoid overlapping tools with conflicting ownership. If you add an opinionated formatter, define whether it replaces or complements `dotnet format`.
+8. Avoid overlapping tools with conflicting ownership. If you add an opinionated formatter, define whether it replaces or complements `dotnet format`.
 
 ## Deliver
 
 - a documented .NET quality baseline
 - CI commands that are explicit and reproducible
 - analyzer and coverage choices that match the repo's runner model
+- a documented post-change quality pass for agents and CI
 - tool selection that stays open-source and free by default, with caveats called out explicitly
 
 ## Validate
@@ -75,6 +84,7 @@ compatibility: "Requires a .NET solution or project; may update `AGENTS.md`, CI 
 - formatting, analyzer, and coverage commands are runner-compatible
 - added tools cover distinct gaps instead of duplicating each other
 - complexity and architecture policy are explicit, not implied
+- .NET code changes are expected to pass more than tests alone when quality gates are configured
 - any licensing or hosting caveat is documented before the tool becomes a default gate
 
 ## Load References
