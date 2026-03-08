@@ -414,9 +414,10 @@ hr {
 }
 
 .template-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px 20px;
   padding: 16px 20px;
   background: #F5F3F7;
   border-radius: 8px;
@@ -424,18 +425,32 @@ hr {
 }
 
 .template-name {
+  display: block;
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 15px;
   font-weight: 500;
   color: #27232A;
 }
 
+.template-item > p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #5A5565;
+}
+
 .template-links {
   display: flex;
-  gap: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-self: start;
+  grid-column: 3;
 }
 
 .template-links a {
+  display: inline-block;
+  white-space: nowrap;
   font-size: 14px;
   color: #785D8F;
   text-decoration: none;
@@ -718,6 +733,10 @@ body.dark .template-item {
 
 body.dark .template-name {
   color: #e0e0e0;
+}
+
+body.dark .template-item > p {
+  color: #b8b2c1;
 }
 
 body.dark .template-links a {
@@ -1020,6 +1039,16 @@ body.dark details.faq-item .faq-answer code {
 
   .footer-container {
     padding: 24px;
+  }
+
+  .template-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .template-links {
+    grid-column: 1;
+    justify-content: flex-start;
   }
 }
 
