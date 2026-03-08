@@ -6,11 +6,11 @@ Branch naming should make intent obvious at a glance.
 
 Use:
 
-- `feature/<short-name>`
-- `fix/<short-name>`
-- `chore/<short-name>`
-- `docs/<short-name>`
-- `release/<version>` when the repo uses release branches
+- `feature/short-name`
+- `fix/short-name`
+- `chore/short-name`
+- `docs/short-name`
+- `release/version` when the repo uses release branches
 
 ## Rules
 

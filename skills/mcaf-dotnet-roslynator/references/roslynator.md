@@ -61,12 +61,12 @@ roslynator analyze MySolution.sln --severity-level warning
 
 Useful scoping flags from the CLI:
 
-- `--projects <name>`
-- `--ignored-projects <name>`
-- `--include <glob>`
-- `--exclude <glob>`
-- `--verbosity <level>`
-- `--properties <NAME=VALUE>`
+- `--projects PROJECT_NAME`
+- `--ignored-projects PROJECT_NAME`
+- `--include GLOB`
+- `--exclude GLOB`
+- `--verbosity LEVEL`
+- `--properties NAME=VALUE`
 
 ## CI Fit
 

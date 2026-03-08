@@ -51,7 +51,7 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
 
 ## Deliver
 
-- `docs/ADR/ADR-XXXX-<short-title>.md`
+- `docs/ADR/ADR-XXXX-short-title.md`
 - linked updates to architecture docs when the decision changes boundaries
 
 ## Validate

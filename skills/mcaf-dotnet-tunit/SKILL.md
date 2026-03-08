@@ -39,7 +39,7 @@ compatibility: "Requires a .NET solution or project with TUnit packages; respect
 ## Workflow
 
 1. Confirm the project really uses TUnit and not a different MTP-based framework.
-2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test <project-or-solution>`.
+2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test PROJECT_OR_SOLUTION`.
 3. Keep the TUnit execution model intact:
    - tests are source-generated at build time
    - tests run in parallel by default
@@ -55,13 +55,13 @@ If `TUnit` is requested but not configured yet:
 1. Detect current state:
    - `rg -n "TUnit|Microsoft\\.Testing\\.Platform" -g '*.csproj' -g 'Directory.Build.*' .`
 2. Add the minimal package set to the test project:
-   - `dotnet add <test-project>.csproj package TUnit`
-   - `dotnet add <test-project>.csproj package Microsoft.NET.Test.Sdk`
+   - `dotnet add TEST_PROJECT.csproj package TUnit`
+   - `dotnet add TEST_PROJECT.csproj package Microsoft.NET.Test.Sdk`
 3. Keep the runner model explicit in `AGENTS.md` and CI:
    - record that the repo uses Microsoft.Testing.Platform-compatible execution for this test project
-   - record the exact `dotnet test <test-project>.csproj` command the repo will use
+   - record the exact `dotnet test TEST_PROJECT.csproj` command the repo will use
 4. Add one small executable test using `[Test]`.
-5. Run `dotnet test <test-project>.csproj` and return `status: configured` or `status: improved`.
+5. Run `dotnet test TEST_PROJECT.csproj` and return `status: configured` or `status: improved`.
 6. If the repo intentionally standardizes on xUnit or MSTest, return `status: not_applicable` unless migration is explicitly requested.
 
 ## Deliver

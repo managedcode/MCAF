@@ -65,13 +65,13 @@ dotnet-counters ps
 Monitor runtime counters:
 
 ```bash
-dotnet-counters monitor --process-id <pid> --counters System.Runtime
+dotnet-counters monitor --process-id PID --counters System.Runtime
 ```
 
 Export counters for later comparison:
 
 ```bash
-dotnet-counters collect --process-id <pid> --counters System.Runtime --format json -o counters.json
+dotnet-counters collect --process-id PID --counters System.Runtime --format json -o counters.json
 ```
 
 For startup diagnostics:
@@ -93,13 +93,13 @@ dotnet-trace ps
 Capture a focused general-purpose trace:
 
 ```bash
-dotnet-trace collect --process-id <pid> --profile dotnet-common,dotnet-sampled-thread-time -o trace.nettrace
+dotnet-trace collect --process-id PID --profile dotnet-common,dotnet-sampled-thread-time -o trace.nettrace
 ```
 
 Capture GC-heavy detail:
 
 ```bash
-dotnet-trace collect --process-id <pid> --profile gc-verbose -o gc.nettrace
+dotnet-trace collect --process-id PID --profile gc-verbose -o gc.nettrace
 ```
 
 Trace startup directly:
@@ -143,7 +143,7 @@ dotnet-gcdump ps
 Capture a heap snapshot:
 
 ```bash
-dotnet-gcdump collect --process-id <pid> --output heap.gcdump
+dotnet-gcdump collect --process-id PID --output heap.gcdump
 ```
 
 Get a heap summary report:

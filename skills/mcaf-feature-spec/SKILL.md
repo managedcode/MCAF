@@ -51,7 +51,7 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 ## Deliver
 
-- `docs/Features/<feature>.md`
+- `docs/Features/feature-name.md`
 - a feature spec that engineers and agents can implement directly
 
 ## Validate

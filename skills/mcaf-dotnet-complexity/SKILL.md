@@ -57,7 +57,7 @@ If complexity thresholds are not configured yet:
 2. Add severity entries for `CA1502`, `CA1505`, `CA1506`, and `CA1501` in root `.editorconfig`.
 3. Add checked-in `CodeMetricsConfig.txt` and include it as `AdditionalFiles` in project props.
 4. Keep maintainability limits aligned with `AGENTS.md`.
-5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` and return `status: configured` or `status: improved`.
 6. If policy relies only on `AGENTS.md` limits with no analyzer gate by design, return `status: not_applicable`.
 
 

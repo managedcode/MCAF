@@ -62,13 +62,13 @@ If `Roslynator` is not configured yet:
    - `dotnet tool list --global`
    - `command -v roslynator`
 2. Choose the install path deliberately:
-   - analyzer package: `dotnet add <project>.csproj package Roslynator.Analyzers`
+   - analyzer package: `dotnet add PROJECT.csproj package Roslynator.Analyzers`
    - optional CLI: `dotnet new tool-manifest` (if missing) and `dotnet tool install roslynator.dotnet.cli`
 3. Configure ownership in root `.editorconfig` so Roslynator does not fight SDK analyzers, StyleCop, or Meziantou.
 4. If the CLI is adopted, add exact commands in `AGENTS.md` and CI, such as:
-   - `dotnet tool run roslynator analyze <solution-or-project>`
-   - `dotnet tool run roslynator fix <solution-or-project>`
-5. Run `dotnet build <solution-or-project>` and the selected Roslynator command, then return `status: configured` or `status: improved`.
+   - `dotnet tool run roslynator analyze SOLUTION_OR_PROJECT`
+   - `dotnet tool run roslynator fix SOLUTION_OR_PROJECT`
+5. Run `dotnet build SOLUTION_OR_PROJECT` and the selected Roslynator command, then return `status: configured` or `status: improved`.
 6. If the repo wants only the current analyzer baseline and no Roslynator-specific CLI workflow, return `status: not_applicable`.
 
 ## Deliver

@@ -42,10 +42,10 @@ compatibility: "Requires a .NET solution or project with MSTest packages; respec
    - `MSTest.Sdk` project SDK
    - `MSTest` meta-package
    - legacy package set with explicit `Microsoft.NET.Test.Sdk`
-2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test <project-or-solution>`.
+2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test PROJECT_OR_SOLUTION`.
 3. Keep the runner model consistent:
    - `MSTest.Sdk` defaults to the MSTest runner on Microsoft.Testing.Platform
-   - VSTest is opt-in with `<UseVSTest>true</UseVSTest>` or legacy package choices
+   - VSTest is opt-in with `UseVSTest=true` or legacy package choices
    - do not pass VSTest-only switches or assume legacy `.runsettings` behavior on Microsoft.Testing.Platform jobs
 4. Prefer `[DataRow]` or `DynamicData` for stable data-driven coverage. Keep test lifecycle hooks minimal and deterministic.
 5. Keep MSTest analyzers enabled and fix findings instead of muting them casually.
@@ -59,9 +59,9 @@ If MSTest is requested but not configured:
    - `rg -n "MSTest\\.Sdk|PackageReference Include=\"MSTest\"|xunit|TUnit|UseVSTest|TestingPlatformDotnetTestSupport" -g '*.csproj' .`
 2. If the repo currently uses `xUnit` or `TUnit`, do not auto-migrate. Return `status: not_applicable` unless migration is explicitly requested.
 3. For explicit MSTest adoption, add package(s) to target test project:
-   - `dotnet add <test-project>.csproj package MSTest`
+   - `dotnet add TEST_PROJECT.csproj package MSTest`
 4. Document runner model (`MSTest.Sdk` default MTP vs `UseVSTest`) in `AGENTS.md`.
-5. Run `dotnet test <test-project>.csproj` and return `status: configured` or `status: improved`.
+5. Run `dotnet test TEST_PROJECT.csproj` and return `status: configured` or `status: improved`.
 
 
 ## Deliver

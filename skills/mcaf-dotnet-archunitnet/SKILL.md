@@ -46,11 +46,11 @@ If `ArchUnitNET` is not configured yet:
 1. Detect existing setup:
    - `rg -n "TngTech\\.ArchUnitNET" -g '*.csproj' .`
 2. Add packages to the architecture test project:
-   - `dotnet add <test-project>.csproj package TngTech.ArchUnitNET`
+   - `dotnet add TEST_PROJECT.csproj package TngTech.ArchUnitNET`
    - add one framework bridge package: `TngTech.ArchUnitNET.xUnit`, `TngTech.ArchUnitNET.xUnitV3`, `TngTech.ArchUnitNET.MSTestV2`, or `TngTech.ArchUnitNET.TUnit`
 3. Add at least one durable boundary rule test.
 4. Wire architecture tests into the standard `test` command in `AGENTS.md` and CI.
-5. Run `dotnet test <test-project>.csproj` and return `status: configured` or `status: improved`.
+5. Run `dotnet test TEST_PROJECT.csproj` and return `status: configured` or `status: improved`.
 6. If `NetArchTest` already covers the same boundary policy and no gap exists, return `status: not_applicable`.
 
 

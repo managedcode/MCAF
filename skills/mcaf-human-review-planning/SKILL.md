@@ -62,7 +62,7 @@ compatibility: "Requires repository read access; may write a `HUMAN_REVIEW_PLAN.
    - prioritized review flow
    - prioritized files or modules to inspect
 7. Present both outputs in chat.
-8. If the user asks for a durable artifact, save the plan to the exact docs path they requested; otherwise use `docs/<area>/HUMAN_REVIEW_PLAN.md`.
+8. If the user asks for a durable artifact, save the plan to the exact docs path they requested; otherwise use `docs/AREA/HUMAN_REVIEW_PLAN.md`.
 
 ## Deliver
 

@@ -29,5 +29,5 @@ For each entry include:
 When saving a plan, use:
 
 - the exact docs path requested by the user when one is provided
-- `docs/<area>/HUMAN_REVIEW_PLAN.md` when the reviewed area has its own docs folder
+- `docs/AREA/HUMAN_REVIEW_PLAN.md` when the reviewed area has its own docs folder
 - otherwise the nearest reasonable `docs/` location for that bounded context

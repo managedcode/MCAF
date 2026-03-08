@@ -38,7 +38,7 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 ## Workflow
 
 1. Prefer the SDK-provided `dotnet format` command instead of inventing custom format scripts.
-2. Start with verify mode in CI: `dotnet format <target> --verify-no-changes`.
+2. Start with verify mode in CI: `dotnet format TARGET --verify-no-changes`.
 3. Use narrower subcommands only when the repo needs them:
    - `whitespace`
    - `style`
@@ -56,7 +56,7 @@ If `dotnet format` is requested but not available yet:
 2. Treat `dotnet format` as SDK-provided, not as a separate repo-local tool by default.
 3. If the command is missing, install or upgrade to a supported .NET SDK, then recheck `dotnet format --version`.
 4. Add explicit local and CI commands to `AGENTS.md`, usually:
-   - `dotnet format <target> --verify-no-changes`
+   - `dotnet format TARGET --verify-no-changes`
 5. Run the chosen command once and return `status: configured` or `status: improved`.
 6. If the repo intentionally uses only `CSharpier` for formatting ownership, return `status: not_applicable`.
 

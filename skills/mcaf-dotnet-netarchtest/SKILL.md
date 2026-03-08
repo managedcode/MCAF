@@ -49,10 +49,10 @@ If `NetArchTest.Rules` is not configured yet:
 1. Detect existing setup:
    - `rg -n "NetArchTest\\.Rules" -g '*.csproj' .`
 2. Add the package to the architecture test project:
-   - `dotnet add <test-project>.csproj package NetArchTest.Rules`
+   - `dotnet add TEST_PROJECT.csproj package NetArchTest.Rules`
 3. Add at least one executable boundary rule test.
 4. Wire architecture tests into the standard `test` command in `AGENTS.md` and CI.
-5. Run `dotnet test <test-project>.csproj` and return `status: configured` or `status: improved`.
+5. Run `dotnet test TEST_PROJECT.csproj` and return `status: configured` or `status: improved`.
 6. If richer modeling is required and `ArchUnitNET` is chosen as the standard, return `status: not_applicable`.
 
 

@@ -43,7 +43,7 @@ compatibility: "Requires a .NET solution or project with xUnit packages; respect
    - `xunit.v3` means v3
    - `xunit.runner.visualstudio` plus `Microsoft.NET.Test.Sdk` usually means VSTest compatibility is enabled
    - `TestingPlatformDotnetTestSupport` or `UseMicrosoftTestingPlatformRunner` means Microsoft.Testing.Platform is in play
-2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test <project-or-solution>`.
+2. Read the repo's real `test` command from `AGENTS.md`. If the repo has no explicit command yet, start with `dotnet test PROJECT_OR_SOLUTION`.
 3. Keep the runner model consistent:
    - xUnit v2 usually runs through VSTest
    - xUnit v3 can run as a standalone executable with `dotnet run`
@@ -65,10 +65,10 @@ If xUnit is requested but not configured:
    - `rg -n "xunit(\\.v3)?|xunit\\.runner\\.visualstudio|TestingPlatformDotnetTestSupport|UseMicrosoftTestingPlatformRunner|TUnit|MSTest" -g '*.csproj' .`
 2. If the repo currently uses `TUnit` or `MSTest`, do not auto-migrate. Return `status: not_applicable` unless migration is explicitly requested.
 3. For explicit xUnit adoption, add packages to the target test project:
-   - `dotnet add <test-project>.csproj package xunit.v3`
-   - optional VSTest bridge: `dotnet add <test-project>.csproj package xunit.runner.visualstudio`
+   - `dotnet add TEST_PROJECT.csproj package xunit.v3`
+   - optional VSTest bridge: `dotnet add TEST_PROJECT.csproj package xunit.runner.visualstudio`
 4. Add repo test commands and runner notes to `AGENTS.md`.
-5. Run `dotnet test <test-project>.csproj` or repo-defined xUnit command and return `status: configured` or `status: improved`.
+5. Run `dotnet test TEST_PROJECT.csproj` or repo-defined xUnit command and return `status: configured` or `status: improved`.
 
 
 ## Deliver

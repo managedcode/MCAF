@@ -61,7 +61,7 @@ If first-party .NET code analysis is requested but not configured yet:
    - `AnalysisMode` when needed
    - warning policy such as `TreatWarningsAsErrors`
 4. Keep rule-level severity in the repo-root `.editorconfig`.
-5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` and return `status: configured` or `status: improved`.
 6. If the repo intentionally defers analyzer policy to another documented build layer, return `status: not_applicable`.
 
 ## Deliver

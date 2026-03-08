@@ -74,9 +74,9 @@ If official .NET profiling tools are not available yet:
    - `dotnet-trace --version`
    - `dotnet-gcdump --version`
 4. Record exact profiling commands in `AGENTS.md`, for example:
-   - `dotnet-counters monitor --process-id <pid> --counters System.Runtime`
-   - `dotnet-trace collect --process-id <pid> --profile dotnet-common,dotnet-sampled-thread-time -o trace.nettrace`
-   - `dotnet-gcdump collect --process-id <pid> --output heap.gcdump`
+   - `dotnet-counters monitor --process-id PID --counters System.Runtime`
+   - `dotnet-trace collect --process-id PID --profile dotnet-common,dotnet-sampled-thread-time -o trace.nettrace`
+   - `dotnet-gcdump collect --process-id PID --output heap.gcdump`
 5. Run one bounded command and return `status: configured` or `status: improved`.
 6. If the repo intentionally standardizes on another profiling stack and does not want these tools, return `status: not_applicable`.
 

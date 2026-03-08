@@ -55,13 +55,13 @@ If coverage is not configured yet:
    - `dotnet tool list --global`
    - `command -v coverlet`
 2. Install exactly one driver path:
-   - VSTest collector: `dotnet add <test-project>.csproj package coverlet.collector`
-   - MSBuild driver: `dotnet add <test-project>.csproj package coverlet.msbuild`
+   - VSTest collector: `dotnet add TEST_PROJECT.csproj package coverlet.collector`
+   - MSBuild driver: `dotnet add TEST_PROJECT.csproj package coverlet.msbuild`
    - Console tool: `dotnet new tool-manifest` (if missing) and `dotnet tool install coverlet.console`
 3. Record one concrete local and CI command in `AGENTS.md`:
-   - collector: `dotnet test <test-project>.csproj --collect:"XPlat Code Coverage"`
-   - msbuild: `dotnet test <test-project>.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura`
-   - console: `dotnet tool run coverlet <test-assembly.dll> --target "dotnet" --targetargs "test <test-project>.csproj --no-build"`
+   - collector: `dotnet test TEST_PROJECT.csproj --collect:"XPlat Code Coverage"`
+   - msbuild: `dotnet test TEST_PROJECT.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura`
+   - console: `dotnet tool run coverlet TEST_ASSEMBLY.dll --target "dotnet" --targetargs "test TEST_PROJECT.csproj --no-build"`
 4. Run the chosen command once and return `status: configured` or `status: improved`.
 5. If another coverage engine already owns coverage for this repo, return `status: not_applicable`.
 

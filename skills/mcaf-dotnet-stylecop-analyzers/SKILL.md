@@ -50,10 +50,10 @@ If `StyleCop.Analyzers` is not configured yet:
 1. Detect current state:
    - `rg -n "StyleCop\\.Analyzers|stylecop\\.json" -g '*.csproj' -g 'stylecop.json' .`
 2. Add package to the intended scope:
-   - `dotnet add <project>.csproj package StyleCop.Analyzers`
+   - `dotnet add PROJECT.csproj package StyleCop.Analyzers`
 3. Keep severity in root `.editorconfig` and use `stylecop.json` only for StyleCop-specific behavior.
 4. Prevent overlap with existing analyzer packs by defining ownership.
-5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` and return `status: configured` or `status: improved`.
 6. If the repo intentionally uses SDK analyzers only, return `status: not_applicable`.
 
 

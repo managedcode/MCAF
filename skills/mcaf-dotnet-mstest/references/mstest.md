@@ -24,7 +24,7 @@ dotnet add package MSTest
 Before adding packages, check which MSTest model the repo already uses:
 
 ```bash
-rg -n "MSTest\\.Sdk|<UseVSTest>|PackageReference Include=\"MSTest\"|Microsoft\\.NET\\.Test\\.Sdk|TestingPlatformDotnetTestSupport" -g '*.csproj' .
+rg -n "MSTest\\.Sdk|UseVSTest|PackageReference Include=\"MSTest\"|Microsoft\\.NET\\.Test\\.Sdk|TestingPlatformDotnetTestSupport" -g '*.csproj' .
 ```
 
 Use this reference when the repository already chose MSTest and you need framework-specific commands, package checks, or CI guardrails.
@@ -34,13 +34,13 @@ Use this reference when the repository already chose MSTest and you need framewo
 Use the project file as the source of truth:
 
 ```bash
-rg -n "MSTest\\.Sdk|<UseVSTest>|PackageReference Include=\"MSTest\"|Microsoft\\.NET\\.Test\\.Sdk|TestingPlatformDotnetTestSupport" -g '*.csproj' .
+rg -n "MSTest\\.Sdk|UseVSTest|PackageReference Include=\"MSTest\"|Microsoft\\.NET\\.Test\\.Sdk|TestingPlatformDotnetTestSupport" -g '*.csproj' .
 ```
 
 Typical markers:
 
 - `MSTest.Sdk`: modern MSTest project SDK, Microsoft.Testing.Platform by default
-- `<UseVSTest>true</UseVSTest>`: explicit VSTest fallback
+- `UseVSTest=true`: explicit VSTest fallback
 - `MSTest` meta-package: framework, adapter, analyzers, and runner-related packages packaged together
 
 ## Common Commands

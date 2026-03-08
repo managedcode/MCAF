@@ -59,11 +59,11 @@ If the requested C# feature depends on SDK or language support the repo does not
 
 1. Detect current state:
    - `dotnet --list-sdks`
-   - `rg -n "<TargetFramework>|<LangVersion>|<TargetFrameworks>" -g '*.csproj' -g 'Directory.Build.*' .`
+   - `rg -n "TargetFramework|LangVersion|TargetFrameworks" -g '*.csproj' -g 'Directory.Build.*' .`
 2. Confirm whether the repo wants to stay on the current stable language level or intentionally upgrade.
 3. If the feature requires a newer supported SDK or target framework, upgrade the repo toolchain deliberately instead of relying on the local machine by accident.
 4. If the repo needs explicit `LangVersion`, record it in project or shared MSBuild config.
-5. Run `dotnet build <solution-or-project>` after the feature or toolchain change and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` after the feature or toolchain change and return `status: configured` or `status: improved`.
 6. If the repo intentionally stays below the required language level, return `status: not_applicable`.
 
 ## Deliver

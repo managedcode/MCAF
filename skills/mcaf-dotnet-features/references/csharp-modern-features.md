@@ -8,13 +8,13 @@ Use this reference when modernizing C# code without breaking the repo's target f
 - `.NET 9` maps to `C# 13`
 - `.NET 10` maps to `C# 14`
 - newer language versions than the target framework supports are not supported
-- do not set `<LangVersion>latest</LangVersion>` because it makes builds machine-dependent
-- use `<LangVersion>preview</LangVersion>` only when the repo intentionally opts into preview
+- do not set `LangVersion=latest` because it makes builds machine-dependent
+- use `LangVersion=preview` only when the repo intentionally opts into preview
 
 Useful checks:
 
 ```bash
-rg -n "<TargetFramework|<TargetFrameworks|<LangVersion" -g '*.csproj' -g 'Directory.Build.*' .
+rg -n "TargetFramework|TargetFrameworks|LangVersion" -g '*.csproj' -g 'Directory.Build.*' .
 ```
 
 If the repo's current language version is unclear, the compiler can reveal it:

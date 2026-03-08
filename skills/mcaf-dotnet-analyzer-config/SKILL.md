@@ -58,7 +58,7 @@ If analyzer configuration is requested but not structured yet:
 2. Create or normalize one repo-root `.editorconfig` with `root = true`.
 3. Move rule severity into `.editorconfig` and keep bulk analyzer switches in project or MSBuild config.
 4. Add nested `.editorconfig` files only when a subtree really needs different scoped policy.
-5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` and return `status: configured` or `status: improved`.
 6. If the repo intentionally uses another documented analyzer-config ownership model, return `status: not_applicable`.
 
 ## Deliver

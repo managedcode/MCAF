@@ -41,7 +41,7 @@ compatibility: "Requires a repository with .NET source files or a Git checkout; 
 1. Choose the counting mode deliberately:
    - `--vcs=git` for repo-respecting counts
    - path-based counting for bounded folders
-   - `--git --diff <base> <head>` for change deltas
+   - `--git --diff BASE HEAD` for change deltas
 2. Prefer `.NET`-relevant views first:
    - C# footprint
    - test versus production footprint

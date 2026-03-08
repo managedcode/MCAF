@@ -47,10 +47,10 @@ If `Meziantou.Analyzer` is not configured yet:
 1. Detect current state:
    - `rg -n "Meziantou\\.Analyzer" -g '*.csproj' .`
 2. Add the package to the intended scope (project-level or shared props strategy):
-   - `dotnet add <project>.csproj package Meziantou.Analyzer`
+   - `dotnet add PROJECT.csproj package Meziantou.Analyzer`
 3. Set severity in root `.editorconfig` for the enabled `MAxxxx` rules.
 4. Keep overlap with SDK analyzers and Roslynator explicit to avoid duplicate noise.
-5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+5. Run `dotnet build SOLUTION_OR_PROJECT` and return `status: configured` or `status: improved`.
 6. If the repo intentionally keeps a smaller analyzer surface, return `status: not_applicable`.
 
 
