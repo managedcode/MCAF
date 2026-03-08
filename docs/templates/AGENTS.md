@@ -167,14 +167,22 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - current state
   - required change
   - constraints and risks
-- For non-trivial work, keep a written implementation plan in the feature doc, ADR, issue, or PR description.
+- For non-trivial work, create a root-level `<slug>.plan.md` file before making code or doc changes.
+- Keep the `<slug>.plan.md` file as the working plan for the task until completion.
+- The plan file MUST contain:
+  - task goal and scope
+  - constraints and risks
+  - ordered implementation steps
+  - a checklist with explicit done criteria for each step
+  - ordered final validation skills and commands, with reason for each
 - Use the Ralph Loop for every non-trivial task:
-  - plan in detail before coding or document edits
-  - include ordered final validation skills in the plan, with reason for each skill
+  - plan in detail in `<slug>.plan.md` before coding or document edits
+  - include ordered final validation skills in the plan file, with reason for each skill
   - require each selected skill to produce a concrete action, artifact, or verification outcome
   - execute one planned step at a time
+  - mark checklist items in `<slug>.plan.md` as work progresses
   - review findings, apply fixes, and rerun relevant verification
-  - update the plan and repeat until done criteria are met or an explicit exception is documented
+  - update the plan file and repeat until done criteria are met or an explicit exception is documented
 - Implement code and tests together.
 - Run verification in layers:
   - changed tests
