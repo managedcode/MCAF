@@ -54,7 +54,7 @@ compatibility: "Requires a .NET solution or project; respects root and local `AG
    - `mcaf-dotnet-quality-ci`
    - `mcaf-dotnet-analyzer-config`
    - `mcaf-dotnet-complexity`
-   - tool-specific skills such as `mcaf-dotnet-format`, `mcaf-dotnet-roslynator`, `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-meziantou-analyzer`, `mcaf-dotnet-coverlet`, `mcaf-dotnet-reportgenerator`, `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, `mcaf-dotnet-semgrep`, `mcaf-dotnet-codeql`, `mcaf-dotnet-csharpier`, and `mcaf-dotnet-stryker`
+   - tool-specific skills such as `mcaf-dotnet-format`, `mcaf-dotnet-roslynator`, `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-meziantou-analyzer`, `mcaf-dotnet-coverlet`, `mcaf-dotnet-reportgenerator`, `mcaf-dotnet-resharper-clt`, `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, `mcaf-dotnet-semgrep`, `mcaf-dotnet-codeql`, `mcaf-dotnet-csharpier`, and `mcaf-dotnet-stryker`
 4. Route design and structure through:
    - `mcaf-solid-maintainability` for SOLID, SRP, cohesion, and maintainability limits
    - `mcaf-architecture-overview` when system or module boundaries, contracts, or architecture docs need work
@@ -67,7 +67,7 @@ compatibility: "Requires a .NET solution or project; respects root and local `AG
    - focused `test`
    - broader `test`
    - `coverage` and report generation when configured
-   - extra configured gates such as Roslynator, StyleCop, Meziantou, NetArchTest, ArchUnitNET, Semgrep, CodeQL, CSharpier, or Stryker
+   - extra configured gates such as Roslynator, StyleCop, Meziantou, ReSharper CLT, NetArchTest, ArchUnitNET, Semgrep, CodeQL, CSharpier, or Stryker
 7. If the repo does not define these commands clearly, tighten `AGENTS.md` before continuing so later agents stop guessing.
 8. Do not introduce preview language features unless the repo explicitly opts into preview in project or MSBuild settings.
 
