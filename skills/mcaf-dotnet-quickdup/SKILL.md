@@ -64,17 +64,20 @@ If `QuickDup` is not available yet:
 1. Detect current state:
    - `command -v quickdup`
    - `go version`
-   - `rg --files -g '.quickdup/ignore.json'`
+   - `rg --files -g '.quickdup/ignore.json' -g '.quickdup/results.json'`
 2. Choose the install path deliberately:
    - preferred when Go is available: `go install github.com/asynkron/Asynkron.QuickDup/cmd/quickdup@latest`
-   - macOS/Linux fallback: `curl -sSL https://raw.githubusercontent.com/asynkron/Asynkron.QuickDup/main/install.sh | bash`
-3. Record exact duplication commands in `AGENTS.md`, for example:
+   - official macOS/Linux fallback: `curl -sSL https://raw.githubusercontent.com/asynkron/Asynkron.QuickDup/main/install.sh | bash`
+   - official Windows fallback: `iwr -useb https://raw.githubusercontent.com/asynkron/Asynkron.QuickDup/main/install.ps1 | iex`
+3. Verify the installed CLI resolves correctly:
+   - `quickdup -h`
+4. Record exact duplication commands in `AGENTS.md`, for example:
    - `quickdup -path . -ext .cs -exclude "bin/*,obj/*,*.g.cs,*.generated.cs,*.Designer.cs"`
    - `quickdup -path src -ext .cs -top 20`
    - `quickdup -path . -ext .cs -select 0..5`
-4. If the repo wants stable suppressions, create `.quickdup/ignore.json` and review each ignored pattern intentionally.
-5. Run one bounded scan and return `status: configured` or `status: improved`.
-6. If the repo already standardizes on another clone detector and does not want `QuickDup`, return `status: not_applicable`.
+5. If the repo wants stable suppressions, create `.quickdup/ignore.json` and review each ignored pattern intentionally.
+6. Run one bounded scan and return `status: configured` or `status: improved`.
+7. If the repo already standardizes on another clone detector and does not want `QuickDup`, return `status: not_applicable`.
 
 ## Deliver
 

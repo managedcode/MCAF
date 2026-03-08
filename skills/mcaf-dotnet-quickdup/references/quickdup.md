@@ -4,6 +4,34 @@
 
 `QuickDup` is a fast clone detector that surfaces structural duplication candidates. Treat its output as a review queue, not as proof that two blocks should always be merged.
 
+## Installation Paths
+
+Use the official upstream install paths and keep the chosen command in `AGENTS.md`:
+
+- preferred when Go is available:
+
+```bash
+go install github.com/asynkron/Asynkron.QuickDup/cmd/quickdup@latest
+```
+
+- official macOS/Linux fallback:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/asynkron/Asynkron.QuickDup/main/install.sh | bash
+```
+
+- official Windows fallback:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/asynkron/Asynkron.QuickDup/main/install.ps1 | iex
+```
+
+Verify the CLI after installation:
+
+```bash
+quickdup -h
+```
+
 ## Good Default Scan Commands
 
 Scan the whole repository:
