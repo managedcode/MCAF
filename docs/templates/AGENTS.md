@@ -171,8 +171,8 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Keep the `<slug>.plan.md` file as the working plan for the task until completion.
 - The plan file MUST contain:
   - task goal and scope
+  - a detailed implementation plan with detailed ordered steps
   - constraints and risks
-  - ordered implementation steps
   - a checklist with explicit done criteria for each step
   - ordered final validation skills and commands, with reason for each
 - Use the Ralph Loop for every non-trivial task:
