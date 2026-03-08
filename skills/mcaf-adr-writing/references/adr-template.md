@@ -141,6 +141,16 @@ This section is mandatory: describe how to prove the decision (tests + commands)
 - Data and reset strategy (seed data, migrations, rollback plan):  
 - External dependencies (real / sandbox / test environment required):
 
+### Testing methodology
+
+- Core flows and invariants that MUST be proven:  
+- Positive flows that MUST pass:  
+- Negative / forbidden flows that MUST be rejected or fail safely:  
+- Edge / boundary / unexpected flows that MUST be covered:  
+- Required realism level (real dependencies, contracts, environments):  
+- Coverage baseline requirement (must stay at least at the pre-change level or improve):  
+- Pass criteria for considering the ADR implementation complete (all relevant tests green, new tests added, verification complete):
+
 ### Test commands
 
 - build: (paste from `AGENTS.md`)
@@ -159,6 +169,7 @@ This section is mandatory: describe how to prove the decision (tests + commands)
 - Regression suites to run (must stay green):  
 - Static analysis (tools/configs that must pass):  
 - Monitoring during rollout (logs/metrics/alerts to watch):
+- Coverage comparison against baseline:
 
 ---
 
@@ -184,4 +195,7 @@ This section is mandatory: describe how to prove the decision (tests + commands)
 - [ ] Status reflects real state (`Proposed`, `Accepted`, `Rejected`, `Superseded`).
 - [ ] Links to related features, tests, and ADRs are filled in.
 - [ ] Diagram section contains at least one Mermaid diagram.
+- [ ] Testing methodology is filled in with positive, negative, and edge flows plus pass criteria.
+- [ ] New or updated automated tests exist for the changed behaviour.
+- [ ] All relevant tests are green and coverage did not fall below baseline.
 - [ ] `docs/Architecture/Overview.md` updated if module boundaries or interactions changed.

@@ -173,10 +173,20 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - task goal and scope
   - a detailed implementation plan with detailed ordered steps
   - constraints and risks
+  - explicit test steps as part of the ordered plan, not as a later add-on
+  - the test and verification strategy for each planned step
+  - the testing methodology for the task: what flows will be tested, how they will be tested, and what quality bar the tests must meet
+  - an explicit full-test baseline step after the plan is prepared
+  - a tracked list of already failing tests, with one checklist item per failing test
+  - root-cause notes and intended fix path for each failing test that must be addressed
   - a checklist with explicit done criteria for each step
   - ordered final validation skills and commands, with reason for each
 - Use the Ralph Loop for every non-trivial task:
   - plan in detail in `<slug>.plan.md` before coding or document edits
+  - include test creation, test updates, and verification work in the ordered steps from the start
+  - once the initial plan is ready, run the full relevant test suite to establish the real baseline
+  - if tests are already failing, add each failing test back into `<slug>.plan.md` as a tracked item with its failure symptom, suspected cause, and fix status
+  - work through failing tests one by one: reproduce, find the root cause, apply the fix, rerun, and update the plan file
   - include ordered final validation skills in the plan file, with reason for each skill
   - require each selected skill to produce a concrete action, artifact, or verification outcome
   - execute one planned step at a time
@@ -190,6 +200,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - broader required regressions
 - If `build` is separate from `test`, run `build` before `test`.
 - After tests pass, run `format`, then the final required verification commands.
+- The task is complete only when every planned checklist item is done and all relevant tests are green.
 - Summarize the change, risks, and verification before marking the task complete.
 
 ### Documentation
@@ -204,6 +215,11 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Public bootstrap templates are limited to root-level agent files. Authoring scaffolds for architecture, features, ADRs, and other workflows live in skills.
 - Update feature docs when behaviour changes.
 - Update ADRs when architecture, boundaries, or standards change.
+- For non-trivial work, the plan file, feature doc, or ADR MUST document the testing methodology:
+  - what flows are covered
+  - how they are tested
+  - which commands prove them
+  - what quality and coverage requirements must hold
 - Every feature doc under `docs/Features/` MUST contain at least one Mermaid diagram for the main behaviour or flow.
 - Every ADR under `docs/ADR/` MUST contain at least one Mermaid diagram for the decision, boundaries, or interactions.
 - Mermaid diagrams are mandatory in architecture docs, feature docs, and ADRs.
@@ -213,16 +229,19 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 
 - TDD is the default for new behaviour and bug fixes: write the failing test first, make it pass, then refactor.
 - Bug fixes start with a failing regression test that reproduces the issue.
-- Every behaviour change needs automated tests with meaningful assertions.
-- Tests must prove the user flow or caller-visible system flow, including the happy path and the most important failure or edge path.
+- Every behaviour change needs new or updated automated tests with meaningful assertions. New tests are mandatory for new behaviour and bug fixes.
+- Tests must prove the real user flow or caller-visible system flow, not only internal implementation details.
+- Tests should be as realistic as possible and exercise the system through real flows, contracts, and dependencies.
+- Tests must cover positive flows, negative flows, edge cases, and unexpected paths from multiple relevant angles when the behaviour can fail in different ways.
 - Prefer integration/API/UI tests over isolated unit tests when behaviour crosses boundaries.
 - Do not use mocks, fakes, stubs, or service doubles in verification.
 - Exercise internal and external dependencies through real containers, test instances, or sandbox environments that match the real contract.
 - Flaky tests are failures. Fix the cause.
 - Changed production code MUST reach at least 80% line coverage, and at least 70% branch coverage where branch coverage is available.
 - Critical flows and public contracts MUST reach at least 90% line coverage with explicit success and failure assertions.
-- Repository or module coverage must not decrease without an explicit written exception.
+- Repository or module coverage must not decrease without an explicit written exception. Coverage after the change must stay at least at the previous baseline or improve.
 - Coverage is for finding gaps, not gaming a number. Coverage numbers do not replace scenario coverage or user-flow verification.
+- The task is not done until the full relevant test suite is green, not only the newly added tests.
 - If the stack is `.NET`, document the active framework and runner model explicitly so agents do not mix VSTest and Microsoft.Testing.Platform assumptions.
 - If the stack is `.NET`, after changing production code run the repo-defined quality pass: format, build, analyze, focused tests, broader tests, coverage, and any configured extra gates such as architecture, security, or mutation checks.
 
