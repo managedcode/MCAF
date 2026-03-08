@@ -26,7 +26,6 @@ Install or update MCAF for this repository using the canonical tutorial:
 Follow the tutorial end-to-end, including template and skill installation steps it references.
 
 Rules:
-- if any legacy skills with prefix mcf- are present, remove them
 - install only current skills with prefix mcaf-
 - keep AGENTS.md in the repository root
 - if this is a multi-project solution, create or update local AGENTS.md files per project
@@ -93,30 +92,6 @@ Get the available skills from:
 
 - Skills page: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
-### 4.0 Remove Legacy `mcf-*` Skills (If Present)
-
-If your repo previously used old MCF skills, delete folders with prefix `mcf-` from your chosen target directory.
-
-Codex:
-
-```bash
-find .codex/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' -exec rm -rf {} +
-```
-
-Claude Code:
-
-```bash
-find .claude/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' -exec rm -rf {} +
-```
-
-Optional verification:
-
-```bash
-find .codex/skills .claude/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' 2>/dev/null
-```
-
-The result should be empty.
-
 For each selected skill:
 
 1. Open the skill entry on the Skills page.
@@ -126,7 +101,7 @@ For each selected skill:
 
 This keeps install deterministic without requiring manifests or archives.
 
-### 4.1 Recommended .NET Bundle
+### 4.0 Recommended .NET Bundle
 
 For a .NET repository, the usual baseline is:
 
@@ -165,7 +140,7 @@ Add tool-specific .NET skills only when the repo standardizes on them:
 - Generated during site build from current `mcaf-dotnet-*` folders in `skills/`.
 <!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->
 
-### 4.2 Current Skill Catalog (Generated)
+### 4.1 Current Skill Catalog (Generated)
 
 The website build generates this list from the actual folders under `skills/`.
 
@@ -247,7 +222,6 @@ The bootstrap is complete when:
 
 - root `AGENTS.md` exists
 - the right skill folders exist in the chosen skills directory
-- if the repo had old MCF installs, no legacy `mcf-*` skill folders remain in the chosen skills directory
 - local `AGENTS.md` files exist for project roots in a multi-project solution
 - docs and commands are customized to the real repo
 

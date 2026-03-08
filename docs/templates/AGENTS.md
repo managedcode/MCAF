@@ -109,7 +109,7 @@ If the stack is `.NET`, document skill-management rules explicitly:
 - `mcaf-dotnet` is the entry skill and routes to specialized `.NET` skills.
 - Keep exactly one framework skill: `mcaf-dotnet-xunit` or `mcaf-dotnet-tunit` or `mcaf-dotnet-mstest`.
 - Add tool-specific `.NET` skills only when the repository actually uses those tools in CI or local verification.
-- Legacy `mcf-*` skills are forbidden. Remove old `mcf-*` folders and keep only `mcaf-*` skills in agent skill directories.
+- Keep only `mcaf-*` skills in agent skill directories.
 - When upgrading skills, recheck `build`, `test`, `format`, `analyze`, and `coverage` commands against the repo toolchain.
 
 ## Rules to Follow (Mandatory)
