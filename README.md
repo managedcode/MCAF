@@ -116,6 +116,7 @@ For example, a typical .NET repo baseline can install `mcaf-dotnet` as the entry
 In that setup, `mcaf-dotnet` knows when to open the more specific .NET skills, the repo-root lowercase `.editorconfig` is the default source of truth for formatting and analyzer severity, and `AGENTS.md` records the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands. Nested `.editorconfig` files are allowed when they serve a clear subtree-specific purpose, such as stricter domain rules, generated-code handling, test-specific conventions, or legacy-code containment.
 For .NET code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, coverage, architecture tests, or security gates. Agents should run the repo-defined post-change quality pass before completion.
 If the repo standardizes on concrete tools, install the matching tool skills as well. Typical open or free .NET additions include `mcaf-dotnet-format`, `mcaf-dotnet-code-analysis`, `mcaf-dotnet-analyzer-config`, `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-roslynator`, `mcaf-dotnet-meziantou-analyzer`, `mcaf-dotnet-cloc`, `mcaf-dotnet-coverlet`, `mcaf-dotnet-profiling`, `mcaf-dotnet-quickdup`, `mcaf-dotnet-reportgenerator`, `mcaf-dotnet-resharper-clt`, `mcaf-dotnet-stryker`, `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, and `mcaf-dotnet-csharpier`. `mcaf-dotnet-codeql` stays available, but should be chosen only when its hosting and licensing model fits the repository.
+Every `mcaf-dotnet*` tool skill should include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
 
 ### 2.5 Context Rules
 
@@ -148,21 +149,24 @@ The goal is enough automated evidence to trust the change.
 ### 3.2 Verification Rules
 
 - Prefer TDD for new behaviour and bug fixes: start with a failing test, make it pass, then refactor.
-- New or changed behaviour is proven by automated tests.
+- New or changed behaviour is proven by new or updated automated tests.
 - Tests prove user-visible or caller-visible flows, not just isolated implementation detail.
+- Tests cover positive, negative, edge, and unexpected flows when the behaviour can fail in different ways.
 - Integration/API/UI coverage is preferred when the behaviour crosses boundaries.
 - Internal and external systems are exercised through real containers, test instances, or sandbox environments in primary suites.
 - Mocks, fakes, stubs, and service doubles are forbidden in verification flows.
 - Changed production code should reach at least 80% line coverage and 70% branch coverage where supported; critical flows and public contracts should reach 90% line coverage.
-- Coverage must not regress without an explicit exception, and coverage numbers do not replace scenario coverage.
+- Coverage must not regress below the pre-change baseline without an explicit exception, and coverage numbers do not replace scenario coverage.
 - Static analysis is part of done, not a cleanup task.
 - Failing tests or analyzers block completion.
+- The task is not done until the full relevant test suite is green, not only the newly added or changed tests.
 
 ### 3.3 Verification Artifacts
 
 Feature docs and ADRs should point to:
 
 - the scenarios that must be proven
+- the testing methodology for those scenarios
 - the commands used to prove them
 - the suites or artifacts that provide that proof
 
@@ -210,7 +214,9 @@ Root `AGENTS.md` stays current with:
 - commands (`build`, `test`, `format`, `analyze`, `coverage` if used)
 - global skills and when to use them
 - self-learning rules
+- non-trivial task planning rules, including root-level `<slug>.plan.md` usage
 - testing discipline
+- done criteria for tests, coverage, and quality gates
 - design and maintainability rules
 - exception policy
 - topology for local `AGENTS.md` files
@@ -255,6 +261,8 @@ If the same mistake happens twice, the framework expects the rule to be made dur
 - Every MCAF repo has a root `AGENTS.md`.
 - Multi-project solutions use local `AGENTS.md` files at project roots.
 - Agents read root and local `AGENTS.md` before editing code.
+- Non-trivial tasks use a root-level `<slug>.plan.md` as the working plan.
+- Plans include ordered implementation steps, explicit test steps, testing methodology, and final validation commands.
 - Skills are preferred over improvised workflow when a skill matches the task.
 - Numeric maintainability limits live in `AGENTS.md`, not in framework prose.
 
@@ -343,17 +351,28 @@ Before heavy coding:
 
 ### 7.2 Plan
 
-For non-trivial work, record:
+For non-trivial work, create a root-level `<slug>.plan.md` and keep it current.
+The plan records:
 
+- goal and scope
+- detailed ordered implementation steps
 - files or boundaries to change
 - tests to add or update
+- the testing methodology: which flows are covered, how they are verified, which commands prove them, and the required quality or coverage bar
 - docs to update
 - risks and constraints
+- final validation skills and commands, with reasons
+- checklist items and done criteria
+
+Before implementation starts, run the full relevant test baseline.
+If anything is already failing, add each failing test to the plan with its symptom, suspected or confirmed root cause, and intended fix path.
 
 ### 7.3 Implement
 
+- Use the Ralph Loop for non-trivial work: execute one planned step, run the relevant checks, update the plan, then move to the next step.
 - implement code and tests together
 - keep changes small and reviewable
+- fix failing tests deliberately, one by one, and track them in the plan until they are closed
 - use the architecture map and nearest local `AGENTS.md` to stay in scope
 
 ### 7.4 Verify
@@ -362,10 +381,11 @@ Run verification in layers:
 
 1. changed tests
 2. related suite
-3. broader required regressions
-4. analyzers
+3. broader required regressions and the full relevant suite
+4. analyzers, formatters, and any configured architecture, security, mutation, or other quality gates
+5. coverage comparison against the pre-change baseline
 
-### 7.5 Update Durable Context
+### 7.5 Update Durable Context and Close the Task
 
 After implementation:
 
@@ -373,6 +393,8 @@ After implementation:
 - update ADRs
 - update the architecture map when boundaries changed
 - update `AGENTS.md` or skills when rules or workflows changed
+- keep the plan file current until every checklist item is done
+- close the task only when all planned work is finished, all relevant tests are green, and coverage is at least at the starting baseline unless an explicit exception was documented
 
 ## 8. AI Participation Modes
 
@@ -407,4 +429,6 @@ Adoption is complete when:
 - the right skills are installed
 - multi-project boundaries have local `AGENTS.md`
 - commands and docs reflect the real repo
+- non-trivial work is guided by a root-level `<slug>.plan.md` and the Ralph Loop
+- tool-specific skills document real bootstrap and install steps when the tool is missing
 - tests and analyzers are the real gates
