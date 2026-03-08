@@ -136,7 +136,7 @@ Key points:
 
 - Environment (local compose / staging / prod-like):
 - Data and reset strategy (seed data, migrations, rollback plan):
-- External dependencies (real / sandbox / fake services required):
+- External dependencies (real / sandbox / test environment required):
 
 ### Test commands
 

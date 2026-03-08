@@ -12,7 +12,7 @@ Rules:
 
 - This ADR is **self-contained** — avoid “as discussed”; include all critical context and links.
 - At least **one Mermaid diagram is mandatory** (boundaries/modules/interactions for this decision).
-- Once accepted, save as `docs/ADR/ADR-XXXX-title-in-kebab-case.md` (English, kebab-case). Keep `docs/templates/ADR-Template.md` unchanged.
+- Once accepted, save as `docs/ADR/ADR-XXXX-title-in-kebab-case.md` (English, kebab-case). Keep this reference file unchanged and copy its structure into the real ADR.
 
 ---
 
@@ -139,7 +139,7 @@ This section is mandatory: describe how to prove the decision (tests + commands)
 
 - Environment (local compose / staging / prod-like):  
 - Data and reset strategy (seed data, migrations, rollback plan):  
-- External dependencies (real / sandbox / fake services required):
+- External dependencies (real / sandbox / test environment required):
 
 ### Test commands
 

@@ -92,6 +92,8 @@ Short description of the business problem and value.
 
 ## Diagrams
 
+At least one Mermaid diagram is mandatory in every real feature doc.
+
 > TEMPLATE ONLY — Mermaid often breaks with fancy syntax. Keep it simple and make sure it renders in the repo.
 
 ```mermaid
@@ -107,7 +109,7 @@ This section is mandatory: describe how to test (scenarios + commands).
 
 - Environment / stack (local compose / staging / cloud env):  
 - Data and reset strategy (seed data, fixtures, migration steps):  
-- External dependencies (real / sandbox / fake services required):  
+- External dependencies (real / sandbox / test environment required):  
 
 ### Test commands
 
@@ -157,6 +159,7 @@ Include this section only if it applies to this feature; otherwise remove it.
 ## Definition of Done
 
 - Behaviour matches rules and flows in this document.  
+- Diagram section contains at least one Mermaid diagram that renders in the repo.  
 - All test flows above are covered by automated tests (Integration / API / UI as applicable).  
 - Static analysis passes with no new unresolved issues.  
 - Test and build commands listed above run clean in local and CI environments.  

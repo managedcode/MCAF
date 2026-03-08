@@ -1,65 +1,58 @@
 ---
 name: mcaf-architecture-overview
-description: "Create or update `docs/Architecture/Overview.md` (architecture diagrams): maintain Mermaid diagrams for system/modules, interfaces/contracts, and key classes/types; document dependency rules; link to ADRs/features. Use when onboarding, refactoring, or adding modules/boundaries."
+description: "Create or update `docs/Architecture/Overview.md` as the global architecture map for a solution. Use when bootstrapping a repo, onboarding, or changing modules, boundaries, or contracts. Keep it navigational and use `references/overview-template.md` for scaffolding."
 compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
 # MCAF: Architecture Overview
 
-## Output
+## Trigger On
 
-- `docs/Architecture/Overview.md` (create or update)
+- create the first repo-wide architecture map
+- modules, boundaries, interfaces, or ownership changed
+- onboarding is slow because there is no short "start here" system map
 
-## Architecture Thinking (keep it a map)
+## Do Not Use For
 
-This doc is the **global map**: boundaries, modules, and dependency rules.
+- recording a single architecture decision with alternatives
+- writing feature-level behaviour details
 
-- Keep it lean and structural:
-  - modules/boundaries + responsibility + dependency direction
-  - Mermaid diagrams are the primary context:
-    - system/module map (blocks + dependency direction)
-    - interfaces/contracts map (how modules talk)
-    - key classes/types map (high-signal only; not exhaustive)
-- Treat it as the main “start here” card for humans and AI agents:
-  - diagram elements must use real names (no placeholders)
-  - every diagram element must have an explicit reference link (docs/code) so an agent can navigate without repo-wide scanning
-  - keep diagrams readable; if a diagram becomes “spaghetti”, split by boundary and link out
-- Keep behaviour out of the overview:
-  - feature flows live in `docs/Features/*`
-  - decision-specific diagrams/invariants live in `docs/ADR/*`
-- Anti-“AI slop” rule: never invent components/services/DBs — only document what exists (or what this change will explicitly add).
+## Inputs
+
+- current solution layout and entry points
+- existing ADRs, feature docs, and boundary docs
+- the nearest `AGENTS.md` files
 
 ## Workflow
 
-1. Open `docs/Architecture/Overview.md` if it exists; otherwise start from `docs/templates/Architecture-Template.md`.
-   - Ensure it contains a short `## Scoping (read first)` section (this is how we prevent “scan everything” behaviour).
-2. Identify the **real** top-level boundaries:
-   - entry points (HTTP/API, CLI, UI, jobs, events)
-   - modules/layers (group by folders/namespaces, not individual files)
-   - external dependencies (only those that actually exist)
-3. Fill the **Summary** so a new engineer can orient in ~1 minute.
-4. Maintain the Mermaid diagrams (the map people and agents start from):
-   - **system/module map**: keep it small (roughly 8–15 nodes), label arrows (calls/events/reads/writes)
-   - **interfaces/contracts map**: show ports/interfaces, APIs, events, queues, file formats (only what exists)
-   - **key classes/types map**: capture the main types that matter across modules (avoid inventories)
-   - don’t invent DB/queues/services/modules that aren’t present
-5. Fill the module index:
-   - one row per diagram node (not every internal module/class)
-   - responsibilities and “depends on” must be concrete
-   - prefer a short navigation list with links over big tables/inventories
-6. Write explicit dependency rules:
-   - what is allowed
-   - what is forbidden
-   - how integration happens (sync / async / shared lib)
-7. Add a short “Key decisions (ADRs)” section:
-   - link to the ADRs that define boundaries, dependencies, and major cross-cutting patterns
-   - keep it link-based (no detailed flows here)
-8. Link out to deeper docs:
-   - ADRs for key decisions
-   - Features for behaviour details
-   - Testing/Development for how to run and verify
+1. Start from the current `docs/Architecture/Overview.md`; if it is missing, scaffold it from `references/overview-template.md`.
+2. Build a short navigational overview:
+   - system or module map
+   - key boundaries and contracts
+   - scoping hints
+   - links to ADRs, feature docs, and high-signal code paths
+3. Use only real names from the repo. No placeholders like "Module A".
+4. Prefer Mermaid diagrams plus a tiny link index over long prose.
+5. Split diagrams by boundary if the map becomes noisy.
 
-## Guardrails
+## Deliver
 
-- Do not list every file/class. This is a **map**, not an inventory (key classes/types only).
-- Keep the document stable: update it when boundaries or interactions change.
+- `docs/Architecture/Overview.md`
+- a short architecture map that routes the reader to deeper docs
+
+## Validate
+
+- diagram nodes use real repo names
+- every important box or boundary links to deeper material
+- the file stays navigational instead of becoming an inventory dump
+- the overview lets a new agent scope work without reading the whole repo
+
+## Load References
+
+- use `references/overview-template.md` only when scaffolding the file
+
+## Example Requests
+
+- "Create an architecture overview for this repo."
+- "Update the overview after splitting the API and worker."
+- "Make onboarding easier by adding a real module map."
