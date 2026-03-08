@@ -49,6 +49,22 @@ compatibility: "Requires a .NET solution or project with TUnit packages; respect
 - built-in TUnit analyzers remain active
 - coverage tooling matches Microsoft.Testing.Platform if coverage is enabled
 
+## Findings Loop
+
+When this skill is used to run a checker, analyzer, test gate, or verification command:
+
+1. Run the command in read-only or report mode first and collect findings.
+2. Return a concise findings list with only actionable items:
+   - rule or check id
+   - `file:line`
+   - one-line fix intent
+3. Fix findings in small batches without hiding rules unless the repo already documents an exception.
+4. Re-run the same command after each fix batch.
+5. Repeat until the gate passes or only explicitly accepted exceptions remain.
+6. Keep output trimmed: include counts and the top remaining items only, not raw full logs.
+
+For setup-only requests that do not execute checks, return `status: configured` and the exact commands that should be run later.
+
 ## Load References
 
 - read `references/tunit.md` first

@@ -136,6 +136,27 @@ jobs:
                   data[key.strip()] = value.strip().strip("\"'")
               return data
 
+          def replace_marker_block(
+              text: str,
+              begin_marker: str,
+              end_marker: str,
+              replacement_lines: list[str],
+          ) -> str:
+              begin_idx = text.find(begin_marker)
+              if begin_idx == -1:
+                  raise SystemExit(f"Missing marker: {begin_marker}")
+
+              begin_line_end = text.find("\n", begin_idx)
+              if begin_line_end == -1:
+                  raise SystemExit(f"Broken marker line: {begin_marker}")
+
+              end_idx = text.find(end_marker, begin_line_end + 1)
+              if end_idx == -1:
+                  raise SystemExit(f"Missing marker: {end_marker}")
+
+              replacement = "\n".join(replacement_lines).rstrip()
+              return text[: begin_line_end + 1] + replacement + "\n" + text[end_idx:]
+
           skills: list[dict[str, str]] = []
           for skill_md in sorted((repo / "skills").glob("*/SKILL.md")):
               skill_dir = skill_md.parent
@@ -223,21 +244,67 @@ jobs:
               "\n".join(skills_page_lines) + "\n",
               encoding="utf-8",
           )
-          PY
 
-      - name: Copy TUTORIAL to github-pages
-        run: |
-          cat > github-pages/tutorial.md << 'EOF'
-          ---
-          layout: default
-          title: Tutorial
-          description: Step-by-step tutorial for bootstrapping an MCAF v1.2 repository through URLs, bootstrap templates, and direct GitHub skill folders.
-          keywords: MCAF tutorial, AGENTS.md setup, skill-first install, AI coding bootstrap, Codex skills, Claude Code skills
-          nav_order: 3
-          ---
-          EOF
-          sed -i 's/^          //' github-pages/tutorial.md
-          cat TUTORIAL.md >> github-pages/tutorial.md
+          dotnet_optional_exclude = {
+              "mcaf-dotnet-features",
+              "mcaf-dotnet-quality-ci",
+              "mcaf-dotnet-complexity",
+              "mcaf-dotnet-xunit",
+              "mcaf-dotnet-tunit",
+              "mcaf-dotnet-mstest",
+          }
+          dotnet_optional = sorted(
+              skill["name"]
+              for skill in skills
+              if skill["name"].startswith("mcaf-dotnet-")
+              and skill["name"] not in dotnet_optional_exclude
+          )
+          dotnet_optional_lines = (
+              [f"- `{skill_name}`" for skill_name in dotnet_optional]
+              if dotnet_optional
+              else ["- _No optional .NET skills found._"]
+          )
+
+          all_skills_lines = [
+              (
+                  f"- `{skill['name']}` — "
+                  f"[Folder]({skill['folder_url']}), "
+                  f"[Raw SKILL]({skill['skill_md_url']})"
+              )
+              for skill in skills
+          ]
+
+          tutorial_body = (repo / "TUTORIAL.md").read_text(encoding="utf-8")
+          tutorial_body = replace_marker_block(
+              tutorial_body,
+              "<!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->",
+              "<!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->",
+              dotnet_optional_lines,
+          )
+          tutorial_body = replace_marker_block(
+              tutorial_body,
+              "<!-- MCAF:ALL-SKILLS-BEGIN -->",
+              "<!-- MCAF:ALL-SKILLS-END -->",
+              all_skills_lines,
+          )
+
+          tutorial_frontmatter = "\n".join(
+              [
+                  "---",
+                  "layout: default",
+                  "title: Tutorial",
+                  "description: Step-by-step tutorial for bootstrapping an MCAF v1.2 repository through URLs, bootstrap templates, and direct GitHub skill folders.",
+                  "keywords: MCAF tutorial, AGENTS.md setup, skill-first install, AI coding bootstrap, Codex skills, Claude Code skills",
+                  "nav_order: 3",
+                  "---",
+                  "",
+              ]
+          )
+          (repo / "github-pages" / "tutorial.md").write_text(
+              tutorial_frontmatter + tutorial_body.rstrip() + "\n",
+              encoding="utf-8",
+          )
+          PY
 
       - name: Copy CREDITS to github-pages
         run: |

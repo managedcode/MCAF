@@ -12,13 +12,32 @@ The install path is URL-first and simple:
 
 ---
 
+## 0. First Prompt to Paste into an AI Agent
+
+Use this prompt first when you want to install or update MCAF in an existing repo:
+
+```text
+Install or update MCAF for this repository using these canonical pages:
+- https://mcaf.managed-code.com/tutorial
+- https://mcaf.managed-code.com/templates
+- https://mcaf.managed-code.com/skills
+
+Rules:
+- remove all legacy skills with prefix mcf-
+- install only current skills with prefix mcaf-
+- keep AGENTS.md in the repository root
+- if this is a multi-project solution, create or update local AGENTS.md files per project
+```
+
+---
+
 ## 1. Open the Canonical Pages
 
 Use these pages as the install surface:
 
-- Tutorial: [https://mcaf.managed-code.com/tutorial.html](https://mcaf.managed-code.com/tutorial.html)
-- Templates: [https://mcaf.managed-code.com/templates.html](https://mcaf.managed-code.com/templates.html)
-- Skills: [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
+- Tutorial: [https://mcaf.managed-code.com/tutorial](https://mcaf.managed-code.com/tutorial)
+- Templates: [https://mcaf.managed-code.com/templates](https://mcaf.managed-code.com/templates)
+- Skills: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
 Use these raw template files for direct download:
 
@@ -66,7 +85,31 @@ Only create the directory for the agent runtime you actually use.
 
 Get the available skills from:
 
-- Skills page: [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
+- Skills page: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
+
+### 4.0 Remove Legacy `mcf-*` Skills First
+
+Before installing current skills, delete old folders with prefix `mcf-` from your chosen target directory.
+
+Codex:
+
+```bash
+find .codex/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' -exec rm -rf {} +
+```
+
+Claude Code:
+
+```bash
+find .claude/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' -exec rm -rf {} +
+```
+
+Optional verification:
+
+```bash
+find .codex/skills .claude/skills -maxdepth 1 -mindepth 1 -type d -name 'mcf-*' 2>/dev/null
+```
+
+The result should be empty.
 
 For each selected skill:
 
@@ -112,21 +155,17 @@ The intended flow is:
 
 Add tool-specific .NET skills only when the repo standardizes on them:
 
-- `mcaf-dotnet-format`
-- `mcaf-dotnet-code-analysis`
-- `mcaf-dotnet-analyzer-config`
-- `mcaf-dotnet-complexity`
-- `mcaf-dotnet-stylecop-analyzers`
-- `mcaf-dotnet-roslynator`
-- `mcaf-dotnet-meziantou-analyzer`
-- `mcaf-dotnet-coverlet`
-- `mcaf-dotnet-reportgenerator`
-- `mcaf-dotnet-stryker`
-- `mcaf-dotnet-netarchtest`
-- `mcaf-dotnet-archunitnet`
-- `mcaf-dotnet-codeql`
-- `mcaf-dotnet-semgrep`
-- `mcaf-dotnet-csharpier`
+<!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->
+- Generated during site build from current `mcaf-dotnet-*` folders in `skills/`.
+<!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->
+
+### 4.2 Current Skill Catalog (Generated)
+
+The website build generates this list from the actual folders under `skills/`.
+
+<!-- MCAF:ALL-SKILLS-BEGIN -->
+- Generated during site build from `skills/*/SKILL.md`
+<!-- MCAF:ALL-SKILLS-END -->
 
 ---
 
@@ -202,6 +241,7 @@ The bootstrap is complete when:
 
 - root `AGENTS.md` exists
 - the right skill folders exist in the chosen skills directory
+- no legacy `mcf-*` skill folders remain in the chosen skills directory
 - local `AGENTS.md` files exist for project roots in a multi-project solution
 - docs and commands are customized to the real repo
 
