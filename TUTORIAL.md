@@ -26,7 +26,7 @@ Install or update MCAF for this repository using the canonical tutorial:
 Follow the tutorial end-to-end, including template and skill installation steps it references.
 
 Rules:
-- remove all legacy skills with prefix mcf-
+- if any legacy skills with prefix mcf- are present, remove them
 - install only current skills with prefix mcaf-
 - keep AGENTS.md in the repository root
 - if this is a multi-project solution, create or update local AGENTS.md files per project
@@ -93,9 +93,9 @@ Get the available skills from:
 
 - Skills page: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
-### 4.0 Remove Legacy `mcf-*` Skills First
+### 4.0 Remove Legacy `mcf-*` Skills (If Present)
 
-Before installing current skills, delete old folders with prefix `mcf-` from your chosen target directory.
+If your repo previously used old MCF skills, delete folders with prefix `mcf-` from your chosen target directory.
 
 Codex:
 
@@ -247,7 +247,7 @@ The bootstrap is complete when:
 
 - root `AGENTS.md` exists
 - the right skill folders exist in the chosen skills directory
-- no legacy `mcf-*` skill folders remain in the chosen skills directory
+- if the repo had old MCF installs, no legacy `mcf-*` skill folders remain in the chosen skills directory
 - local `AGENTS.md` files exist for project roots in a multi-project solution
 - docs and commands are customized to the real repo
 
