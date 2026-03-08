@@ -7,7 +7,6 @@ Open/free policy for this catalog:
 
 - everything listed here is open source or free to adopt locally
 - `CodeQL` stays in the catalog with an explicit caveat because the hosted GitHub private-repo experience is not universally free
-- if the team needs a security scanner with no such hosting caveat, prefer `mcaf-dotnet-semgrep`
 
 Install policy for this catalog:
 
@@ -50,7 +49,6 @@ These tools are worth adding once the baseline is stable:
 | Architecture tests | `NetArchTest.Rules` | `mcaf-dotnet-netarchtest` | Simple, fluent architectural rules in tests | Good for layered or clean architecture policies |
 | Architecture tests | `ArchUnitNET` | `mcaf-dotnet-archunitnet` | Richer architecture assertions across xUnit, MSTest, and TUnit | Heavier than NetArchTest but more expressive |
 | Deep inspections and cleanup | `JetBrains ReSharper Command Line Tools` | `mcaf-dotnet-resharper-clt` | Powerful ReSharper inspections plus cleanup profiles in CI or local runs | Free official JetBrains CLI package; keep shared policy in solution `.DotSettings` |
-| Security scanning | `Semgrep CE` | `mcaf-dotnet-semgrep` | Fast OSS static analysis across many languages | Community Edition is file/function-scoped for security analysis |
 | Security scanning | `CodeQL` | `mcaf-dotnet-codeql` | Deep GitHub-native query-based analysis | Open ecosystem with private-repo hosting caveats |
 | Opinionated formatter | `CSharpier` | `mcaf-dotnet-csharpier` | Fast one-style formatter for C# and XML | Use only if the repo wants a formatter owner beyond `dotnet format` |
 
@@ -94,7 +92,7 @@ Use the exact commands from `AGENTS.md`. The usual checked-in flow is:
 4. focused `test`
 5. broader `test`
 6. `coverage` and report generation when configured
-7. extra configured gates such as Roslynator, StyleCop, Meziantou, ReSharper CLT, architecture tests, Semgrep, CodeQL, CSharpier, or Stryker
+7. extra configured gates such as Roslynator, StyleCop, Meziantou, ReSharper CLT, architecture tests, CodeQL, CSharpier, or Stryker
 
 Run only the gates the repo actually enabled.
 
@@ -143,5 +141,4 @@ dotnet stryker
 - [CleanupCode](https://www.jetbrains.com/help/resharper/CleanupCode.html)
 - [InspectCode](https://www.jetbrains.com/help/resharper/InspectCode.html)
 - [CodeQL code scanning](https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning-with-codeql)
-- [Semgrep](https://github.com/semgrep/semgrep)
 - [CSharpier](https://github.com/belav/csharpier)

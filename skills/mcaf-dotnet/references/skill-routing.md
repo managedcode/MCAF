@@ -14,7 +14,7 @@ Use `mcaf-dotnet` as the entry skill when a task spans more than one .NET concer
 | .NET quality gates, analyzer stack, coverage, mutation, or security gate selection | `mcaf-dotnet-quality-ci` |
 | repo-root `.editorconfig` authoring and analyzer severity ownership | `mcaf-dotnet-analyzer-config` |
 | complex methods, maintainability metrics, and coupling thresholds | `mcaf-dotnet-complexity` |
-| one concrete tool such as Roslynator, StyleCop, Coverlet, ReportGenerator, ReSharper CLT, Semgrep, or CSharpier | the exact tool skill |
+| one concrete tool such as Roslynator, StyleCop, Coverlet, ReportGenerator, ReSharper CLT, or CSharpier | the exact tool skill |
 | SOLID-driven refactors and maintainability-limit enforcement | `mcaf-solid-maintainability` |
 | architecture map or boundary documentation | `mcaf-architecture-overview` |
 | architecture rules in executable tests | `mcaf-dotnet-netarchtest` or `mcaf-dotnet-archunitnet` |

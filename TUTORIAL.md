@@ -153,7 +153,6 @@ Add tool-specific .NET skills only when the repo standardizes on them:
 - `mcaf-dotnet-reportgenerator`
 - `mcaf-dotnet-resharper-clt`
 - `mcaf-dotnet-roslynator`
-- `mcaf-dotnet-semgrep`
 - `mcaf-dotnet-stryker`
 - `mcaf-dotnet-stylecop-analyzers`
 <!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->
@@ -190,7 +189,6 @@ The website build generates this list from the actual folders under `skills/`.
 - `mcaf-dotnet-reportgenerator` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-reportgenerator), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-reportgenerator/SKILL.md)
 - `mcaf-dotnet-resharper-clt` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-resharper-clt), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-resharper-clt/SKILL.md)
 - `mcaf-dotnet-roslynator` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-roslynator), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-roslynator/SKILL.md)
-- `mcaf-dotnet-semgrep` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-semgrep), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-semgrep/SKILL.md)
 - `mcaf-dotnet-stryker` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-stryker), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-stryker/SKILL.md)
 - `mcaf-dotnet-stylecop-analyzers` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-stylecop-analyzers), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-stylecop-analyzers/SKILL.md)
 - `mcaf-dotnet-tunit` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-tunit), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-tunit/SKILL.md)

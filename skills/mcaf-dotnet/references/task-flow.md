@@ -8,7 +8,7 @@ Start from checked-in repo state:
 
 ```bash
 rg -n "TargetFramework|TargetFrameworks|LangVersion|UseMicrosoftTestingPlatformRunner|TestingPlatformDotnetTestSupport|EnableNETAnalyzers|AnalysisLevel|TreatWarningsAsErrors" -g '*.csproj' -g 'Directory.Build.*' .
-rg -n "xunit|xunit\\.v3|TUnit|MSTest|StyleCopAnalyzers|Roslynator|Meziantou|coverlet|ReportGenerator|JetBrains\\.ReSharper\\.GlobalTools|NetArchTest|ArchUnitNET|Semgrep|CodeQL|CSharpier" -g '*.csproj' -g '.config/dotnet-tools.json' .
+rg -n "xunit|xunit\\.v3|TUnit|MSTest|StyleCopAnalyzers|Roslynator|Meziantou|coverlet|ReportGenerator|JetBrains\\.ReSharper\\.GlobalTools|NetArchTest|ArchUnitNET|CodeQL|CSharpier" -g '*.csproj' -g '.config/dotnet-tools.json' .
 rg --files -g '.editorconfig' -g '*.sln.DotSettings'
 ```
 
@@ -32,7 +32,7 @@ Use the repo's exact commands from `AGENTS.md`. If the repo has no wrappers, the
 4. focused `test`
 5. broader `test`
 6. `coverage` and report generation when configured
-7. extra configured gates such as Roslynator, StyleCop, Meziantou, ReSharper CLT, architecture tests, Semgrep, CodeQL, CSharpier, or Stryker
+7. extra configured gates such as Roslynator, StyleCop, Meziantou, ReSharper CLT, architecture tests, CodeQL, CSharpier, or Stryker
 
 ## 4. Completion Rule
 

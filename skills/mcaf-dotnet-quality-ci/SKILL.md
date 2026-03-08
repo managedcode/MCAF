@@ -79,7 +79,7 @@ compatibility: "Requires a .NET solution or project; may update `AGENTS.md`, CI 
    - `mcaf-dotnet-analyzer-config`
    - analyzer-pack skills such as `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-roslynator`, and `mcaf-dotnet-meziantou-analyzer`
    - coverage/reporting skills such as `mcaf-dotnet-coverlet` and `mcaf-dotnet-reportgenerator`
-   - architecture/security skills such as `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, `mcaf-dotnet-codeql`, and `mcaf-dotnet-semgrep`
+   - architecture/security skills such as `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, and `mcaf-dotnet-codeql`
 8. Avoid overlapping tools with conflicting ownership. If you add an opinionated formatter, define whether it replaces or complements `dotnet format`.
 
 ## Bootstrap When Missing
