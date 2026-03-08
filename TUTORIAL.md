@@ -20,10 +20,10 @@ The install path is URL-first and simple:
 Use this prompt first when you want to install or update MCAF in an existing repo:
 
 ```text
-Install or update MCAF for this repository using these canonical pages:
+Install or update MCAF for this repository using the canonical tutorial:
 - https://mcaf.managed-code.com/tutorial
-- https://mcaf.managed-code.com/templates
-- https://mcaf.managed-code.com/skills
+
+Follow the tutorial end-to-end, including template and skill installation steps it references.
 
 Rules:
 - remove all legacy skills with prefix mcf-
@@ -34,11 +34,14 @@ Rules:
 
 ---
 
-## 1. Open the Canonical Pages
+## 1. Open the Canonical Entry Point
 
-Use these pages as the install surface:
+Use the tutorial as the single canonical install surface:
 
 - Tutorial: [https://mcaf.managed-code.com/tutorial](https://mcaf.managed-code.com/tutorial)
+
+Direct links below are optional shortcuts when you need them:
+
 - Templates: [https://mcaf.managed-code.com/templates](https://mcaf.managed-code.com/templates)
 - Skills: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 

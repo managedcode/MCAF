@@ -42,11 +42,14 @@ Bootstrap stays minimal:
 - one `CLAUDE.md` wrapper template
 - one tutorial page that explains how agents fetch and install the right skill folders
 
-Canonical install surfaces:
+Canonical install entry point:
 
-- Tutorial: [https://mcaf.managed-code.com/tutorial.html](https://mcaf.managed-code.com/tutorial.html)
-- Templates: [https://mcaf.managed-code.com/templates.html](https://mcaf.managed-code.com/templates.html)
-- Skills: [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
+- Tutorial: [https://mcaf.managed-code.com/tutorial](https://mcaf.managed-code.com/tutorial)
+
+Optional direct shortcuts:
+
+- Templates: [https://mcaf.managed-code.com/templates](https://mcaf.managed-code.com/templates)
+- Skills: [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
 ## 2. Context
 
@@ -112,7 +115,7 @@ Recommended target locations in a consuming repo:
 
 The public skill catalog lives on the Skills page:
 
-- [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
+- [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
 Platform-specific bundles can stay small and still be explicit.
 For example, a typical .NET repo baseline can install `mcaf-dotnet` as the entry skill, `mcaf-dotnet-features`, `mcaf-solution-governance`, `mcaf-testing`, exactly one of `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`, plus `mcaf-dotnet-quality-ci`, `mcaf-dotnet-complexity`, `mcaf-solid-maintainability`, `mcaf-architecture-overview`, and `mcaf-ci-cd`.
@@ -399,11 +402,10 @@ The repo may choose different modes per task, but the same verification and gove
 
 Use the tutorial as the canonical install flow:
 
-1. Open [Tutorial](https://mcaf.managed-code.com/tutorial.html).
-2. Fetch the bootstrap templates from [Templates](https://mcaf.managed-code.com/templates.html).
-3. Use [Skills](https://mcaf.managed-code.com/skills.html) to pick the exact skills you need.
-4. In multi-project solutions, add project-local `AGENTS.md` files using the governance skill.
-5. Restart the agent so it reloads the installed skills.
+1. Open [Tutorial](https://mcaf.managed-code.com/tutorial).
+2. Follow the tutorial flow to fetch templates and install the needed skills.
+3. In multi-project solutions, add project-local `AGENTS.md` files using the governance skill.
+4. Restart the agent so it reloads the installed skills.
 
 Adoption is complete when:
 
