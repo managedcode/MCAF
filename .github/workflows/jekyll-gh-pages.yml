@@ -32,9 +32,9 @@ jobs:
         id: changes
         run: |
           if [ "${{ github.event_name }}" = "push" ] && [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
-            CONTENT_CHANGES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" 2>/dev/null | grep -E '^(README\.md|TUTORIAL\.md|CREDITS\.md|docs/|skills/|\.github/workflows/jekyll-gh-pages\.yml)' || true)
+            CONTENT_CHANGES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" 2>/dev/null | grep -E '^(README\.md|TUTORIAL\.md|CREDITS\.md|docs/|skills/|github-pages/|scripts/|\.github/workflows/jekyll-gh-pages\.yml)' || true)
           else
-            CONTENT_CHANGES=$(git ls-files README.md TUTORIAL.md CREDITS.md docs skills .github/workflows/jekyll-gh-pages.yml 2>/dev/null || true)
+            CONTENT_CHANGES=$(git ls-files README.md TUTORIAL.md CREDITS.md docs skills github-pages scripts .github/workflows/jekyll-gh-pages.yml 2>/dev/null || true)
           fi
           if [ -n "$CONTENT_CHANGES" ]; then
             echo "Documentation or packaging changes detected:"
