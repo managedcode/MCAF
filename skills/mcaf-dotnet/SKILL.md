@@ -1,6 +1,6 @@
 ---
 name: mcaf-dotnet
-description: "Primary entry skill for C# and .NET tasks. Detect the repo's language version, test runner, quality stack, and architecture rules; route to the right .NET subskills; and run the repo-defined post-change quality pass after any code change."
+description: "Primary entry skill for C# and .NET tasks. Detect the repo's language version, test runner, quality stack, and architecture rules; route to the right .NET subskills; and run the repo-defined post-change quality pass after any code change. Use when the user asks to implement, debug, review, or refactor .NET code, or asks which .NET skill or toolchain should apply."
 compatibility: "Requires a .NET solution or project; respects root and local `AGENTS.md` first."
 ---
 

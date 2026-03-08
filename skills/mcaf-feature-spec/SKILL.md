@@ -1,6 +1,6 @@
 ---
 name: mcaf-feature-spec
-description: "Create or update a feature spec under `docs/Features/` with business rules, user flows, system behaviour, verification, and Definition of Done. Use before implementing non-trivial behaviour changes; use `references/feature-template.md` for scaffolding."
+description: "Create or update a feature spec under `docs/Features/` with business rules, user flows, system behaviour, verification, and Definition of Done. Use when the user asks for a feature spec, executable requirements, acceptance criteria, behaviour documentation, or a pre-implementation plan for non-trivial behaviour changes."
 compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps."
 ---
 

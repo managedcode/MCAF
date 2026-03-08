@@ -1,6 +1,6 @@
 ---
 name: mcaf-adr-writing
-description: "Create or update an ADR under `docs/ADR/` for architectural decisions, dependency changes, data-model changes, or cross-cutting policy shifts. Use `references/adr-template.md` for scaffolding and keep the ADR self-contained, diagrammed, and testable."
+description: "Create or update an ADR under `docs/ADR/` for architectural decisions, dependency changes, data-model changes, or cross-cutting policy shifts. Use when the user asks to write, update, or document an ADR, record a design decision, capture architecture trade-offs, or justify a repo-wide technical policy."
 compatibility: "Requires repository write access; produces Markdown ADRs with Mermaid diagrams."
 ---
 
