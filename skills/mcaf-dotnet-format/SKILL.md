@@ -46,6 +46,20 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 4. Keep `.editorconfig` as the source of truth for style preferences.
 5. If the repo also uses `CSharpier`, document which tool owns which file types or rules.
 
+## Bootstrap When Missing
+
+If `dotnet format` is requested but not available yet:
+
+1. Detect current state:
+   - `dotnet --info`
+   - `dotnet format --version`
+2. Treat `dotnet format` as SDK-provided, not as a separate repo-local tool by default.
+3. If the command is missing, install or upgrade to a supported .NET SDK, then recheck `dotnet format --version`.
+4. Add explicit local and CI commands to `AGENTS.md`, usually:
+   - `dotnet format <target> --verify-no-changes`
+5. Run the chosen command once and return `status: configured` or `status: improved`.
+6. If the repo intentionally uses only `CSharpier` for formatting ownership, return `status: not_applicable`.
+
 ## Deliver
 
 - explicit `dotnet format` commands for local and CI runs

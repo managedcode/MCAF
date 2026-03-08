@@ -47,6 +47,23 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 4. Use `dotnet build` as the analyzer execution gate in CI.
 5. Add third-party analyzers only for real gaps that first-party rules do not cover.
 
+## Bootstrap When Missing
+
+If first-party .NET code analysis is requested but not configured yet:
+
+1. Detect current state:
+   - `dotnet --info`
+   - `rg -n "EnableNETAnalyzers|AnalysisLevel|AnalysisMode|TreatWarningsAsErrors" -g '*.csproj' -g 'Directory.Build.*' .`
+2. Treat SDK analyzers as built-in functionality, not as a separate third-party install path.
+3. Enable the needed properties in the solution's MSBuild config, typically in `Directory.Build.props` or the target project file:
+   - `EnableNETAnalyzers`
+   - `AnalysisLevel`
+   - `AnalysisMode` when needed
+   - warning policy such as `TreatWarningsAsErrors`
+4. Keep rule-level severity in the repo-root `.editorconfig`.
+5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+6. If the repo intentionally defers analyzer policy to another documented build layer, return `status: not_applicable`.
+
 ## Deliver
 
 - first-party analyzer policy that is explicit and reviewable
