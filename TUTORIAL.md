@@ -140,6 +140,7 @@ Add tool-specific .NET skills only when the repo standardizes on them:
 <!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->
 - `mcaf-dotnet-analyzer-config`
 - `mcaf-dotnet-archunitnet`
+- `mcaf-dotnet-cloc`
 - `mcaf-dotnet-code-analysis`
 - `mcaf-dotnet-codeql`
 - `mcaf-dotnet-coverlet`
@@ -170,6 +171,7 @@ The website build generates this list from the actual folders under `skills/`.
 - `mcaf-dotnet` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet/SKILL.md)
 - `mcaf-dotnet-analyzer-config` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-analyzer-config), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-analyzer-config/SKILL.md)
 - `mcaf-dotnet-archunitnet` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-archunitnet), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-archunitnet/SKILL.md)
+- `mcaf-dotnet-cloc` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-cloc), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-cloc/SKILL.md)
 - `mcaf-dotnet-code-analysis` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-code-analysis), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-code-analysis/SKILL.md)
 - `mcaf-dotnet-codeql` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-codeql), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-codeql/SKILL.md)
 - `mcaf-dotnet-complexity` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-complexity), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-complexity/SKILL.md)
