@@ -82,7 +82,7 @@ compatibility: "Requires a .NET solution or project; may update `AGENTS.md`, CI 
    - architecture/security skills such as `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, `mcaf-dotnet-codeql`, and `mcaf-dotnet-semgrep`
 8. Avoid overlapping tools with conflicting ownership. If you add an opinionated formatter, define whether it replaces or complements `dotnet format`.
 
-## Bootstrap When A Gate Is Missing
+## Bootstrap When Missing
 
 If a quality gate is requested but not configured, use this activation path:
 

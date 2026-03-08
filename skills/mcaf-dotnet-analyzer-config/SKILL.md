@@ -48,6 +48,19 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 5. Keep bulk switches such as `EnableNETAnalyzers` in MSBuild files, not in `.editorconfig`.
 6. Treat `.globalconfig` as an exceptional case, not the normal repo setup.
 
+## Bootstrap When Missing
+
+If analyzer configuration is requested but not structured yet:
+
+1. Detect current state:
+   - `rg --files -g '.editorconfig' -g '.globalconfig'`
+   - `rg -n "EnableNETAnalyzers|AnalysisLevel|AnalysisMode" -g '*.csproj' -g 'Directory.Build.*' .`
+2. Create or normalize one repo-root `.editorconfig` with `root = true`.
+3. Move rule severity into `.editorconfig` and keep bulk analyzer switches in project or MSBuild config.
+4. Add nested `.editorconfig` files only when a subtree really needs different scoped policy.
+5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+6. If the repo intentionally uses another documented analyzer-config ownership model, return `status: not_applicable`.
+
 ## Deliver
 
 - one explicit analyzer configuration ownership model

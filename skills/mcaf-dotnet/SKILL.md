@@ -71,7 +71,7 @@ compatibility: "Requires a .NET solution or project; respects root and local `AG
 7. If the repo does not define these commands clearly, tighten `AGENTS.md` before continuing so later agents stop guessing.
 8. Do not introduce preview language features unless the repo explicitly opts into preview in project or MSBuild settings.
 
-## Bootstrap Policy For Inactive Tools
+## Bootstrap When Missing
 
 When a requested .NET gate or tool is missing in this repo, do not stop at "not configured":
 
