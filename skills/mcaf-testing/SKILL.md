@@ -1,67 +1,67 @@
 ---
 name: mcaf-testing
-description: "Add or update automated tests for a change (bugfix, feature, refactor) using the repository’s testing rules in `AGENTS.md`. Use TDD where applicable; derive scenarios from docs/Features/* and ADR invariants; prefer stable integration/API/UI tests, run build before tests, and verify meaningful assertions for happy/negative/edge cases."
-compatibility: "Requires the repository’s build/test tooling; uses commands from AGENTS.md."
+description: "Add or update automated tests for a change using the repository’s verification rules in `AGENTS.md`. Use when implementing a feature, bugfix, refactor, or regression test; prefer stable integration/API/UI coverage and pull deeper test strategy from the bundled references."
+compatibility: "Requires the repository’s build and test tooling; uses commands from root or local `AGENTS.md`."
 ---
 
 # MCAF: Testing
 
-## Outputs
+## Trigger On
 
-- New/updated automated tests that encode **documented behaviour** (happy path + negative + edge), with integration/API/UI preferred
-- For new behaviour and bugfixes: tests drive the change (TDD: reproduce/specify → test fails → implement → test passes)
-- Updated verification sections in relevant docs (`docs/Features/*`, `docs/ADR/*`) when needed (tests + commands must match reality)
-- Evidence of verification: commands run (`build`/`test`/`coverage`/`analyze`) + result + the report/artifact path written by the tool (when applicable)
+- implementing a feature or bugfix
+- adding a regression test for a failure
+- protecting a refactor with automated verification
+
+## Do Not Use For
+
+- repo-wide delivery policy with no test change
+- documentation-only changes unless they alter executable verification
+
+## Inputs
+
+- the nearest `AGENTS.md`
+- the changed behaviour and touched boundaries
+- existing tests near the impacted code path
 
 ## Workflow
 
-1. Read `AGENTS.md`:
-   - commands: `build`, `test`, `format`, `analyze`, and the repo’s coverage path (either a dedicated `coverage` command or a `test` command that generates coverage)
-   - testing rules (levels, mocks policy, suites to run, containers, etc.)
-2. Start from the docs that define behaviour (no guessing):
-   - `docs/Features/*` for user/system flows and business rules
-   - `docs/ADR/*` for architectural decisions and invariants that must remain true
-   - if the docs are missing/contradict, fix the docs first (or write a minimal spec + test plan in the task/PR)
-   - follow `AGENTS.md` scoping rules (Architecture map → relevant docs → relevant module code; avoid repo-wide scanning)
-3. Follow `AGENTS.md` verification timing (optimize time + tokens):
-   - run tests/coverage only when you have a reason (changed code/tests, bug reproduction, baseline confirmation)
-   - start with the smallest scope (new/changed tests), then expand to required suites
-4. Define the scenarios you must prove (map them back to docs):
-   - **positive** (happy path)
-   - **negative** (validation/forbidden/unauthorized/error paths)
-   - **edge** (limits, concurrency, retries/idempotency, time-sensitive behaviour)
-   - for ADRs: test the **invariants** and the “must not happen” behaviours the decision relies on
-5. Choose the highest meaningful test level:
-   - prefer integration/API/UI when the behaviour crosses boundaries
-   - use unit tests only when logic is isolated and higher-level coverage is impractical
-6. Implement via a TDD loop (per scenario):
-   - write the test first and make sure it fails for the **right reason**
-   - implement the minimum change to make it pass
-   - refactor safely (keep tests green)
-7. Write tests that assert outcomes (not “it runs”):
-   - assert returned values/responses
-   - assert DB state / emitted events / observable side effects
-   - include negative and edge cases when relevant
-8. Keep tests stable (treat flakiness as a bug):
-   - deterministic data/fixtures, no hidden dependencies
-   - avoid `sleep`-based timing; prefer “wait until condition”/polling with a timeout
-   - keep test setup/teardown reliable (reset state between tests)
-9. Coverage (follow `AGENTS.md`, optimize time/tokens):
-   - run coverage only if it’s part of the repo’s required verification path or if you need it to find gaps
-   - run coverage once per change (it is heavier than tests)
-   - capture where the report/artifacts were written (path, summary) if generated
-10. If the repo has UI:
-   - run UI/E2E tests
-   - inspect screenshots/videos/traces produced by the runner for failures and obvious UI regressions
-11. Run verification in layers (as required by `AGENTS.md`):
-   - new/changed tests first
-   - then the related suite
-   - then broader regressions if required
-   - run `analyze` if required
-12. Keep docs and skills consistent:
-   - ensure `docs/Features/*` and `docs/ADR/*` verification sections point to the real tests and real commands
-   - if you change test/coverage commands or rules, update `AGENTS.md` and this skill in the same PR
+1. Read the repo’s real verification commands from `AGENTS.md`.
+2. Start with a failing test first when the change adds behaviour or fixes a bug.
+3. Start with the smallest meaningful test scope:
+   - new or changed tests
+   - related suite
+   - broader regressions
+4. When the stack is .NET, route framework mechanics through exactly one matching skill:
+   - `mcaf-dotnet-xunit`
+   - `mcaf-dotnet-tunit`
+   - `mcaf-dotnet-mstest`
+5. Prefer integration, API, or UI coverage when behaviour crosses boundaries.
+6. Prove the user flow or caller-visible system flow, not just internal details.
+7. Add a regression test for every bug that can be captured reliably.
+8. Use deeper testing references only when the repo’s current strategy is unclear.
 
-## Guardrails
+## Deliver
 
-- All test discipline and prohibitions come from `AGENTS.md`. Do not contradict it in this skill.
+- automated tests close to the changed behaviour
+- verification results that match the repo’s real commands
+
+## Validate
+
+- the new behaviour is covered at the right level
+- the main user flow or caller-visible system flow is proven
+- tests assert meaningful outcomes, not implementation trivia
+- coverage expectations from `AGENTS.md` are met, or the exception is documented
+- the verification sequence matches `AGENTS.md`
+- broader suites are run after there is something real to verify
+
+## Load References
+
+- read `references/test-planning.md` first
+- open `references/automated-testing.md` for deeper strategy and trade-offs
+- for .NET framework-specific mechanics, use exactly one of `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
+
+## Example Requests
+
+- "Add tests for this bugfix."
+- "Protect this refactor with regression coverage."
+- "Choose the right test level for this API change."

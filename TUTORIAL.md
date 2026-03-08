@@ -1,466 +1,207 @@
-# Getting Started with MCAF
+# Getting Started with MCAF v1.2
 
-A practical guide to implementing MCAF in your repository.
+This tutorial is the canonical bootstrap flow for humans and agents.
 
-## Quick Start
+There is no shell installer in `v1.2`.
+The install path is URL-first and simple:
 
-Get MCAF running in your repository:
-
-1. Bootstrap AGENTS.md with AI analysis
-2. Create documentation structure in `docs/` (including `docs/Architecture/Overview.md`)
-3. Add skills (agent-specific directory)
-4. Document existing features
-5. Create ADRs for existing decisions
-6. Write feature docs before coding (ongoing workflow)
-7. Set up test environment
-8. Configure CI pipeline
+1. fetch bootstrap templates
+2. fetch the needed skill folders
+3. place them in the right target directories
+4. restart the agent
 
 ---
 
-## Step 1: Bootstrap AGENTS.md
+## 1. Open the Canonical Pages
 
-Download templates from [Templates](/templates):
-- **AGENTS.md** — copy to repository root
-- **Architecture-Template.md** — use for `docs/Architecture/Overview.md`
-- **ADR-Template.md** — use for `docs/ADR/ADR-*.md`
-- **Feature-Template.md** — use for `docs/Features/*.md`
+Use these pages as the install surface:
 
-The AI agent will analyze your project and fill in the template with actual commands, patterns, and conventions found in your codebase.
+- Tutorial: [https://mcaf.managed-code.com/tutorial.html](https://mcaf.managed-code.com/tutorial.html)
+- Templates: [https://mcaf.managed-code.com/templates.html](https://mcaf.managed-code.com/templates.html)
+- Skills: [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
 
-**What you get:** A customized AGENTS.md with your tech stack, build commands, code style, and workflow patterns.
+Use these raw template files for direct download:
 
-**Prompt:**
-
-```
-Analyze this project and fill in AGENTS.md:
-
-1. Detect tech stack — language, framework, versions from config files
-2. Scan codebase — folders, modules, layers, architecture
-3. Read existing code — patterns, conventions, naming styles
-4. Check git history — commit message format, branch naming, team patterns
-5. Find existing docs — README, comments with rules, ADRs if exist
-6. Analyze tests — structure, frameworks, how organized
-7. Ensure the workflow is **architecture-first** (no exceptions):
-   - always start from `docs/Architecture/Overview.md` to locate modules and boundaries
-   - do not add “file creation” logic into `AGENTS.md` (bootstrap creates docs; `AGENTS.md` governs work)
-
-Fill each AGENTS.md section:
-- Project name and detected stack
-- Commands — actual build/test/format commands
-- Task Delivery — workflow based on git patterns
-- Testing — rules based on test structure
-- Code Style — conventions from existing code
-- Boundaries — protected/critical areas
-
-Keep Self-Learning section as-is.
-Report what you found.
-```
+- Root `AGENTS.md`: [https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/AGENTS.md](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/AGENTS.md)
+- `CLAUDE.md`: [https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/CLAUDE.md](https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/CLAUDE.md)
 
 ---
 
-## Step 2: Create Documentation Structure
+## 2. Bootstrap the Repo Root
 
-Create a `docs/` folder with subfolders for different types of documentation. This gives AI agents and developers a clear place to find and add documentation.
+Always place `AGENTS.md` at the repository or solution root.
 
-**What you get:** Organized folder structure ready for feature specs, ADRs, and development guides.
+If you use Claude Code, also place `CLAUDE.md` at the repository root.
 
-**Prompt:**
-
-```
-Create documentation structure for this project:
-
-1. Create docs/ folder with subfolders:
-   - docs/Architecture/ — global architecture overview and module boundaries
-   - docs/Features/ — for feature specifications
-   - docs/ADR/ — for architecture decisions
-
-2. Create docs/Architecture/Overview.md with:
-   - At least one Mermaid diagram showing modules and interactions
-   - Module catalog (responsibilities + boundaries)
-   - Dependency rules (allowed/forbidden)
-   - Links to key ADRs/features (keep it link-based; no feature flows in the overview)
-   - Use template from docs/templates/Architecture-Template.md if it exists
-
-Report what you created.
-```
-
----
-
-## Step 3: Add Skills (repeatable agent workflows)
-
-Skills are part of MCAF: keep them in-repo so agents and humans share the same workflows, scripts, and standards.
-
-Where to put skills depends on your agent:
-
-- **Codex (OpenAI)**: `.codex/skills/`
-- **Claude Code (Anthropic)**: `.claude/skills/`
-- **Gemini Code Assist (Google)**: no documented Agent Skills folders (`SKILL.md`) like Codex/Claude; use `AGENTS.md` + docs, and control context with `.aiexclude`/`.gitignore` (Gemini CLI: `.geminiignore`)
-
-Baseline skills in this MCAF repo live under `skills/` (templates). The installer copies them into your chosen skills directory.
-
-One-line remote installer (no local clone required). It will prompt for agent selection; you can also pin it:
+Example:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s --
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/AGENTS.md -o AGENTS.md
+curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/docs/templates/CLAUDE.md -o CLAUDE.md
 ```
 
-For Claude Code (no prompt):
+If you are not using Claude Code, `CLAUDE.md` is optional.
+
+---
+
+## 3. Choose the Agent Skill Directory
+
+Use one of these target directories:
+
+- Codex: `.codex/skills/`
+- Claude Code: `.claude/skills/`
+
+Create the directory if it does not exist:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/managedcode/MCAF/main/scripts/mcaf-remote-install.sh | bash -s -- --agent claude
+mkdir -p .codex/skills
+mkdir -p .claude/skills
 ```
 
-If you already have this repo locally, run the installer from your repo root:
-
-```bash
-bash scripts/mcaf-install.sh
-```
-
-Install skills for Claude Code instead:
-
-```bash
-bash scripts/mcaf-install.sh --skills-dir .claude/skills
-```
-
-**Prompt:**
-
-```
-Add skills structure to this project:
-
-1. Create the agent skills directory at repo root:
-   - Codex: `.codex/skills/`
-   - Claude Code: `.claude/skills/`
-2. Add baseline MCAF skills (copy from the MCAF repo and then adapt to your repo):
-   - `mcaf-architecture-overview`
-   - `mcaf-feature-spec`
-   - `mcaf-adr-writing`
-   - `mcaf-testing`
-   - `mcaf-formatting`
-   - `mcaf-skill-curation`
-3. Ensure each skill is discoverable:
-   - folder name matches `name` (lowercase, digits, hyphens)
-   - `description` includes clear trigger contexts (this is what matching uses)
-4. Generate an “available skills” block for your agent runtime:
-   - include only metadata (name, description, location)
-   - prefer a simple XML `<available_skills>` block (easy to copy/paste and parse)
-   - generate from your repo (example for Codex): `python3 .codex/skills/mcaf-skill-curation/scripts/generate_available_skills.py .codex/skills --absolute`
-5. Validate skills and fix reported issues:
-   - (example for Codex) `python3 .codex/skills/mcaf-skill-curation/scripts/validate_skills.py .codex/skills`
-
-Report what you created.
-```
+Only create the directory for the agent runtime you actually use.
 
 ---
 
-## Updating an Existing Repo (Templates + Skills)
+## 4. Fetch the Skill Folders
 
-If your project already uses MCAF and you want to see what changed upstream (without overwriting your customized files), fetch a snapshot first:
+Get the available skills from:
 
-```bash
-# Run in your repo root:
-bash ../MCAF/scripts/mcaf-upstream-snapshot.sh
+- Skills page: [https://mcaf.managed-code.com/skills.html](https://mcaf.managed-code.com/skills.html)
+
+For each selected skill:
+
+1. Open the skill entry on the Skills page.
+2. Open the `Raw SKILL` link for that skill.
+3. Fetch `SKILL.md` into the target skill folder.
+4. Read the skill’s `Load References` section and fetch only the referenced files you actually need from the same GitHub folder.
+
+This keeps install deterministic without requiring manifests or archives.
+
+### 4.1 Recommended .NET Bundle
+
+For a .NET repository, the usual baseline is:
+
+- `mcaf-solution-governance`
+- `mcaf-testing`
+- exactly one of:
+  - `mcaf-dotnet-xunit`
+  - `mcaf-dotnet-tunit`
+  - `mcaf-dotnet-mstest`
+- `mcaf-dotnet-quality-ci`
+- `mcaf-solid-maintainability`
+- `mcaf-ci-cd`
+
+For .NET repositories, also make these repo-native artifacts explicit:
+
+- a repo-root `.editorconfig` as the analyzer and formatting source of truth
+- project-specific nested `.editorconfig` files when a subtree has a clear different purpose or policy
+- `Directory.Build.props` or project files for bulk analyzer and runner settings
+- whether the solution uses `VSTest` or `Microsoft.Testing.Platform`
+
+Add tool-specific .NET skills only when the repo standardizes on them:
+
+- `mcaf-dotnet-format`
+- `mcaf-dotnet-code-analysis`
+- `mcaf-dotnet-analyzer-config`
+- `mcaf-dotnet-complexity`
+- `mcaf-dotnet-stylecop-analyzers`
+- `mcaf-dotnet-roslynator`
+- `mcaf-dotnet-meziantou-analyzer`
+- `mcaf-dotnet-coverlet`
+- `mcaf-dotnet-reportgenerator`
+- `mcaf-dotnet-stryker`
+- `mcaf-dotnet-netarchtest`
+- `mcaf-dotnet-archunitnet`
+- `mcaf-dotnet-codeql`
+- `mcaf-dotnet-semgrep`
+- `mcaf-dotnet-csharpier`
+
+---
+
+## 5. Multi-Project Solutions
+
+For multi-project solutions:
+
+- keep one root `AGENTS.md` at the solution root
+- add one local `AGENTS.md` at each project or module root
+
+Do not create local files ad hoc.
+Use the `mcaf-solution-governance` skill to define:
+
+- project purpose
+- entry points
+- boundaries
+- project-local commands
+- applicable skills
+- stricter local maintainability limits, if needed
+
+Project-local `AGENTS.md` files refine root rules.
+They do not silently weaken root policy.
+
+---
+
+## 6. Maintainability Limits Live in AGENTS.md
+
+Numeric limits are repo policy, not framework constants.
+
+Put them in root `AGENTS.md` under `Maintainability Limits`:
+
+- `file_max_loc`
+- `type_max_loc`
+- `function_max_loc`
+- `max_nesting_depth`
+- `exception_policy`
+
+Project-local `AGENTS.md` files may tighten these limits for a specific area.
+
+Use the `mcaf-solid-maintainability` skill for:
+
+- SOLID and SRP guidance
+- split/refactor workflow
+- documenting justified exceptions
+
+---
+
+## 7. Where the Authoring Scaffolds Live
+
+`v1.2` keeps public templates minimal.
+
+Public templates:
+
+- `AGENTS.md`
+- `CLAUDE.md`
+
+Authoring scaffolds are now loaded through skills:
+
+- architecture overview scaffold: `mcaf-architecture-overview`
+- feature spec scaffold: `mcaf-feature-spec`
+- ADR scaffold: `mcaf-adr-writing`
+- project-local `AGENTS.md` scaffold: `mcaf-solution-governance`
+
+This keeps public pages small and lets agents fetch only the guidance they need.
+
+---
+
+## 8. Restart the Agent
+
+After placing the skill folders in the target directory, restart the agent runtime so it reloads the installed skills.
+
+The bootstrap is complete when:
+
+- root `AGENTS.md` exists
+- the right skill folders exist in the chosen skills directory
+- local `AGENTS.md` files exist for project roots in a multi-project solution
+- docs and commands are customized to the real repo
+
+---
+
+## 9. Suggested First Prompt After Install
+
+Use a prompt like this:
+
+```text
+Analyze this solution and customize the root AGENTS.md.
+If this is a multi-project solution, create project-local AGENTS.md files in each project root.
+Then identify which MCAF skills apply to each project and document them in the local AGENTS files.
+Finally, update docs/Architecture/Overview.md so agents can scope work without repo-wide scanning.
 ```
-
-For Claude Code repos (skills in `.claude/skills/`):
-
-```bash
-bash ../MCAF/scripts/mcaf-upstream-snapshot.sh --skills-dir .claude/skills
-```
-
-Then review and merge what you want (example):
-
-```bash
-diff -ruN docs/templates .mcaf/upstream/<timestamp>/docs/templates | less
-diff -ruN .codex/skills .mcaf/upstream/<timestamp>/.codex/skills | less
-```
-
-After merging, validate skills and regenerate the metadata block:
-
-```bash
-python3 .codex/skills/mcaf-skill-curation/scripts/validate_skills.py .codex/skills
-python3 .codex/skills/mcaf-skill-curation/scripts/generate_available_skills.py .codex/skills --absolute
-```
-
-If you use a different skills directory, replace `.codex/skills` with your chosen path (for example `.claude/skills`).
-
----
-
-## Step 4: Document Existing Features
-
-Scan the codebase for major features and modules, then create documentation for each. This captures current behavior so AI agents understand what already exists before making changes.
-
-Use [Feature-Template.md](/templates) from templates.
-
-**What you get:** Feature docs in `docs/Features/` describing purpose, flows, components, and tests for each major feature.
-
-**Prompt:**
-
-```
-Document existing features in this project:
-
-1. Scan codebase for major features/modules
-2. For each feature create docs/Features/{feature-name}.md with:
-   - Purpose — what it does
-   - Main flows — how it works
-   - Components — files/classes involved
-   - Tests — what tests exist for it
-   - Current behavior — how it behaves now
-
-Use template from docs/templates/Feature-Template.md if exists.
-List all features you documented.
-```
-
----
-
-## Step 5: Create ADRs for Existing Decisions
-
-Document architectural decisions that were already made in the project. This prevents AI agents from suggesting changes that conflict with existing architecture.
-
-Use [ADR-Template.md](/templates) from templates.
-
-**What you get:** ADRs in `docs/ADR/` explaining why the database, framework, auth approach, and other technical choices were made.
-
-**Prompt:**
-
-```
-Create ADRs for architectural decisions found in this project:
-
-1. Analyze codebase for architectural patterns:
-   - Database choice
-   - Framework choice
-   - Authentication approach
-   - API structure
-   - Any significant technical decisions
-
-2. For each decision create docs/ADR/{number}-{title}.md with:
-   - Status: Accepted (already implemented)
-   - Context: Why this decision was needed
-   - Decision: What was chosen
-   - Consequences: Trade-offs
-
-Use template from docs/templates/ADR-Template.md if exists.
-List all ADRs you created.
-```
-
----
-
-## Step 6: Write Feature Docs (Ongoing Workflow)
-
-For new features, write documentation before coding. This is your ongoing workflow after bootstrap.
-
-**What you get:** Clear specification that both humans and AI agents can implement without guessing.
-
-**Include:**
-
-- Feature name and purpose
-- Business rules and constraints
-- Main flow description
-- Test flows (positive, negative, edge cases)
-- Definition of Done
-
-Feature docs should be precise enough that:
-
-- A human can implement and verify the feature
-- An AI agent can derive code and tests without inventing behaviour
-
----
-
-## Step 7: Set Up Tests
-
-Integration tests are the backbone of MCAF. Configure your test environment to use real dependencies instead of mocks.
-
-**What you get:** Test infrastructure that catches real integration issues, not just unit-level bugs.
-
-**Principles:**
-
-- Use real dependencies, not mocks
-- Internal systems (database, cache, queues) run in containers
-- Test environment starts from documented scripts
-- Same commands work locally and in CI
-
-For .NET projects, consider:
-
-- Aspire for container orchestration
-- TUnit for test framework
-- WebApplicationFactory for Integration tests
-- Playwright for UI tests
-
-The specific tools matter less than the principle: test real behaviour with real dependencies.
-
----
-
-## Step 8: Configure CI
-
-Set up CI to run all tests automatically. This ensures every PR is verified before merge.
-
-**What you get:** Automated quality gate that runs build, tests, and static analysis.
-
-**CI pipeline should:**
-
-- Build the solution
-- Run all tests (unit, integration, API, UI)
-- Run static analysis
-- Fail on test failures or violations
-
-Both GitHub Actions and Azure DevOps support containerized test environments.
-
-Docker is available by default on hosted runners.
-
----
-
-## Working with AI Agents
-
-### Delegated Mode
-
-Agent does most work. Human reviews and merges.
-
-Best for:
-
-- Bug fixes with clear reproduction
-- Features with complete documentation
-- Routine refactoring
-
-### Collaborative Mode
-
-Agent and human work together throughout.
-
-Best for:
-
-- Complex features
-- Architectural changes
-- High-risk modifications
-
-### Consultative Mode
-
-Agent advises. Human implements.
-
-Best for:
-
-- Security-sensitive code
-- Learning new codebase
-- Design exploration
-
----
-
-## FAQ
-
-<details class="faq-item">
-<summary>Does MCAF work with any programming language?</summary>
-<div class="faq-answer">
-Yes. MCAF is language-agnostic. Define your <code>build</code>, <code>test</code>, <code>format</code> commands for your stack.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>Do I need all documentation folders?</summary>
-<div class="faq-answer">
-Start with <code>Features/</code>, <code>ADR/</code>, <code>Testing/</code>, and <code>Development/</code>. Add others as needed.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>What if my team doesn't have a dedicated QA?</summary>
-<div class="faq-answer">
-Developers take the QA perspective. The point is ensuring test coverage, not having a specific role.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>Why avoid mocking internal services?</summary>
-<div class="faq-answer">
-Mocks hide integration bugs. Real containers catch issues that mocks miss.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>How much test coverage is enough?</summary>
-<div class="faq-answer">
-Every significant behaviour needs at least one integration/API/UI test. Focus on workflows, not percentages.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>Which AI agents work with MCAF?</summary>
-<div class="faq-answer">
-Any AI coding assistant that can read files. Point them to <code>AGENTS.md</code>.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>How does the agent learn my preferences?</summary>
-<div class="faq-answer">
-Update <code>AGENTS.md</code> when you give feedback. Chat is not memory — the file is.
-</div>
-</details>
-
-<details class="faq-item">
-<summary>Can I adopt MCAF gradually?</summary>
-<div class="faq-answer">
-Yes. Start with <code>AGENTS.md</code> and one feature doc. Add structure as you go.
-</div>
-</details>
-
----
-
-## Common Mistakes
-
-### Writing code before docs
-
-Write feature doc with test flows first. Then implement.
-
-### Mocking everything
-
-Use real containers. Catch real integration issues.
-
-### Treating AGENTS.md as static
-
-Update after every significant feedback or pattern discovery.
-
-### Skipping the plan step
-
-Even small changes benefit from explicit planning.
-
----
-
-## Example Project Structure
-
-```
-my-project/
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── docs/
-│   ├── Features/
-│   │   ├── user-auth.md
-│   │   └── payment-flow.md
-│   ├── ADR/
-│   │   ├── 001-database-choice.md
-│   │   └── 002-auth-strategy.md
-│   ├── Testing/
-│   │   └── strategy.md
-│   ├── Development/
-│   │   └── setup.md
-│   └── API/
-│       └── endpoints.md
-├── src/
-│   └── ...
-├── tests/
-│   ├── integration/
-│   ├── api/
-│   └── ui/
-├── AGENTS.md
-└── README.md
-```
-
----
-
-## Next Steps
-
-1. Copy templates from [Templates](/templates)
-2. Read the full [MCAF Guide](/) for detailed specifications
-3. Set up your first feature using this workflow
-4. Iterate and improve your `AGENTS.md` as you learn
-
----
-
-*Need help? Open an issue on [GitHub](https://github.com/managedcode/MCAF).*
