@@ -66,8 +66,10 @@
   </style>
 
   <!-- Stylesheet - non-blocking -->
-  <link rel="preload" href="{{ '/assets/css/style.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"></noscript>
+  {% assign css_url = '/assets/css/style.css' | relative_url %}
+  {% assign css_version = site.version | default: site.build_date | default: 'dev' %}
+  <link rel="preload" href="{{ css_url }}?v={{ css_version }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ css_url }}?v={{ css_version }}"></noscript>
 
   <!-- Fonts - non-blocking -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
