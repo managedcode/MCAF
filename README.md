@@ -102,12 +102,6 @@ A skill contains:
 - `assets/` — output assets or templates used by the workflow
 - `scripts/` — deterministic helpers when they add reliability
 
-Run skill quality validation before merging skill changes:
-
-```bash
-./scripts/verify_mcaf_skills.sh
-```
-
 Recommended target locations in a consuming repo:
 
 - Codex: `.codex/skills/`
