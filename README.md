@@ -1,4 +1,4 @@
-# MCAF Guide
+# MCAF Concepts
 
 **Managed Code Coding AI Framework**
 
@@ -28,8 +28,9 @@ MCAF has three core elements:
 - **Verification** — tests and analyzers are the decision makers, not opinions.
 - **Instructions** — root and local `AGENTS.md` files define how agents work here.
 
-This Guide defines the framework.  
-Repository `AGENTS.md` files apply it to a specific solution.
+These concepts define the framework (the "what" and "why").  
+`TUTORIAL.md` is the bootstrap procedure (the "how").  
+Repository `AGENTS.md` files apply both to a specific solution.
 
 ### 1.1 Bootstrap Surface
 
@@ -97,6 +98,12 @@ A skill contains:
 - `references/` — long-form guidance or scaffolds loaded only when needed
 - `assets/` — output assets or templates used by the workflow
 - `scripts/` — deterministic helpers when they add reliability
+
+Run skill quality validation before merging skill changes:
+
+```bash
+./scripts/verify_mcaf_skills.sh
+```
 
 Recommended target locations in a consuming repo:
 

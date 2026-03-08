@@ -12,6 +12,12 @@ compatibility: "Requires repository access when UI docs, component guidance, or 
 - choosing front-end stack or design-system direction
 - tightening accessibility or design-to-development collaboration
 
+## Value
+
+- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
+- reduce ambiguity through explicit planning, verification, and final validation skills
+- leave reusable project context so future tasks are faster and safer
+
 ## Do Not Use For
 
 - pure backend or infrastructure work
@@ -22,6 +28,12 @@ compatibility: "Requires repository access when UI docs, component guidance, or 
 - user outcomes, device targets, and accessibility needs
 - design-system constraints and design handoff inputs
 - current front-end stack and delivery constraints
+
+## Quick Start
+
+1. Read the nearest `AGENTS.md` and confirm scope and constraints.
+2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
+3. Return the `Required Result Format` with concrete artifacts and verification evidence.
 
 ## Workflow
 
@@ -40,6 +52,33 @@ compatibility: "Requires repository access when UI docs, component guidance, or 
 - accessibility is treated as a first-class requirement
 - technology choices serve the product and team constraints
 - design handoff guidance is actionable for engineers
+
+## Ralph Loop
+
+Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
+
+1. Plan first (mandatory):
+   - analyze current state
+   - define target outcome, constraints, and risks
+   - write a detailed execution plan
+   - list final validation skills to run at the end, with order and reason
+2. Execute one planned step and produce a concrete delta.
+3. Review the result and capture findings with actionable next fixes.
+4. Apply fixes in small batches and rerun the relevant checks or review steps.
+5. Update the plan after each iteration.
+6. Repeat until outcomes are acceptable or only explicit exceptions remain.
+7. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
+
+### Required Result Format
+
+- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
+- `plan`: concise plan and current iteration step
+- `actions_taken`: concrete changes made
+- `validation_skills`: final skills run, or skipped with reasons
+- `verification`: commands, checks, or review evidence summary
+- `remaining`: top unresolved items or `none`
+
+For setup-only requests with no execution, return `status: configured` and exact next commands.
 
 ## Load References
 

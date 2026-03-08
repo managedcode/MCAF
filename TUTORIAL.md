@@ -1,6 +1,9 @@
 # Getting Started with MCAF v1.2
 
 This tutorial is the canonical bootstrap flow for humans and agents.
+It is intentionally separate from `README.md`:
+- `README.md` explains MCAF concepts
+- `TUTORIAL.md` explains installation and update steps
 
 There is no shell installer in `v1.2`.
 The install path is URL-first and simple:

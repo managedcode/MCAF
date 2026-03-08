@@ -168,6 +168,13 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - required change
   - constraints and risks
 - For non-trivial work, keep a written implementation plan in the feature doc, ADR, issue, or PR description.
+- Use the Ralph Loop for every non-trivial task:
+  - plan in detail before coding or document edits
+  - include ordered final validation skills in the plan, with reason for each skill
+  - require each selected skill to produce a concrete action, artifact, or verification outcome
+  - execute one planned step at a time
+  - review findings, apply fixes, and rerun relevant verification
+  - update the plan and repeat until done criteria are met or an explicit exception is documented
 - Implement code and tests together.
 - Run verification in layers:
   - changed tests

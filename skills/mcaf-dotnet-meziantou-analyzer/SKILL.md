@@ -11,6 +11,12 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 - the repo uses or wants `Meziantou.Analyzer`
 - the team wants one analyzer pack that covers design, usage, security, performance, and style
 
+## Value
+
+- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
+- reduce ambiguity through explicit planning, verification, and final validation skills
+- leave reusable project context so future tasks are faster and safer
+
 ## Do Not Use For
 
 - repos that already enforce an overlapping analyzer baseline and do not want extra diagnostics
@@ -22,11 +28,31 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 - current analyzer packages
 - `.editorconfig`
 
+## Quick Start
+
+1. Read the nearest `AGENTS.md` and confirm scope and constraints.
+2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
+3. Return the `Required Result Format` with concrete artifacts and verification evidence.
+
 ## Workflow
 
 1. Add `Meziantou.Analyzer` when the repo wants broader rules than the SDK baseline.
 2. Keep rule severity in the repo-root `.editorconfig`.
 3. Review overlaps with SDK analyzers and Roslynator before mass-enabling everything as errors.
+
+## Bootstrap When Missing
+
+If `Meziantou.Analyzer` is not configured yet:
+
+1. Detect current state:
+   - `rg -n "Meziantou\\.Analyzer" -g '*.csproj' .`
+2. Add the package to the intended scope (project-level or shared props strategy):
+   - `dotnet add <project>.csproj package Meziantou.Analyzer`
+3. Set severity in root `.editorconfig` for the enabled `MAxxxx` rules.
+4. Keep overlap with SDK analyzers and Roslynator explicit to avoid duplicate noise.
+5. Run `dotnet build <solution-or-project>` and return `status: configured` or `status: improved`.
+6. If the repo intentionally keeps a smaller analyzer surface, return `status: not_applicable`.
+
 
 ## Deliver
 
@@ -38,21 +64,32 @@ compatibility: "Requires a .NET SDK-based repository; respects the repo's `AGENT
 - the added rules are understood by the team
 - CI runs stay actionable instead of noisy
 
-## Findings Loop
+## Ralph Loop
 
-When this skill is used to run a checker, analyzer, test gate, or verification command:
+Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
 
-1. Run the command in read-only or report mode first and collect findings.
-2. Return a concise findings list with only actionable items:
-   - rule or check id
-   - `file:line`
-   - one-line fix intent
-3. Fix findings in small batches without hiding rules unless the repo already documents an exception.
-4. Re-run the same command after each fix batch.
-5. Repeat until the gate passes or only explicitly accepted exceptions remain.
-6. Keep output trimmed: include counts and the top remaining items only, not raw full logs.
+1. Plan first (mandatory):
+   - analyze current state
+   - define target outcome, constraints, and risks
+   - write a detailed execution plan
+   - list final validation skills to run at the end, with order and reason
+2. Execute one planned step and produce a concrete delta.
+3. Review the result and capture findings with actionable next fixes.
+4. Apply fixes in small batches and rerun the relevant checks or review steps.
+5. Update the plan after each iteration.
+6. Repeat until outcomes are acceptable or only explicit exceptions remain.
+7. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
 
-For setup-only requests that do not execute checks, return `status: configured` and the exact commands that should be run later.
+### Required Result Format
+
+- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
+- `plan`: concise plan and current iteration step
+- `actions_taken`: concrete changes made
+- `validation_skills`: final skills run, or skipped with reasons
+- `verification`: commands, checks, or review evidence summary
+- `remaining`: top unresolved items or `none`
+
+For setup-only requests with no execution, return `status: configured` and exact next commands.
 
 ## Load References
 
