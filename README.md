@@ -72,7 +72,7 @@ Anything that materially affects development, verification, or operation belongs
 
 A typical MCAF repo keeps durable docs under `docs/`:
 
-- `docs/Architecture/` — global map and module boundaries
+- `docs/Architecture.md` — global map and module boundaries
 - `docs/Features/` — behaviour specs and testable flows
 - `docs/ADR/` — architecture decisions and trade-offs
 - `docs/Testing/` — test strategy and environments
@@ -121,9 +121,9 @@ Every `mcaf-dotnet*` tool skill should include a `Bootstrap When Missing` sectio
 ### 2.5 Context Rules
 
 - All durable engineering context lives in the repository.
-- The project has a current `docs/Architecture/Overview.md`.
+- The project has a current `docs/Architecture.md`.
 - Humans and agents start from the architecture map, not repo-wide scanning.
-- `docs/Architecture/Overview.md` contains Mermaid diagrams for system/module boundaries, interfaces/contracts, and key types for the active area.
+- `docs/Architecture.md` contains Mermaid diagrams for system/module boundaries, interfaces/contracts, and key types for the active area.
 - Feature docs under `docs/Features/` contain at least one Mermaid diagram for the main flow.
 - ADRs under `docs/ADR/` contain at least one Mermaid diagram for the decision and affected boundaries.
 - Multi-project solutions use root plus project-local `AGENTS.md` files.

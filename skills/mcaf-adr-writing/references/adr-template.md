@@ -120,7 +120,7 @@ This section is mandatory.
 - Feature docs to update:  
 - Testing docs to update:  
 - Architecture docs to update:  
-- `docs/Architecture/Overview.md` updates (what must change):  
+- `docs/Architecture.md` updates (what must change):  
 - Notes for `AGENTS.md` (new rules/patterns):
 
 ---
@@ -198,4 +198,4 @@ This section is mandatory: describe how to prove the decision (tests + commands)
 - [ ] Testing methodology is filled in with positive, negative, and edge flows plus pass criteria.
 - [ ] New or updated automated tests exist for the changed behaviour.
 - [ ] All relevant tests are green and coverage did not fall below baseline.
-- [ ] `docs/Architecture/Overview.md` updated if module boundaries or interactions changed.
+- [ ] `docs/Architecture.md` updated if module boundaries or interactions changed.

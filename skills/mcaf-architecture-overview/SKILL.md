@@ -1,6 +1,6 @@
 ---
 name: mcaf-architecture-overview
-description: "Create or update `docs/Architecture/Overview.md` as the global architecture map for a solution. Use when bootstrapping a repo, onboarding, or changing modules, boundaries, or contracts. Keep it navigational and use `references/overview-template.md` for scaffolding."
+description: "Create or update `docs/Architecture.md` as the global architecture map for a solution. Use when bootstrapping a repo, onboarding, or changing modules, boundaries, or contracts. Keep it navigational and use `references/overview-template.md` for scaffolding."
 compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
@@ -37,7 +37,7 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 ## Workflow
 
-1. Start from the current `docs/Architecture/Overview.md`; if it is missing, scaffold it from `references/overview-template.md`.
+1. Start from the current `docs/Architecture.md`; if it is missing, scaffold it from `references/overview-template.md`.
 2. Build a short navigational overview:
    - system or module map
    - key boundaries and contracts
@@ -49,7 +49,7 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 ## Deliver
 
-- `docs/Architecture/Overview.md`
+- `docs/Architecture.md`
 - a short architecture map that routes the reader to deeper docs
 
 ## Validate

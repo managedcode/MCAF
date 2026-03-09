@@ -293,5 +293,5 @@ Use a prompt like this:
 Analyze this solution and customize the root AGENTS.md.
 If this is a multi-project solution, create project-local AGENTS.md files in each project root.
 Then identify which MCAF skills apply to each project and document them in the local AGENTS files.
-Finally, update docs/Architecture/Overview.md so agents can scope work without repo-wide scanning.
+Finally, update docs/Architecture.md so agents can scope work without repo-wide scanning.
 ```

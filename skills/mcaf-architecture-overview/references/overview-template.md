@@ -1,6 +1,6 @@
 # Architecture Overview
 
-> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real `docs/Architecture/Overview.md`.
+> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real `docs/Architecture.md`.
 
 Goal: in ~5 minutes, understand **what exists**, **where it lives**, and **how modules interact**.
 
@@ -30,7 +30,7 @@ Single source of truth: keep this doc navigational and coarse (diagrams + links)
 > Diagrams are for humans and AI agents. They must be self-describing.  
 > Model real blocks/modules/interfaces and **key** classes/types (not every file). Add dependencies only if they exist.  
 > Every diagram element must be anchored via real, clickable Markdown links in the indexes below (feature docs, ADRs, code paths, entry-point files).  
-> From `docs/Architecture/Overview.md`, code links usually start with `../../` (two levels up to repo root).  
+> From `docs/Architecture.md`, code links usually start with `../` (one level up to repo root).  
 > If a diagram becomes a messy “spaghetti graph”, it is incorrect: split by boundary and keep each diagram readable.  
 > Remove this note in the real doc.
 
@@ -89,17 +89,17 @@ classDiagram
 
 ### 3.1 Modules (diagram nodes)
 
-- `ModuleName` — code: [path/to/module/](../../path/to/module/); entry points: [path/to/entrypoint](../../path/to/entrypoint); docs: [docs/Features/...](../Features/...) / [docs/ADR/...](../ADR/...)
+- `ModuleName` — code: [path/to/module/](../path/to/module/); entry points: [path/to/entrypoint](../path/to/entrypoint); docs: [docs/Features/...](./Features/...) / [docs/ADR/...](./ADR/...)
 
 ### 3.2 Interfaces / contracts (diagram edges)
 
-- `ContractName` (HTTP/event/queue/interface) — source of truth: [path/to/api-or-contract](../../path/to/api-or-contract); producer/caller: ModuleA; consumer: ModuleB; docs: [docs/ADR/...](../ADR/...)
+- `ContractName` (HTTP/event/queue/interface) — source of truth: [path/to/api-or-contract](../path/to/api-or-contract); producer/caller: ModuleA; consumer: ModuleB; docs: [docs/ADR/...](./ADR/...)
 
 ### 3.3 Key classes / types (optional, high-signal only)
 
 > Include only cross-module/public types that matter for understanding and safe change (usually <= 10–20). Do not list internal implementation classes.
 
-- `TypeName` (class/interface/DTO/event) — defined in: [path/to/TypeName](../../path/to/TypeName); used by: ModuleA / ModuleB
+- `TypeName` (class/interface/DTO/event) — defined in: [path/to/TypeName](../path/to/TypeName); used by: ModuleA / ModuleB
 
 ## 4) Dependency rules (must be explicit)
 
@@ -113,10 +113,10 @@ classDiagram
 - Link ADRs that define boundaries, dependencies, and cross-cutting patterns.  
 - Keep this section link-based. Detailed flows belong in feature docs / ADRs, not in the overview.
 
-- [docs/ADR/ADR-XXXX-some-decision.md](../ADR/ADR-XXXX-some-decision.md) — what it decides, and what it impacts
+- [docs/ADR/ADR-XXXX-some-decision.md](./ADR/ADR-XXXX-some-decision.md) — what it decides, and what it impacts
 
 ## 6) Where to go next
 
-- Decisions: [docs/ADR/](../ADR/)  
-- Behaviour specs: [docs/Features/](../Features/)  
-- How to run + verify: [docs/Development/](../Development/), [docs/Testing/](../Testing/)
+- Decisions: [docs/ADR/](./ADR/)  
+- Behaviour specs: [docs/Features/](./Features/)  
+- How to run + verify: [docs/Development/](./Development/), [docs/Testing/](./Testing/)

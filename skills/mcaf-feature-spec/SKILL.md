@@ -25,7 +25,7 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 ## Inputs
 
-- `docs/Architecture/Overview.md`
+- `docs/Architecture.md`
 - the nearest `AGENTS.md`
 - current user flows, business rules, and acceptance expectations
 

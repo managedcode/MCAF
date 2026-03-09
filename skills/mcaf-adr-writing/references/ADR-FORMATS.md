@@ -119,7 +119,7 @@ Key points:
 - Feature docs to update:
 - Testing docs to update:
 - Architecture docs to update:
-- `docs/Architecture/Overview.md` updates (what must change):
+- `docs/Architecture.md` updates (what must change):
 - Notes for `AGENTS.md` (new rules/patterns):
 
 ---
@@ -181,7 +181,7 @@ Key points:
 - [ ] Status reflects real state (`Proposed`, `Accepted`, `Rejected`, `Superseded`).
 - [ ] Links to related features, tests, and ADRs are filled in.
 - [ ] Diagram section contains at least one Mermaid diagram.
-- [ ] `docs/Architecture/Overview.md` updated if module boundaries or interactions changed.
+- [ ] `docs/Architecture.md` updated if module boundaries or interactions changed.
 ````
 
 ---

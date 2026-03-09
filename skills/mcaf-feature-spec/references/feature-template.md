@@ -3,7 +3,7 @@
 > TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real feature doc under `docs/Features/`.
 
 Links:  
-Architecture: `docs/Architecture/Overview.md`  
+Architecture: `docs/Architecture.md`  
 Modules:  
 ADRs: `docs/ADR/...`  
 
@@ -187,6 +187,6 @@ Include this section only if it applies to this feature; otherwise remove it.
 
 - ADRs: `docs/ADR/...`  
 - API: `docs/API/...`  
-- Architecture: `docs/Architecture/...`  
+- Architecture: `docs/Architecture.md`  
 - Testing: `docs/Testing/...`  
 - Code: modules / namespaces  

@@ -25,7 +25,7 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
 
 ## Inputs
 
-- `docs/Architecture/Overview.md`
+- `docs/Architecture.md`
 - related feature docs
 - the nearest `AGENTS.md`
 - current constraints, options, and risks
@@ -47,7 +47,7 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
    - trade-offs and consequences
    - implementation plan
 4. Add diagrams only when they remove ambiguity.
-5. Link the ADR to affected feature docs and `docs/Architecture/Overview.md`.
+5. Link the ADR to affected feature docs and `docs/Architecture.md`.
 
 ## Deliver
 
