@@ -1,6 +1,7 @@
 # .NET AGENTS Pattern
 
 Use this reference when the solution stack is .NET and the root or local `AGENTS.md` needs concrete command and tooling guidance.
+The `.NET` skill bundle itself lives in [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills), not in this repository.
 
 ## Root AGENTS.md Expectations
 
@@ -27,7 +28,7 @@ Coverage command depends on the runner model:
 - `coverage`: `dotnet test MySolution.sln --coverlet`
 ```
 
-In `Global Skills`, list:
+In `Global Skills`, list the installed `.NET` skills from the external repository:
 
 - `mcaf-dotnet`
 - `mcaf-dotnet-features` when modern C# feature choice matters in this repo

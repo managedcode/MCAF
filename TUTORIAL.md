@@ -29,6 +29,7 @@ Rules:
 - install only current skills with prefix mcaf-
 - keep AGENTS.md in the repository root
 - if this is a multi-project solution, create or update local AGENTS.md files per project
+- if this is a .NET repo, fetch the needed `mcaf-dotnet*` skills from https://github.com/managedcode/dotnet-skills
 ```
 
 ---
@@ -103,63 +104,29 @@ This keeps install deterministic without requiring manifests or archives.
 
 ### 4.0 Recommended .NET Bundle
 
-For a .NET repository, the usual baseline is:
+This repository no longer bundles `.NET` skills under `skills/`.
+Fetch the `.NET` skill bundle from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
 
-- `mcaf-dotnet`
-- `mcaf-dotnet-features`
-- `mcaf-solution-governance`
-- `mcaf-testing`
-- exactly one of:
-  - `mcaf-dotnet-xunit`
-  - `mcaf-dotnet-tunit`
-  - `mcaf-dotnet-mstest`
-- `mcaf-dotnet-quality-ci`
-- `mcaf-dotnet-complexity`
-- `mcaf-solid-maintainability`
-- `mcaf-architecture-overview`
-- `mcaf-ci-cd`
-
-For .NET repositories, also make these repo-native artifacts explicit:
+For `.NET` repositories, keep these repo-native artifacts explicit in `AGENTS.md`:
 
 - a repo-root `.editorconfig` as the analyzer and formatting source of truth
 - project-specific nested `.editorconfig` files when a subtree has a clear different purpose or policy
 - `Directory.Build.props` or project files for bulk analyzer and runner settings
 - target `TFM` and explicit `LangVersion` only when the repo intentionally differs from the SDK default
 - whether the solution uses `VSTest` or `Microsoft.Testing.Platform`
+- the non-trivial task flow: `<slug>.brainstorm.md` first, then `<slug>.plan.md`, then implementation and validation
 
-The intended flow is:
+The intended `.NET` flow stays the same even though the bundle is external:
 
-- `mcaf-dotnet` is the entry skill for normal C# or .NET work
-- `mcaf-dotnet-features` decides which modern language features are safe to use, especially for C# 13 on `.NET 9` and C# 14 on `.NET 10`
-- the framework-specific test skill handles xUnit, TUnit, or MSTest mechanics
-- after code changes, agents run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
-
-The baseline above is intentionally small.
-Add tool-specific .NET skills only when the repo standardizes on them:
-
-<!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->
-- `mcaf-dotnet-analyzer-config`
-- `mcaf-dotnet-archunitnet`
-- `mcaf-dotnet-cloc`
-- `mcaf-dotnet-code-analysis`
-- `mcaf-dotnet-codeql`
-- `mcaf-dotnet-coverlet`
-- `mcaf-dotnet-csharpier`
-- `mcaf-dotnet-format`
-- `mcaf-dotnet-meziantou-analyzer`
-- `mcaf-dotnet-netarchtest`
-- `mcaf-dotnet-profiling`
-- `mcaf-dotnet-quickdup`
-- `mcaf-dotnet-reportgenerator`
-- `mcaf-dotnet-resharper-clt`
-- `mcaf-dotnet-roslynator`
-- `mcaf-dotnet-stryker`
-- `mcaf-dotnet-stylecop-analyzers`
-<!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->
+- install the matching `mcaf-dotnet*` skills from the external repository
+- use the orchestration and test-framework skills that fit the repo
+- after code changes, run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
 
 ### 4.1 Current Skill Catalog (Generated)
 
 The website build generates this list from the actual folders under `skills/`.
+
+`.NET` skills are excluded here because they live in the external repository above.
 
 <!-- MCAF:ALL-SKILLS-BEGIN -->
 - `mcaf-adr-writing` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-adr-writing), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-adr-writing/SKILL.md)
@@ -169,30 +136,6 @@ The website build generates this list from the actual folders under `skills/`.
 - `mcaf-code-review` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-code-review), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-code-review/SKILL.md)
 - `mcaf-devex` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-devex), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-devex/SKILL.md)
 - `mcaf-documentation` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-documentation), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-documentation/SKILL.md)
-- `mcaf-dotnet` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet/SKILL.md)
-- `mcaf-dotnet-analyzer-config` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-analyzer-config), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-analyzer-config/SKILL.md)
-- `mcaf-dotnet-archunitnet` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-archunitnet), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-archunitnet/SKILL.md)
-- `mcaf-dotnet-cloc` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-cloc), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-cloc/SKILL.md)
-- `mcaf-dotnet-code-analysis` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-code-analysis), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-code-analysis/SKILL.md)
-- `mcaf-dotnet-codeql` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-codeql), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-codeql/SKILL.md)
-- `mcaf-dotnet-complexity` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-complexity), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-complexity/SKILL.md)
-- `mcaf-dotnet-coverlet` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-coverlet), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-coverlet/SKILL.md)
-- `mcaf-dotnet-csharpier` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-csharpier), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-csharpier/SKILL.md)
-- `mcaf-dotnet-features` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-features), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-features/SKILL.md)
-- `mcaf-dotnet-format` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-format), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-format/SKILL.md)
-- `mcaf-dotnet-meziantou-analyzer` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-meziantou-analyzer), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-meziantou-analyzer/SKILL.md)
-- `mcaf-dotnet-mstest` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-mstest), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-mstest/SKILL.md)
-- `mcaf-dotnet-netarchtest` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-netarchtest), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-netarchtest/SKILL.md)
-- `mcaf-dotnet-profiling` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-profiling), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-profiling/SKILL.md)
-- `mcaf-dotnet-quality-ci` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-quality-ci), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-quality-ci/SKILL.md)
-- `mcaf-dotnet-quickdup` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-quickdup), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-quickdup/SKILL.md)
-- `mcaf-dotnet-reportgenerator` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-reportgenerator), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-reportgenerator/SKILL.md)
-- `mcaf-dotnet-resharper-clt` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-resharper-clt), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-resharper-clt/SKILL.md)
-- `mcaf-dotnet-roslynator` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-roslynator), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-roslynator/SKILL.md)
-- `mcaf-dotnet-stryker` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-stryker), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-stryker/SKILL.md)
-- `mcaf-dotnet-stylecop-analyzers` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-stylecop-analyzers), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-stylecop-analyzers/SKILL.md)
-- `mcaf-dotnet-tunit` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-tunit), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-tunit/SKILL.md)
-- `mcaf-dotnet-xunit` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-dotnet-xunit), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-dotnet-xunit/SKILL.md)
 - `mcaf-feature-spec` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-feature-spec), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-feature-spec/SKILL.md)
 - `mcaf-human-review-planning` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-human-review-planning), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-human-review-planning/SKILL.md)
 - `mcaf-ml-ai-delivery` — [Folder](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-ml-ai-delivery), [Raw SKILL](https://raw.githubusercontent.com/managedcode/MCAF/main/skills/mcaf-ml-ai-delivery/SKILL.md)
@@ -293,5 +236,6 @@ Use a prompt like this:
 Analyze this solution and customize the root AGENTS.md.
 If this is a multi-project solution, create project-local AGENTS.md files in each project root.
 Then identify which MCAF skills apply to each project and document them in the local AGENTS files.
+For non-trivial tasks, require a root-level <slug>.brainstorm.md before <slug>.plan.md.
 Finally, update docs/Architecture.md so agents can scope work without repo-wide scanning.
 ```

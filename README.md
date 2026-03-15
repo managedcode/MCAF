@@ -112,11 +112,10 @@ The public skill catalog lives on the Skills page:
 - [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
 Platform-specific bundles can stay small and still be explicit.
-For example, a typical .NET repo baseline can install `mcaf-dotnet` as the entry skill, `mcaf-dotnet-features`, `mcaf-solution-governance`, `mcaf-testing`, exactly one of `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`, plus `mcaf-dotnet-quality-ci`, `mcaf-dotnet-complexity`, `mcaf-solid-maintainability`, `mcaf-architecture-overview`, and `mcaf-ci-cd`.
-In that setup, `mcaf-dotnet` knows when to open the more specific .NET skills, the repo-root lowercase `.editorconfig` is the default source of truth for formatting and analyzer severity, and `AGENTS.md` records the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands. Nested `.editorconfig` files are allowed when they serve a clear subtree-specific purpose, such as stricter domain rules, generated-code handling, test-specific conventions, or legacy-code containment.
-For .NET code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, coverage, architecture tests, or security gates. Agents should run the repo-defined post-change quality pass before completion.
-If the repo standardizes on concrete tools, install the matching tool skills as well. Typical open or free .NET additions include `mcaf-dotnet-format`, `mcaf-dotnet-code-analysis`, `mcaf-dotnet-analyzer-config`, `mcaf-dotnet-stylecop-analyzers`, `mcaf-dotnet-roslynator`, `mcaf-dotnet-meziantou-analyzer`, `mcaf-dotnet-cloc`, `mcaf-dotnet-coverlet`, `mcaf-dotnet-profiling`, `mcaf-dotnet-quickdup`, `mcaf-dotnet-reportgenerator`, `mcaf-dotnet-resharper-clt`, `mcaf-dotnet-stryker`, `mcaf-dotnet-netarchtest`, `mcaf-dotnet-archunitnet`, and `mcaf-dotnet-csharpier`. `mcaf-dotnet-codeql` stays available, but should be chosen only when its hosting and licensing model fits the repository.
-Every `mcaf-dotnet*` tool skill should include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
+The `.NET` skill bundle is maintained outside this repository at [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
+Install the `.NET` skills you need from that repository, then document the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands in the consuming repo’s `AGENTS.md`.
+For `.NET` code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, coverage, architecture tests, or security gates.
+Agents should run the repo-defined post-change quality pass before completion, and any external `mcaf-dotnet*` tool skill should still include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
 
 ### 2.5 Context Rules
 
@@ -214,7 +213,7 @@ Root `AGENTS.md` stays current with:
 - commands (`build`, `test`, `format`, `analyze`, `coverage` if used)
 - global skills and when to use them
 - self-learning rules
-- non-trivial task planning rules, including root-level `<slug>.plan.md` usage
+- non-trivial task workflow rules, including root-level `<slug>.brainstorm.md` and `<slug>.plan.md` usage
 - testing discipline
 - done criteria for tests, coverage, and quality gates
 - design and maintainability rules
@@ -261,7 +260,8 @@ If the same mistake happens twice, the framework expects the rule to be made dur
 - Every MCAF repo has a root `AGENTS.md`.
 - Multi-project solutions use local `AGENTS.md` files at project roots.
 - Agents read root and local `AGENTS.md` before editing code.
-- Non-trivial tasks use a root-level `<slug>.plan.md` as the working plan.
+- Non-trivial tasks start with a root-level `<slug>.brainstorm.md`, then move into a root-level `<slug>.plan.md`.
+- Brainstorms capture thinking, options, trade-offs, and the chosen direction before implementation starts.
 - Plans include ordered implementation steps, explicit test steps, testing methodology, and final validation commands.
 - Skills are preferred over improvised workflow when a skill matches the task.
 - Numeric maintainability limits live in `AGENTS.md`, not in framework prose.
@@ -349,9 +349,23 @@ Before heavy coding:
 3. align test expectations
 4. identify the right skills
 
-### 7.2 Plan
+### 7.2 Brainstorm
 
-For non-trivial work, create a root-level `<slug>.plan.md` and keep it current.
+For non-trivial work, start with a root-level `<slug>.brainstorm.md` and keep it concise.
+The brainstorm records:
+
+- the problem to solve
+- scope and constraints
+- relevant context and assumptions
+- candidate approaches or options
+- trade-offs, risks, and open questions
+- the recommended direction that will become the plan
+
+Brainstorm first, think through the task, then convert the chosen direction into a working plan.
+
+### 7.3 Plan
+
+For non-trivial work, create a root-level `<slug>.plan.md` after the brainstorm direction is chosen, and keep it current.
 The plan records:
 
 - goal and scope
@@ -367,15 +381,15 @@ The plan records:
 Before implementation starts, run the full relevant test baseline.
 If anything is already failing, add each failing test to the plan with its symptom, suspected or confirmed root cause, and intended fix path.
 
-### 7.3 Implement
+### 7.4 Implement
 
-- Use the Ralph Loop for non-trivial work: execute one planned step, run the relevant checks, update the plan, then move to the next step.
+- Use the Ralph Loop for non-trivial work: brainstorm first, turn the chosen direction into a plan, execute one planned step, run the relevant checks, update the plan, then move to the next step.
 - implement code and tests together
 - keep changes small and reviewable
 - fix failing tests deliberately, one by one, and track them in the plan until they are closed
 - use the architecture map and nearest local `AGENTS.md` to stay in scope
 
-### 7.4 Verify
+### 7.5 Verify
 
 Run verification in layers:
 
@@ -385,7 +399,7 @@ Run verification in layers:
 4. analyzers, formatters, and any configured architecture, security, mutation, or other quality gates
 5. coverage comparison against the pre-change baseline
 
-### 7.5 Update Durable Context and Close the Task
+### 7.6 Update Durable Context and Close the Task
 
 After implementation:
 
@@ -429,6 +443,6 @@ Adoption is complete when:
 - the right skills are installed
 - multi-project boundaries have local `AGENTS.md`
 - commands and docs reflect the real repo
-- non-trivial work is guided by a root-level `<slug>.plan.md` and the Ralph Loop
+- non-trivial work is guided by root-level `<slug>.brainstorm.md`, `<slug>.plan.md`, and the Ralph Loop
 - tool-specific skills document real bootstrap and install steps when the tool is missing
 - tests and analyzers are the real gates

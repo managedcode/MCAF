@@ -84,17 +84,20 @@ compatibility: "Requires repository read access; may write a `HUMAN_REVIEW_PLAN.
 
 Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
 
-1. Plan first (mandatory):
+1. Brainstorm first (mandatory):
    - analyze current state
-   - define target outcome, constraints, and risks
-   - write a detailed execution plan
+   - define the problem, target outcome, constraints, and risks
+   - generate options and think through trade-offs before committing
+   - capture the recommended direction and open questions
+2. Plan second (mandatory):
+   - write a detailed execution plan from the chosen direction
    - list final validation skills to run at the end, with order and reason
-2. Execute one planned step and produce a concrete delta.
-3. Review the result and capture findings with actionable next fixes.
-4. Apply fixes in small batches and rerun the relevant checks or review steps.
-5. Update the plan after each iteration.
-6. Repeat until outcomes are acceptable or only explicit exceptions remain.
-7. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
+3. Execute one planned step and produce a concrete delta.
+4. Review the result and capture findings with actionable next fixes.
+5. Apply fixes in small batches and rerun the relevant checks or review steps.
+6. Update the plan after each iteration.
+7. Repeat until outcomes are acceptable or only explicit exceptions remain.
+8. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
 
 ### Required Result Format
 
