@@ -29,7 +29,7 @@ Rules:
 - install only current skills with prefix mcaf-
 - keep AGENTS.md in the repository root
 - if this is a multi-project solution, create or update local AGENTS.md files per project
-- if this is a .NET repo, fetch the needed `mcaf-dotnet*` skills from https://github.com/managedcode/dotnet-skills
+- if this is a .NET repo, fetch the needed skills from https://skills.managed-code.com/
 ```
 
 ---
@@ -102,10 +102,10 @@ For each selected skill:
 
 This keeps install deterministic without requiring manifests or archives.
 
-### 4.0 Recommended .NET Bundle
+### 4.0 For .NET Repositories
 
 This repository no longer bundles `.NET` skills under `skills/`.
-Fetch the `.NET` skill bundle from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
+Fetch the required `.NET` skills from the [Managed Code Skills catalog](https://skills.managed-code.com/).
 
 For `.NET` repositories, keep these repo-native artifacts explicit in `AGENTS.md`:
 
@@ -118,8 +118,8 @@ For `.NET` repositories, keep these repo-native artifacts explicit in `AGENTS.md
 
 The intended `.NET` flow stays the same even though the bundle is external:
 
-- install the matching `mcaf-dotnet*` skills from the external repository
-- use the orchestration and test-framework skills that fit the repo
+- install the required skills from the external catalog
+- use the skills that fit the repo workflow and test framework
 - after code changes, run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
 
 ### 4.1 Current Skill Catalog (Generated)

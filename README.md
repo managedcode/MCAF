@@ -112,10 +112,10 @@ The public skill catalog lives on the Skills page:
 - [https://mcaf.managed-code.com/skills](https://mcaf.managed-code.com/skills)
 
 Platform-specific bundles can stay small and still be explicit.
-The `.NET` skill bundle is maintained outside this repository at [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
-Install the `.NET` skills you need from that repository, then document the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands in the consuming repo’s `AGENTS.md`.
+`.NET` skills are maintained outside this repository in the [Managed Code Skills catalog](https://skills.managed-code.com/).
+Install the `.NET` skills you need from that catalog, then document the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands in the consuming repo’s `AGENTS.md`.
 For `.NET` code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, coverage, architecture tests, or security gates.
-Agents should run the repo-defined post-change quality pass before completion, and any external `mcaf-dotnet*` tool skill should still include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
+Agents should run the repo-defined post-change quality pass before completion, and any external `.NET` helper should still include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
 
 ### 2.5 Context Rules
 

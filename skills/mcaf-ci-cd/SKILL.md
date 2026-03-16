@@ -101,7 +101,7 @@ For setup-only requests with no execution, return `status: configured` and exact
 ## Load References
 
 - read `references/ci-cd.md` first
-- for .NET quality gates, use the external `mcaf-dotnet-quality-ci` skill from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills)
+- for .NET quality gates, use the external `mcaf-dotnet-quality-ci` skill from the [Managed Code Skills catalog](https://skills.managed-code.com/)
 
 ## Example Requests
 

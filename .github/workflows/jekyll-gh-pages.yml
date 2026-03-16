@@ -122,6 +122,7 @@ jobs:
           site_url = os.environ["SITE_URL"].rstrip("/")
           github_raw = "https://raw.githubusercontent.com/managedcode/MCAF/main"
           github_blob = "https://github.com/managedcode/MCAF/blob/main"
+          dotnet_catalog_url = "https://skills.managed-code.com/"
 
           def parse_frontmatter(skill_md: Path) -> dict[str, str]:
               text = skill_md.read_text(encoding="utf-8")
@@ -172,6 +173,10 @@ jobs:
                       "skill_md_url": f"{github_raw}/skills/{skill_name}/SKILL.md",
                   }
               )
+
+          public_skills = [
+              skill for skill in skills if not skill["name"].startswith("mcaf-dotnet")
+          ]
 
           templates_page = repo / "github-pages" / "templates.md"
           templates_page.write_text(
@@ -225,9 +230,11 @@ jobs:
               "",
               f"Use these skill folders with the [tutorial]({site_url}/tutorial.html).",
               "",
+              f"MCAF lists only the skills bundled in this repository. `.NET` skills live in the dedicated [Managed Code Skills catalog]({dotnet_catalog_url}).",
+              "",
               "<div class=\"templates-list\">",
           ]
-          for skill in skills:
+          for skill in public_skills:
               skills_page_lines.extend(
                   [
                       "<div class=\"template-item\">",
@@ -247,42 +254,16 @@ jobs:
               encoding="utf-8",
           )
 
-          dotnet_optional_exclude = {
-              "mcaf-dotnet-features",
-              "mcaf-dotnet-quality-ci",
-              "mcaf-dotnet-complexity",
-              "mcaf-dotnet-xunit",
-              "mcaf-dotnet-tunit",
-              "mcaf-dotnet-mstest",
-          }
-          dotnet_optional = sorted(
-              skill["name"]
-              for skill in skills
-              if skill["name"].startswith("mcaf-dotnet-")
-              and skill["name"] not in dotnet_optional_exclude
-          )
-          dotnet_optional_lines = (
-              [f"- `{skill_name}`" for skill_name in dotnet_optional]
-              if dotnet_optional
-              else ["- _No optional .NET skills found._"]
-          )
-
           all_skills_lines = [
               (
                   f"- `{skill['name']}` — "
                   f"[Folder]({skill['folder_url']}), "
                   f"[Raw SKILL]({skill['skill_md_url']})"
               )
-              for skill in skills
+              for skill in public_skills
           ]
 
           tutorial_body = (repo / "TUTORIAL.md").read_text(encoding="utf-8")
-          tutorial_body = replace_marker_block(
-              tutorial_body,
-              "<!-- MCAF:DOTNET-OPTIONAL-SKILLS-BEGIN -->",
-              "<!-- MCAF:DOTNET-OPTIONAL-SKILLS-END -->",
-              dotnet_optional_lines,
-          )
           tutorial_body = replace_marker_block(
               tutorial_body,
               "<!-- MCAF:ALL-SKILLS-BEGIN -->",

@@ -1,7 +1,7 @@
 # .NET AGENTS Pattern
 
 Use this reference when the solution stack is .NET and the root or local `AGENTS.md` needs concrete command and tooling guidance.
-The `.NET` skill bundle itself lives in [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills), not in this repository.
+The `.NET` skill bundle itself lives in the [Managed Code Skills catalog](https://skills.managed-code.com/), not in this repository.
 
 ## Root AGENTS.md Expectations
 

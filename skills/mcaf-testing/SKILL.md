@@ -43,7 +43,7 @@ compatibility: "Requires the repository’s build and test tooling; uses command
    - new or changed tests
    - related suite
    - broader regressions
-4. When the stack is .NET, use the external `.NET` skills from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills), use `mcaf-dotnet` as the orchestration skill when the task spans code, tests, and verification, and route framework mechanics through exactly one matching skill:
+4. When the stack is .NET, use the external `.NET` skills from the [Managed Code Skills catalog](https://skills.managed-code.com/), use `mcaf-dotnet` as the orchestration skill when the task spans code, tests, and verification, and route framework mechanics through exactly one matching skill:
    - `mcaf-dotnet-xunit`
    - `mcaf-dotnet-tunit`
    - `mcaf-dotnet-mstest`
@@ -102,8 +102,8 @@ For setup-only requests with no execution, return `status: configured` and exact
 
 - read `references/test-planning.md` first
 - open `references/automated-testing.md` for deeper strategy and trade-offs
-- for broader .NET implementation flow, use the external `mcaf-dotnet` skill from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills)
-- for .NET framework-specific mechanics, use exactly one external skill from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills): `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
+- for broader .NET implementation flow, use the external `mcaf-dotnet` skill from the [Managed Code Skills catalog](https://skills.managed-code.com/)
+- for .NET framework-specific mechanics, use exactly one external skill from the [Managed Code Skills catalog](https://skills.managed-code.com/): `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
 
 ## Example Requests
 

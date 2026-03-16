@@ -41,7 +41,7 @@ For .NET projects also document:
 - `...`
 - `...`
 
-For .NET projects, install the needed `.NET` skills from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
+For .NET projects, install the needed `.NET` skills from the [Managed Code Skills catalog](https://skills.managed-code.com/).
 The local skill list usually includes:
 
 - `mcaf-testing`

@@ -92,7 +92,7 @@ Do not paste the whole framework catalog here.
 - `<skill-name>` — when agents should use it
 - `<skill-name>` — when agents should use it
 
-If the stack is `.NET`, install the needed `.NET` skills from [managedcode/dotnet-skills](https://github.com/managedcode/dotnet-skills).
+If the stack is `.NET`, install the needed `.NET` skills from the [Managed Code Skills catalog](https://skills.managed-code.com/).
 The usual baseline often includes:
 
 - `mcaf-dotnet`
@@ -107,7 +107,7 @@ The usual baseline often includes:
 
 If the stack is `.NET`, document skill-management rules explicitly:
 
-- `.NET` skills are sourced from `https://github.com/managedcode/dotnet-skills`.
+- `.NET` skills are sourced from `https://skills.managed-code.com/`.
 - `mcaf-dotnet` is the entry skill and routes to specialized `.NET` skills.
 - Keep exactly one framework skill: `mcaf-dotnet-xunit` or `mcaf-dotnet-tunit` or `mcaf-dotnet-mstest`.
 - Add tool-specific `.NET` skills only when the repository actually uses those tools in CI or local verification.
