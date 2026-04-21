@@ -114,13 +114,15 @@ For `.NET` repositories, keep these repo-native artifacts explicit in `AGENTS.md
 - `Directory.Build.props` or project files for bulk analyzer and runner settings
 - target `TFM` and explicit `LangVersion` only when the repo intentionally differs from the SDK default
 - whether the solution uses `VSTest` or `Microsoft.Testing.Platform`
-- the non-trivial task flow: `<slug>.brainstorm.md` first, then `<slug>.plan.md`, then implementation and validation
+- the decision rule for `brainstorm`: use `<slug>.brainstorm.md` only for non-trivial tasks, then `<slug>.plan.md`, then implementation and validation
+- vertical-slice architecture rules so each feature stays in its own isolated folder tree
+- self-learning rules so repeated corrections become durable repo guidance
 
 The intended `.NET` flow stays the same even though the bundle is external:
 
 - install the required skills from the external catalog
 - use the skills that fit the repo workflow and test framework
-- after code changes, run the repo-defined quality pass: format, build, analyze, tests, coverage, and any configured extra gates
+- after code changes, run the repo-defined quality pass: format, build, analyze, tests, complexity, coverage, and any configured extra gates
 
 ### 4.1 Current Skill Catalog (Generated)
 
@@ -236,6 +238,8 @@ Use a prompt like this:
 Analyze this solution and customize the root AGENTS.md.
 If this is a multi-project solution, create project-local AGENTS.md files in each project root.
 Then identify which MCAF skills apply to each project and document them in the local AGENTS files.
-For non-trivial tasks, require a root-level <slug>.brainstorm.md before <slug>.plan.md.
+For non-trivial tasks, require a root-level <slug>.brainstorm.md before <slug>.plan.md, but skip brainstorm for simple or obvious tasks.
+Make vertical-slice architecture mandatory so each feature stays in its own isolated folder tree with nearby tests and dependencies.
+Treat integration tests, self-learning, and full quality-gate execution as non-negotiable repo rules.
 Finally, update docs/Architecture.md so agents can scope work without repo-wide scanning.
 ```

@@ -25,8 +25,8 @@ The goal of MCAF:
 MCAF has three core elements:
 
 - **Context** — code, docs, `AGENTS.md`, and skills live with the repo.
-- **Verification** — tests and analyzers are the decision makers, not opinions.
-- **Instructions** — root and local `AGENTS.md` files define how agents work here.
+- **Verification** — integration tests and quality gates are the decision makers, not opinions.
+- **Instructions** — root and local `AGENTS.md` files define how agents work here and learn over time.
 
 These concepts define the framework (the "what" and "why").  
 `TUTORIAL.md` is the bootstrap procedure (the "how").  
@@ -113,8 +113,8 @@ The public skill catalog lives on the Skills page:
 
 Platform-specific bundles can stay small and still be explicit.
 `.NET` skills are maintained outside this repository in the [Managed Code Skills catalog](https://skills.managed-code.com/).
-Install the `.NET` skills you need from that catalog, then document the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, and coverage commands in the consuming repo’s `AGENTS.md`.
-For `.NET` code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, coverage, architecture tests, or security gates.
+Install the `.NET` skills you need from that catalog, then document the exact `dotnet build`, `dotnet test`, `dotnet format`, `analyze`, `complexity`, coverage, and other quality-gate commands in the consuming repo’s `AGENTS.md`.
+For `.NET` code changes, the task is not done when tests are green if the repo also configured formatters, analyzers, complexity checks, coverage, architecture tests, or security gates.
 Agents should run the repo-defined post-change quality pass before completion, and any external `.NET` helper should still include a `Bootstrap When Missing` section so agents can detect, install, verify, and first-run the tool without guessing.
 
 ### 2.5 Context Rules
@@ -122,6 +122,9 @@ Agents should run the repo-defined post-change quality pass before completion, a
 - All durable engineering context lives in the repository.
 - The project has a current `docs/Architecture.md`.
 - Humans and agents start from the architecture map, not repo-wide scanning.
+- Vertical-slice architecture is mandatory by default.
+- Each feature lives in its own folder tree with the code, tests, contracts, docs, and other dependencies needed for that slice.
+- Feature slices stay as isolated as possible so task context stays narrow and the right files are easy to find.
 - `docs/Architecture.md` contains Mermaid diagrams for system/module boundaries, interfaces/contracts, and key types for the active area.
 - Feature docs under `docs/Features/` contain at least one Mermaid diagram for the main flow.
 - ADRs under `docs/ADR/` contain at least one Mermaid diagram for the decision and affected boundaries.
@@ -145,6 +148,8 @@ MCAF expects layered verification:
 The goal is not “one test per feature.”  
 The goal is enough automated evidence to trust the change.
 
+Integration tests are the backbone because they prove that a slice works through real boundaries, not just isolated units.
+
 ### 3.2 Verification Rules
 
 - Prefer TDD for new behaviour and bug fixes: start with a failing test, make it pass, then refactor.
@@ -152,12 +157,14 @@ The goal is enough automated evidence to trust the change.
 - Tests prove user-visible or caller-visible flows, not just isolated implementation detail.
 - Tests cover positive, negative, edge, and unexpected flows when the behaviour can fail in different ways.
 - Integration/API/UI coverage is preferred when the behaviour crosses boundaries.
+- Integration tests are the default primary proof for behaviour that spans more than one component inside a feature slice.
 - Internal and external systems are exercised through real containers, test instances, or sandbox environments in primary suites.
 - Mocks, fakes, stubs, and service doubles are forbidden in verification flows.
 - Changed production code should reach at least 80% line coverage and 70% branch coverage where supported; critical flows and public contracts should reach 90% line coverage.
 - Coverage must not regress below the pre-change baseline without an explicit exception, and coverage numbers do not replace scenario coverage.
 - Static analysis is part of done, not a cleanup task.
 - Failing tests or analyzers block completion.
+- Run every repo-defined quality gate that is available for the stack and change scope: formatters, linters, analyzers, complexity checks, architecture tests, security scans, mutation checks, coverage, and any other configured verification tools.
 - The task is not done until the full relevant test suite is green, not only the newly added or changed tests.
 
 ### 3.3 Verification Artifacts
@@ -210,13 +217,14 @@ Agents follow this order:
 
 Root `AGENTS.md` stays current with:
 
-- commands (`build`, `test`, `format`, `analyze`, `coverage` if used)
+- commands (`build`, `test`, `format`, `analyze`, `complexity`, `coverage`, and other quality gates if used)
 - global skills and when to use them
 - self-learning rules
 - non-trivial task workflow rules, including root-level `<slug>.brainstorm.md` and `<slug>.plan.md` usage
 - testing discipline
 - done criteria for tests, coverage, and quality gates
 - design and maintainability rules
+- vertical-slice architecture rules and allowed exceptions
 - exception policy
 - topology for local `AGENTS.md` files
 
@@ -254,13 +262,18 @@ Stable corrections, preferences, and recurring mistakes should become:
 - skill updates
 
 If the same mistake happens twice, the framework expects the rule to be made durable.
+Self-learning is a cornerstone of the framework, not an optional habit.
 
 ### 4.6 Hard Rules for Instructions
 
 - Every MCAF repo has a root `AGENTS.md`.
 - Multi-project solutions use local `AGENTS.md` files at project roots.
 - Agents read root and local `AGENTS.md` before editing code.
-- Non-trivial tasks start with a root-level `<slug>.brainstorm.md`, then move into a root-level `<slug>.plan.md`.
+- Vertical-slice architecture is mandatory unless an ADR or local exception rule says otherwise.
+- Each feature must live in its own isolated folder tree with its local code, tests, and supporting artifacts kept together.
+- Agents must prefer the smallest relevant feature slice over repo-wide scanning.
+- Only non-trivial tasks start with a root-level `<slug>.brainstorm.md`, then move into a root-level `<slug>.plan.md`.
+- Simple, short, or obvious tasks should skip the brainstorm and go straight to execution.
 - Brainstorms capture thinking, options, trade-offs, and the chosen direction before implementation starts.
 - Plans include ordered implementation steps, explicit test steps, testing methodology, and final validation commands.
 - Skills are preferred over improvised workflow when a skill matches the task.
@@ -274,6 +287,8 @@ MCAF coding rules exist to keep systems changeable and testable.
 
 - SOLID is mandatory.
 - SRP and cohesion are mandatory.
+- Vertical-slice architecture is mandatory at feature level.
+- Organize code so each feature owns its folder, subfolders, tests, and nearby dependencies as an isolated slice.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
 - Boundaries must support realistic tests through public interfaces.
 - Hidden global state and side effects are design smells.
@@ -362,6 +377,7 @@ The brainstorm records:
 - the recommended direction that will become the plan
 
 Brainstorm first, think through the task, then convert the chosen direction into a working plan.
+Do not create a brainstorm for simple, short, or obvious work where the path is already clear.
 
 ### 7.3 Plan
 
@@ -397,7 +413,8 @@ Run verification in layers:
 2. related suite
 3. broader required regressions and the full relevant suite
 4. analyzers, formatters, and any configured architecture, security, mutation, or other quality gates
-5. coverage comparison against the pre-change baseline
+5. complexity checks and any other configured code-quality tools
+6. coverage comparison against the pre-change baseline
 
 ### 7.6 Update Durable Context and Close the Task
 
@@ -444,5 +461,7 @@ Adoption is complete when:
 - multi-project boundaries have local `AGENTS.md`
 - commands and docs reflect the real repo
 - non-trivial work is guided by root-level `<slug>.brainstorm.md`, `<slug>.plan.md`, and the Ralph Loop
+- simple work skips brainstorm overhead and goes straight to execution
+- vertical-slice architecture, integration tests, and self-learning are treated as core framework pillars
 - tool-specific skills document real bootstrap and install steps when the tool is missing
 - tests and analyzers are the real gates

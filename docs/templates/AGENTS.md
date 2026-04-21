@@ -112,7 +112,7 @@ If the stack is `.NET`, document skill-management rules explicitly:
 - Keep exactly one framework skill: `mcaf-dotnet-xunit` or `mcaf-dotnet-tunit` or `mcaf-dotnet-mstest`.
 - Add tool-specific `.NET` skills only when the repository actually uses those tools in CI or local verification.
 - Keep only `mcaf-*` skills in agent skill directories.
-- When upgrading skills, recheck `build`, `test`, `format`, `analyze`, and `coverage` commands against the repo toolchain.
+- When upgrading skills, recheck `build`, `test`, `format`, `analyze`, `complexity`, and `coverage` commands against the repo toolchain.
 
 ## Rules to Follow (Mandatory)
 
@@ -122,6 +122,7 @@ If the stack is `.NET`, document skill-management rules explicitly:
 - `test`: `...`
 - `format`: `...`
 - `analyze`: `...` (delete if not used)
+- `complexity`: `...` (delete if not used)
 - `coverage`: `...` (delete if not used)
 
 If the stack is `.NET`, also document:
@@ -160,6 +161,9 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Start from `docs/Architecture.md` and the nearest local `AGENTS.md`.
 - Treat `docs/Architecture.md` as the architecture map for every non-trivial task.
 - If the overview is missing, stale, or diagram-free, update it before implementation.
+- Use vertical slices as the default architecture rule.
+- Keep each feature in its own folder tree with its code, tests, contracts, docs, and supporting artifacts together.
+- Prefer the smallest relevant feature slice over repo-wide scanning so context stays narrow.
 - Define scope before coding:
   - in scope
   - out of scope
@@ -169,7 +173,9 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - current state
   - required change
   - constraints and risks
+- Before starting a brainstorm, decide whether the task is actually non-trivial.
 - For non-trivial work, create a root-level `<slug>.brainstorm.md` file before making code or doc changes.
+- For simple, short, or obvious work, skip the brainstorm and go directly to execution.
 - Use `<slug>.brainstorm.md` to capture the problem framing, options, trade-offs, risks, open questions, and the recommended direction.
 - Think through the task in the brainstorm before committing to implementation details.
 - After the brainstorm direction is chosen, create a root-level `<slug>.plan.md` file.
@@ -208,6 +214,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - broader required regressions
 - If `build` is separate from `test`, run `build` before `test`.
 - After tests pass, run `format`, then the final required verification commands.
+- Run every repo-defined quality gate that is available for the stack and change scope, including analyzers, linters, complexity checks, coverage, architecture checks, security checks, and any other configured tools.
 - The task is complete only when every planned checklist item is done and all relevant tests are green.
 - Summarize the change, risks, and verification before marking the task complete.
 
@@ -242,6 +249,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Tests should be as realistic as possible and exercise the system through real flows, contracts, and dependencies.
 - Tests must cover positive flows, negative flows, edge cases, and unexpected paths from multiple relevant angles when the behaviour can fail in different ways.
 - Prefer integration/API/UI tests over isolated unit tests when behaviour crosses boundaries.
+- Integration tests are the default primary proof for feature-slice behaviour that spans multiple components.
 - Do not use mocks, fakes, stubs, or service doubles in verification.
 - Exercise internal and external dependencies through real containers, test instances, or sandbox environments that match the real contract.
 - Flaky tests are failures. Fix the cause.
@@ -251,7 +259,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Coverage is for finding gaps, not gaming a number. Coverage numbers do not replace scenario coverage or user-flow verification.
 - The task is not done until the full relevant test suite is green, not only the newly added tests.
 - If the stack is `.NET`, document the active framework and runner model explicitly so agents do not mix VSTest and Microsoft.Testing.Platform assumptions.
-- If the stack is `.NET`, after changing production code run the repo-defined quality pass: format, build, analyze, focused tests, broader tests, coverage, and any configured extra gates such as architecture, security, or mutation checks.
+- If the stack is `.NET`, after changing production code run the repo-defined quality pass: format, build, analyze, focused tests, broader tests, complexity, coverage, and any configured extra gates such as architecture, security, or mutation checks.
 
 ### Code and Design
 
@@ -259,6 +267,8 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Every class, object, module, and service MUST have a clear single responsibility and explicit boundaries.
 - SOLID is mandatory.
 - SRP and strong cohesion are mandatory for files, types, and functions.
+- Vertical-slice architecture is mandatory unless a local rule or ADR documents an exception.
+- Each feature MUST live in its own isolated folder tree with all slice-local dependencies kept together.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
 - Large files, types, functions, and deep nesting are design smells. Split them or document a justified exception under `exception_policy`.
 - Hardcoded values are forbidden.
@@ -274,6 +284,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Never weaken a test or analyzer without explicit justification.
 - Never introduce mocks, fakes, stubs, or service doubles to hide real behaviour in tests or local flows.
 - Never introduce a non-SOLID design unless the exception is explicitly documented under `exception_policy`.
+- Never spread one feature across unrelated folders when a vertical slice can keep it isolated.
 - Never force-push to `main`.
 - Never approve or merge on behalf of a human maintainer.
 
