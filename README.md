@@ -220,6 +220,7 @@ Root `AGENTS.md` stays current with:
 - commands (`build`, `test`, `format`, `analyze`, `complexity`, `coverage`, and other quality gates if used)
 - global skills and when to use them
 - self-learning rules
+- subagent orchestration rules for large, non-trivial, research-heavy, or implementation-heavy tasks
 - non-trivial task workflow rules, including root-level `<slug>.brainstorm.md` and `<slug>.plan.md` usage
 - testing discipline
 - done criteria for tests, coverage, and quality gates
@@ -272,6 +273,9 @@ Self-learning is a cornerstone of the framework, not an optional habit.
 - Vertical-slice architecture is mandatory unless an ADR or local exception rule says otherwise.
 - Each feature must live in its own isolated folder tree with its local code, tests, and supporting artifacts kept together.
 - Agents must prefer the smallest relevant feature slice over repo-wide scanning.
+- For large or complex tasks, the lead agent plans the work, explicitly identifies parallelizable workstreams, and spawns subagents for independent research, implementation, test, verification, documentation, and review scopes that can run in parallel.
+- The agent must spawn subagents for every independent parallel workstream unless there is a concrete coordination, risk, or ownership reason not to.
+- Subagents must receive concrete ownership and verification duties; the lead agent remains responsible for integration, quality gates, and final completion.
 - Only non-trivial tasks start with a root-level `<slug>.brainstorm.md`, then move into a root-level `<slug>.plan.md`.
 - Simple, short, or obvious tasks should skip the brainstorm and go straight to execution.
 - Brainstorms capture thinking, options, trade-offs, and the chosen direction before implementation starts.
@@ -291,6 +295,9 @@ MCAF coding rules exist to keep systems changeable and testable.
 - Organize code so each feature owns its folder, subfolders, tests, and nearby dependencies as an isolated slice.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
 - Boundaries must support realistic tests through public interfaces.
+- Do not preserve obsolete, dead, duplicate, or replaced legacy code unless the user explicitly asks for a temporary compatibility path.
+- Replacements remove the old code, tests, configuration, docs, and routing in the same change once the new path is proven.
+- Placeholder implementations, compatibility shims, and fallback paths are not acceptable substitutes for a complete migration.
 - Hidden global state and side effects are design smells.
 
 ### 5.2 Maintainability Policy
@@ -320,6 +327,7 @@ String literals do not belong in implementation logic. If a string matters, defi
 - Code structure must support meaningful automated tests.
 - Maintainability limits are enforced through `AGENTS.md`.
 - Patterns that depend on mocks, fakes, stubs, or service doubles are design smells.
+- Legacy, obsolete, duplicate, shim, placeholder, and fallback code must be removed unless an explicit documented exception requires it.
 - Hard-to-test behaviour is treated as a design problem to fix.
 
 ## 6. Perspectives

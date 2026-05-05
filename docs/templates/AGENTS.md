@@ -144,6 +144,17 @@ If the stack is `.NET`, also document:
   - local risks or protected areas
 - If a project grows enough that the root file becomes vague, add or tighten the local `AGENTS.md` before continuing implementation.
 
+### Agent Orchestration
+
+- For large, non-trivial, cross-module, research-heavy, or implementation-heavy tasks, the lead agent's primary job is to plan the work, identify all parallelizable workstreams, split them into independent scopes, and spawn subagents to execute those scopes in parallel.
+- Before writing the implementation plan, explicitly look for parallel tasks across research, code ownership areas, test creation, verification, documentation, and review.
+- Spawn subagents for every independent workstream that can run safely in parallel unless there is a concrete coordination, risk, or ownership reason not to.
+- Give each subagent a concrete responsibility, clear file or module ownership, expected output, and verification duty.
+- Subagents that write code MUST own disjoint write scopes and must not revert or overwrite work from other agents.
+- The lead agent remains responsible for the final architecture, integration, conflict resolution, quality gates, and completion criteria.
+- Do not serialize independent work when safe parallel execution is available.
+- Keep the orchestration lightweight for simple, short, or obvious tasks; do not create subagents when coordination overhead would be larger than the task.
+
 ### Maintainability Limits
 
 These limits are repo-configured policy values. They live here so the solution can tune them over time.
@@ -270,6 +281,10 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Vertical-slice architecture is mandatory unless a local rule or ADR documents an exception.
 - Each feature MUST live in its own isolated folder tree with all slice-local dependencies kept together.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
+- Do not preserve obsolete, dead, duplicate, or replaced legacy code unless the user explicitly asks for a temporary compatibility path.
+- When replacing an old implementation, remove the old code, tests, configuration, docs, and routing in the same change once the new path is proven.
+- Do not leave compatibility shims, placeholder implementations, or fallback paths as a substitute for a complete migration.
+- If a temporary transition path is unavoidable, document the reason, owner, scope, verification, and removal plan in the nearest ADR, feature doc, or local `AGENTS.md`.
 - Large files, types, functions, and deep nesting are design smells. Split them or document a justified exception under `exception_policy`.
 - Hardcoded values are forbidden.
 - String literals are forbidden in implementation code. Declare them once as named constants, enums, configuration entries, or dedicated value objects, then reuse those symbols.
@@ -283,6 +298,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Never skip tests to make a branch green.
 - Never weaken a test or analyzer without explicit justification.
 - Never introduce mocks, fakes, stubs, or service doubles to hide real behaviour in tests or local flows.
+- Never keep legacy, obsolete, dead, duplicate, shim, placeholder, or fallback code unless an explicit documented exception requires it.
 - Never introduce a non-SOLID design unless the exception is explicitly documented under `exception_policy`.
 - Never spread one feature across unrelated folders when a vertical slice can keep it isolated.
 - Never force-push to `main`.
