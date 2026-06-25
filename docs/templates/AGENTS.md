@@ -189,7 +189,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - For simple, short, or obvious work, skip the brainstorm and go directly to execution.
 - Use `<slug>.brainstorm.md` to capture the problem framing, options, trade-offs, risks, open questions, and the recommended direction.
 - Think through the task in the brainstorm before committing to implementation details.
-- After the brainstorm direction is chosen and before writing the implementation plan, create a root-level `<slug>.acceptance.md` file.
+- Before creating `<slug>.plan.md`, create a root-level `<slug>.acceptance.md` file.
 - The acceptance criteria file MUST be detailed enough that another agent or maintainer can implement and test the task without rereading the conversation.
 - The acceptance criteria file MUST contain:
   - task goal and user-visible outcome
@@ -204,11 +204,12 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - a criterion-to-test matrix that maps each `AC-*` item to planned automated tests, test level, assertions, and verification commands
   - explicit criteria that will not receive automated coverage, with the reason and required manual or review evidence
 - Do not start implementation until the acceptance criteria file exists and the test strategy maps back to it.
-- After the brainstorm direction is chosen, create a root-level `<slug>.plan.md` file.
+- After the acceptance criteria are written, create a root-level `<slug>.plan.md` file derived from `<slug>.acceptance.md`.
 - Keep the `<slug>.plan.md` file as the working plan for the task until completion.
 - The plan file MUST contain:
   - a link or reference to the chosen brainstorm
   - a link or reference to the acceptance criteria file
+  - implementation steps derived from the accepted `AC-*` criteria
   - task goal and scope
   - a detailed implementation plan with detailed ordered steps
   - constraints and risks
