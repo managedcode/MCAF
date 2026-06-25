@@ -189,14 +189,31 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - For simple, short, or obvious work, skip the brainstorm and go directly to execution.
 - Use `<slug>.brainstorm.md` to capture the problem framing, options, trade-offs, risks, open questions, and the recommended direction.
 - Think through the task in the brainstorm before committing to implementation details.
+- After the brainstorm direction is chosen and before writing the implementation plan, create a root-level `<slug>.acceptance.md` file.
+- The acceptance criteria file MUST be detailed enough that another agent or maintainer can implement and test the task without rereading the conversation.
+- The acceptance criteria file MUST contain:
+  - task goal and user-visible outcome
+  - in-scope and out-of-scope behaviour
+  - assumptions and open questions
+  - actors, entry points, permissions, and affected boundaries
+  - numbered criteria with stable IDs such as `AC-001`, `AC-002`, and `AC-003`
+  - clear pass and fail conditions for every criterion
+  - positive flows, negative flows, edge cases, and unexpected/error paths
+  - data, contract, API, UI, persistence, performance, security, and observability expectations where relevant
+  - migration, compatibility, and rollback expectations where relevant
+  - a criterion-to-test matrix that maps each `AC-*` item to planned automated tests, test level, assertions, and verification commands
+  - explicit criteria that will not receive automated coverage, with the reason and required manual or review evidence
+- Do not start implementation until the acceptance criteria file exists and the test strategy maps back to it.
 - After the brainstorm direction is chosen, create a root-level `<slug>.plan.md` file.
 - Keep the `<slug>.plan.md` file as the working plan for the task until completion.
 - The plan file MUST contain:
   - a link or reference to the chosen brainstorm
+  - a link or reference to the acceptance criteria file
   - task goal and scope
   - a detailed implementation plan with detailed ordered steps
   - constraints and risks
   - explicit test steps as part of the ordered plan, not as a later add-on
+  - a test plan derived from the `AC-*` criteria, with every criterion covered by tests or a documented exception
   - the test and verification strategy for each planned step
   - the testing methodology for the task: what flows will be tested, how they will be tested, and what quality bar the tests must meet
   - an explicit full-test baseline step after the plan is prepared
@@ -207,6 +224,8 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Use the Ralph Loop for every non-trivial task:
   - brainstorm in `<slug>.brainstorm.md` before coding or document edits
   - think through options and choose the intended direction before planning
+  - turn the chosen direction into detailed acceptance criteria in `<slug>.acceptance.md`
+  - map every acceptance criterion to planned automated tests or a documented test exception before coding
   - turn the chosen direction into a detailed `<slug>.plan.md`
   - include test creation, test updates, and verification work in the ordered steps from the start
   - once the initial plan is ready, run the full relevant test suite to establish the real baseline
@@ -216,6 +235,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - require each selected skill to produce a concrete action, artifact, or verification outcome
   - execute one planned step at a time
   - mark checklist items in `<slug>.plan.md` as work progresses
+  - update `<slug>.acceptance.md` when the criteria change, then update the mapped tests and plan before continuing
   - review findings, apply fixes, and rerun relevant verification
   - update the plan file and repeat until done criteria are met or an explicit exception is documented
 - Implement code and tests together.
@@ -226,7 +246,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - If `build` is separate from `test`, run `build` before `test`.
 - After tests pass, run `format`, then the final required verification commands.
 - Run every repo-defined quality gate that is available for the stack and change scope, including analyzers, linters, complexity checks, coverage, architecture checks, security checks, and any other configured tools.
-- The task is complete only when every planned checklist item is done and all relevant tests are green.
+- The task is complete only when every planned checklist item is done, every acceptance criterion is satisfied, and all relevant tests are green.
 - Summarize the change, risks, and verification before marking the task complete.
 
 ### Documentation
@@ -241,7 +261,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Public bootstrap templates are limited to root-level agent files. Authoring scaffolds for architecture, features, ADRs, and other workflows live in skills.
 - Update feature docs when behaviour changes.
 - Update ADRs when architecture, boundaries, or standards change.
-- For non-trivial work, the plan file, feature doc, or ADR MUST document the testing methodology:
+- For non-trivial work, the acceptance criteria file, plan file, feature doc, or ADR MUST document the testing methodology:
   - what flows are covered
   - how they are tested
   - which commands prove them
@@ -255,6 +275,9 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 
 - TDD is the default for new behaviour and bug fixes: write the failing test first, make it pass, then refactor.
 - Bug fixes start with a failing regression test that reproduces the issue.
+- Tests MUST be written from acceptance criteria, not from implementation details.
+- Each `AC-*` criterion in `<slug>.acceptance.md` MUST be covered by one or more automated tests or by an explicit written exception.
+- Test names, display names, or comments should reference the relevant `AC-*` ID when that improves traceability.
 - Every behaviour change needs new or updated automated tests with meaningful assertions. New tests are mandatory for new behaviour and bug fixes.
 - Tests must prove the real user flow or caller-visible system flow, not only internal implementation details.
 - Tests should be as realistic as possible and exercise the system through real flows, contracts, and dependencies.
