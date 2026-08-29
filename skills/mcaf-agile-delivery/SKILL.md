@@ -1,7 +1,8 @@
 ---
 name: mcaf-agile-delivery
 description: "Shape delivery workflow around backlog quality, roles, ceremonies, and engineering feedback. Use when defining how the team plans, tracks work, and turns feedback into durable improvements."
-compatibility: "Requires repository access only when the repo stores delivery docs or governance guidance."
+metadata:
+  compatibility: "Requires repository access only when the repo stores delivery docs or governance guidance."
 ---
 
 # MCAF: Agile Delivery

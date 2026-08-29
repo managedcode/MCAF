@@ -20,9 +20,30 @@ This file defines how AI agents work in this solution.
 ## Solution Topology
 
 - Solution root: `...`
+- Repository boundary: this repository contains the complete solution.
+- Canonical slice convention: `.../Features/<SliceName>/...`
+- Solution-owned surfaces that MUST stay in this repository:
+  - backend applications and services: `...`
+  - frontend applications: `...`
+  - shared contracts: `...`
+  - automated tests: `...`
+  - infrastructure and deployment assets: `...`
+  - durable documentation: `docs/...`
 - Projects or modules with local `AGENTS.md` files:
   - `...`
   - `...`
+
+## Mandatory Solution Architecture (`MCAF-ARCH-001`)
+
+- This solution MUST be delivered as one repository. All solution-owned backend, frontend, contracts, tests, infrastructure, and documentation live here and are versioned together.
+- Vertical-slice architecture is mandatory across the entire repository.
+- Every feature MUST use one canonical `<SliceName>` across backend, frontend, contracts, tests, and `docs/Features/`.
+- Every technical root MUST organize feature-owned work under the same `Features/<SliceName>/` convention, or use one fully colocated executable-artifact convention; durable feature docs remain under `docs/Features/<SliceName>.md`.
+- A feature surface that does not apply MUST be recorded as `N/A` with a reason in the feature spec; it must not be silently omitted.
+- Layer-first folders such as repository-level `Controllers`, `Services`, or `Repositories` MUST NOT own feature behaviour.
+- Only genuinely solution-wide entry points, composition roots, building blocks, infrastructure, and global docs may live outside a feature slice.
+- Local `AGENTS.md` files and ADRs may tighten these rules or document time-bounded migration debt, but MUST NOT make split repositories, layer-first feature ownership, or inconsistent slice names compliant.
+- Existing deviations require a migration ADR with affected paths, owner, target layout, verification, and removal date. New work MUST use the target slice structure and MUST NOT expand the deviation.
 
 ## Rule Precedence
 
@@ -31,6 +52,28 @@ This file defines how AI agents work in this solution.
 3. Apply the stricter rule when both files speak to the same topic.
 4. Local `AGENTS.md` files may refine or tighten root rules, but they must not silently weaken them.
 5. If a local rule needs an exception, document it explicitly in the nearest local `AGENTS.md`, ADR, or feature doc.
+6. `MCAF-ARCH-001` has no target-architecture exception: a durable doc may record only a time-bounded migration deviation and may not declare that deviation compliant.
+
+## MCAF Update Safety (`MCAF-GOV-001`)
+
+- Every rule in this customized root `AGENTS.md` and every project-local `AGENTS.md` is mandatory repository policy.
+- An MCAF install or update MUST read all existing root and local `AGENTS.md` files completely before editing them.
+- Update by merging current requirements into the existing files. MUST NOT replace, overwrite, truncate, summarize away, or omit existing rules, sections, commands, boundaries, preferences, or exception records.
+- MUST NOT weaken a rule by changing mandatory wording into optional guidance, narrowing its scope, reducing its priority, or adding a bypass.
+- When incoming guidance overlaps or conflicts, preserve the stricter rule and report the conflict instead of silently rewriting policy.
+- Template-only notes and placeholders may be replaced during first customization; a real rule may change only under explicit, rule-specific owner direction.
+- Before completion, review the full governance diff and verify that every existing rule remains present and equally or more strict.
+
+## Mandatory Feature Requirements and ADR Implementation (`MCAF-REQ-001`)
+
+- Every non-trivial feature MUST have a real `docs/Features/<SliceName>.md` specification before implementation.
+- The feature spec MUST contain stable `REQ-*` requirements and `AC-*` acceptance criteria with measurable pass/fail conditions, positive/negative/edge/error flows, and one canonical slice map.
+- Every `REQ-*` MUST map to at least one `AC-*`; every `AC-*` MUST map to automated tests or an explicit exception with required manual evidence.
+- The feature spec MUST link each required ADR, or record `ADR: N/A` with a concrete reason why existing architecture and contracts are sufficient.
+- Create or update an ADR before implementing changes to boundaries, public contracts, data, dependencies, security/trust boundaries, deployment topology, cross-cutting standards, or migration architecture.
+- Every required ADR MUST contain an implementation contract: related `REQ-*`/`AC-*`, ordered stages, exact slice/file ownership, dependencies, migration/rollout/rollback, tests, verification, agent roles, and integration/join points.
+- An ADR MUST NOT be marked `Implemented` until its required implementation, migration, tests, docs, and verification evidence exist.
+- Keep a traceability chain from `REQ-*` to `AC-*`, ADR, `TASK-*`, automated test, and final evidence. Update the whole chain before continuing when a requirement changes.
 
 ## Conversations (Self-Learning)
 
@@ -146,14 +189,30 @@ If the stack is `.NET`, also document:
 
 ### Agent Orchestration
 
+- `MCAF-AI-001` is mandatory for non-trivial work: use the strongest suitable large or high-capability model available for planning, architecture, acceptance criteria, decomposition, integration, and final review.
+- Do not begin delegated implementation until the planning model has made the scope, boundaries, contracts, acceptance criteria, test strategy, and ordered plan explicit.
+- Do not begin write-capable delegated implementation until `MCAF-REQ-001` requirements and every required ADR implementation contract are approved.
+- After planning, spawn cost-efficient coding workers for every independent, bounded implementation scope when a suitable cheaper model is available.
+- Choose the least expensive model that is still capable of the language, framework, tools, context size, and risk level. Cost MUST NOT override correctness, security, or verification.
+- Every coding worker MUST receive the goal, acceptance IDs, exact file/module/slice ownership, architecture and contracts to preserve, constraints, forbidden changes, expected artifacts, verification commands, and escalation conditions.
+- Coding workers MUST stop and escalate rather than invent architecture, change public contracts, weaken tests or rules, or expand scope.
+- The planning model MUST inspect every delegated diff, compare it with the plan and acceptance criteria, integrate the results, resolve conflicts, and own final quality gates and completion.
+- Build an explicit task graph before spawning: task ID, requirements/acceptance IDs, owner, model tier/effort, permissions, dependencies, start condition, artifacts, verification, completion state, and join condition.
+- Research and analysis agents SHOULD be read-only and may run in parallel before implementation. Use stronger reasoning for ambiguous architecture/security/review work and cost-efficient capable models for bounded discovery, log/test analysis, and documentation lookup.
 - For large, non-trivial, cross-module, research-heavy, or implementation-heavy tasks, the lead agent's primary job is to plan the work, identify all parallelizable workstreams, split them into independent scopes, and spawn subagents to execute those scopes in parallel.
 - Before writing the implementation plan, explicitly look for parallel tasks across research, code ownership areas, test creation, verification, documentation, and review.
 - Spawn subagents for every independent workstream that can run safely in parallel unless there is a concrete coordination, risk, or ownership reason not to.
 - Give each subagent a concrete responsibility, clear file or module ownership, expected output, and verification duty.
 - Subagents that write code MUST own disjoint write scopes and must not revert or overwrite work from other agents.
+- Shared contracts, solution files, central configuration, migrations, and cross-cutting docs MUST have exactly one integration owner. Same-file edits MUST be serialized.
+- Use platform-native agent status, messaging, and wait controls. Monitor agents needing input or drifting; steer, retry, replace, or escalate them explicitly.
+- Wait for every required dependency and result before integration. `idle`, partial output, a plan, or an unverified worker claim is not `complete`.
+- Every delegated task MUST end as `complete`, `blocked`, `failed`, or `cancelled` with artifacts and evidence appropriate to that state. Blocked or failed tasks MUST NOT unblock dependants.
+- The lead MUST verify the combined repository state after joining worker results; worker-local checks are not integrated proof.
 - The lead agent remains responsible for the final architecture, integration, conflict resolution, quality gates, and completion criteria.
 - Do not serialize independent work when safe parallel execution is available.
 - Keep the orchestration lightweight for simple, short, or obvious tasks; do not create subagents when coordination overhead would be larger than the task.
+- If non-trivial coding cannot be delegated because model-tier routing is unavailable, no cheaper model is capable, or safe ownership cannot be separated, record the concrete reason before the planning model implements it.
 
 ### Maintainability Limits
 
@@ -172,8 +231,9 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Start from `docs/Architecture.md` and the nearest local `AGENTS.md`.
 - Treat `docs/Architecture.md` as the architecture map for every non-trivial task.
 - If the overview is missing, stale, or diagram-free, update it before implementation.
-- Use vertical slices as the default architecture rule.
-- Keep each feature in its own folder tree with its code, tests, contracts, docs, and supporting artifacts together.
+- Apply mandatory policy `MCAF-ARCH-001` before choosing implementation paths.
+- Keep each feature in one repository-wide vertical slice, using the same canonical slice name for its backend, frontend, contracts, tests, and documentation.
+- Change all affected surfaces of the owning slice together; do not move one surface into another repository or an unrelated layer folder.
 - Prefer the smallest relevant feature slice over repo-wide scanning so context stays narrow.
 - Define scope before coding:
   - in scope
@@ -262,6 +322,8 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Public bootstrap templates are limited to root-level agent files. Authoring scaffolds for architecture, features, ADRs, and other workflows live in skills.
 - Update feature docs when behaviour changes.
 - Update ADRs when architecture, boundaries, or standards change.
+- Every non-trivial feature doc MUST satisfy `MCAF-REQ-001`: stable `REQ-*` and `AC-*`, explicit ADR decision, multi-agent execution contract when applicable, and requirement-to-test evidence traceability.
+- Every architecture-affecting ADR MUST include its implementation contract and MUST remain `Accepted` until implementation and verification are complete.
 - For non-trivial work, the acceptance criteria file, plan file, feature doc, or ADR MUST document the testing methodology:
   - what flows are covered
   - how they are tested
@@ -302,8 +364,9 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Every class, object, module, and service MUST have a clear single responsibility and explicit boundaries.
 - SOLID is mandatory.
 - SRP and strong cohesion are mandatory for files, types, and functions.
-- Vertical-slice architecture is mandatory unless a local rule or ADR documents an exception.
-- Each feature MUST live in its own isolated folder tree with all slice-local dependencies kept together.
+- Vertical-slice architecture and the single-repository boundary are mandatory under `MCAF-ARCH-001`.
+- Each feature MUST live in one consistently named repository-wide slice with all feature-owned backend, frontend, contracts, tests, and supporting artifacts colocated or mirrored under the documented slice convention and its durable doc mapped by the same name under `docs/Features/`.
+- Local rules and ADRs MUST NOT weaken `MCAF-ARCH-001`; they may only document stricter rules or a time-bounded migration to compliance.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
 - Do not preserve obsolete, dead, duplicate, or replaced legacy code unless the user explicitly asks for a temporary compatibility path.
 - When replacing an old implementation, remove the old code, tests, configuration, docs, and routing in the same change once the new path is proven.
@@ -325,6 +388,10 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Never keep legacy, obsolete, dead, duplicate, shim, placeholder, or fallback code unless an explicit documented exception requires it.
 - Never introduce a non-SOLID design unless the exception is explicitly documented under `exception_policy`.
 - Never spread one feature across unrelated folders when a vertical slice can keep it isolated.
+- Never move solution-owned backend, frontend, tests, infrastructure, or documentation into a separate repository.
+- Never use different names or different internal conventions for the same slice across technical roots.
+- Never overwrite an existing root or local `AGENTS.md` with a downloaded template or a shortened reconstruction.
+- Never delete, omit, or weaken an existing `AGENTS.md` rule during framework installation or update.
 - Never force-push to `main`.
 - Never approve or merge on behalf of a human maintainer.
 

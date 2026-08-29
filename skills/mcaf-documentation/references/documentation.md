@@ -4,6 +4,8 @@ Documentation should reduce guessing, not create a second project to maintain.
 
 ## Principles
 
+- under `MCAF-ARCH-001`, solution documentation stays in the solution repository and feature docs use the same canonical slice name as backend, frontend, contracts, and tests
+- under `MCAF-REQ-001`, non-trivial feature docs contain stable `REQ-*`/`AC-*`, an explicit ADR decision, and traceability through implementation tasks, tests, and evidence; architecture-affecting ADRs contain implementation contracts
 - one durable fact has one canonical home
 - entry pages route the reader to detail instead of copying it
 - docs change with the code or policy they describe

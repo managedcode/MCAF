@@ -1,7 +1,8 @@
 ---
 name: mcaf-security-baseline
 description: "Apply baseline engineering security guidance: secrets handling, secure defaults, threat modelling references, and review checkpoints for auth, data flow, pipelines, and external integrations. Use when a change has security impact but does not require a full standalone AppSec engagement."
-compatibility: "Requires repository access; may update security docs, ADRs, and verification steps."
+metadata:
+  compatibility: "Requires repository access; may update security docs, ADRs, and verification steps."
 ---
 
 # MCAF: Security Baseline

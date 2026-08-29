@@ -1,7 +1,8 @@
 ---
 name: mcaf-adr-writing
 description: "Create or update an ADR under `docs/ADR/` for architectural decisions, dependency changes, data-model changes, or cross-cutting policy shifts. Use when the user asks to write, update, or document an ADR, record a design decision, capture architecture trade-offs, or justify a repo-wide technical policy."
-compatibility: "Requires repository write access; produces Markdown ADRs with Mermaid diagrams."
+metadata:
+  compatibility: "Requires repository write access; produces Markdown ADRs with Mermaid diagrams."
 ---
 
 # MCAF: ADR Writing
@@ -29,6 +30,8 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
 - related feature docs
 - the nearest `AGENTS.md`
 - current constraints, options, and risks
+- the mandatory `MCAF-ARCH-001` repository boundary and canonical vertical-slice convention
+- stable feature `REQ-*` and `AC-*` IDs governed by `MCAF-REQ-001`, or an explicit cross-cutting operational obligation
 
 ## Quick Start
 
@@ -39,15 +42,20 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
 ## Workflow
 
 1. Start from the concrete decision that must be made now.
-2. If the ADR is missing, scaffold it from `references/adr-template.md`.
-3. Record:
+2. Read `../mcaf-feature-spec/references/requirements-adr-traceability.md` and apply `MCAF-REQ-001`.
+3. If the ADR is missing, scaffold it from `references/adr-template.md`.
+4. Record:
    - context and problem
    - chosen decision
    - alternatives considered
    - trade-offs and consequences
-   - implementation plan
-4. Add diagrams only when they remove ambiguity.
-5. Link the ADR to affected feature docs and `docs/Architecture.md`.
+   - related `REQ-*` and `AC-*` IDs
+   - an ordered implementation contract with exact ownership, dependencies, migration/rollout, verification, and completion evidence
+   - `MCAF-AI-001` lead/worker/reviewer roles, disjoint write scopes, native wait/status mechanism, and join gates
+5. Add diagrams only when they remove ambiguity.
+6. Verify the decision preserves `MCAF-ARCH-001`. Do not approve a split repository, layer-first feature owner, or inconsistent slice naming as a valid target architecture; document an existing deviation only as a time-bounded migration with owner and removal date.
+7. Link the ADR to affected feature docs and `docs/Architecture.md`.
+8. Use `Implemented` only after the planned artifacts, migrations, tests, docs, and verification evidence exist.
 
 ## Deliver
 
@@ -60,6 +68,10 @@ compatibility: "Requires repository write access; produces Markdown ADRs with Me
 - trade-offs are concrete, not hand-wavy
 - implementation impact is clear
 - a future engineer can understand why this path was chosen
+- the decision preserves one repository and the same canonical slice name and convention across all applicable surfaces
+- related requirements, implementation tasks, tests, and evidence are traceable
+- the implementation contract is executable without rereading the conversation
+- the ADR status matches the actual implementation and verification state
 
 ## Ralph Loop
 
@@ -93,6 +105,7 @@ For setup-only requests with no execution, return `status: configured` and exact
 
 ## Load References
 
+- read `../mcaf-feature-spec/references/requirements-adr-traceability.md` first
 - start with `references/adr-template.md`
 - use `references/ADR-FORMATS.md` only for numbering or formatting conventions
 

@@ -1,7 +1,8 @@
 ---
 name: mcaf-feature-spec
 description: "Create or update a feature spec under `docs/Features/` with business rules, user flows, system behaviour, verification, and Definition of Done. Use when the user asks for a feature spec, executable requirements, acceptance criteria, behaviour documentation, or a pre-implementation plan for non-trivial behaviour changes."
-compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps."
+metadata:
+  compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams and executable verification steps."
 ---
 
 # MCAF: Feature Spec
@@ -28,6 +29,8 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 - `docs/Architecture.md`
 - the nearest `AGENTS.md`
 - current user flows, business rules, and acceptance expectations
+- the `MCAF-ARCH-001` canonical slice name and in-repository backend/frontend/contracts/tests/docs paths
+- the `MCAF-REQ-001` requirement, acceptance, ADR, task, test, and evidence traceability contract
 
 ## Quick Start
 
@@ -38,16 +41,22 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 ## Workflow
 
 1. Define scope first: in scope, out of scope, boundaries touched.
-2. If the feature doc is missing, scaffold from `references/feature-template.md`.
-3. Keep the spec executable:
-   - numbered rules
+2. Confirm `MCAF-ARCH-001`: choose one canonical slice name and map every applicable backend, frontend, contract, test, infrastructure, and documentation path inside this repository. Mark a non-applicable surface `N/A` with a reason.
+3. Read `references/requirements-adr-traceability.md` and apply `MCAF-REQ-001` before implementation.
+4. If the feature doc is missing, scaffold from `references/feature-template.md`.
+5. Keep the spec executable:
+   - stable `REQ-*` requirements with type, priority, rationale, pass, and fail conditions
+   - stable `AC-*` acceptance criteria mapped to requirements
+   - an explicit ADR link or `N/A` with a concrete reason
    - main flow
    - edge and failure flows
    - system behaviour
    - verification steps
    - Definition of Done
-4. Make the spec concrete enough that tests can be written without guessing.
-5. If the feature creates a new dependency, boundary, or major policy shift, update an ADR too.
+6. For non-trivial implementation, define the `MCAF-AI-001` task graph: role/model tier, exact read/write ownership, requirements, dependencies, artifacts, verification, completion state, and join condition.
+7. Maintain the traceability matrix from every `REQ-*` through `AC-*`, ADR, `TASK-*`, automated test, and evidence.
+8. Make the spec concrete enough that tests and worker instruction packets can be written without guessing.
+9. Create or update an ADR before implementation when boundaries, public contracts, data, dependencies, security, deployment, or cross-cutting standards change.
 
 ## Deliver
 
@@ -60,6 +69,10 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 - edge cases are captured where they matter
 - verification steps match the intended behaviour
 - the doc can drive implementation without hidden tribal knowledge
+- the feature stays within one repository-wide slice and uses the same canonical name and structure across all applicable surfaces
+- every requirement is traceable to acceptance criteria, ADR decision, implementation task, test, and evidence
+- every required ADR contains an implementation contract and its status matches reality
+- non-trivial multi-agent work records model tiers, disjoint ownership, dependencies, completion states, waiting, and final lead review
 
 ## Ralph Loop
 
@@ -93,7 +106,8 @@ For setup-only requests with no execution, return `status: configured` and exact
 
 ## Load References
 
-- use `references/feature-template.md` only for scaffolding
+- read `references/requirements-adr-traceability.md` first for every non-trivial feature
+- use `references/feature-template.md` for scaffolding
 
 ## Example Requests
 

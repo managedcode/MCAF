@@ -1,7 +1,8 @@
 ---
 name: mcaf-ml-ai-delivery
 description: "Apply ML/AI project delivery guidance for data exploration, feasibility, experimentation, testing, responsible AI, and operating ML systems. Use when the repo includes model training, inference, data science workflows, or ML-specific delivery planning."
-compatibility: "Requires repository access when ML/AI docs, experiments, or delivery guidance live in the repo."
+metadata:
+  compatibility: "Requires repository access when ML/AI docs, experiments, or delivery guidance live in the repo."
 ---
 
 # MCAF: ML/AI Delivery

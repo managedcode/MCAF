@@ -1,7 +1,8 @@
 ---
 name: mcaf-documentation
 description: "Create or refine durable engineering documentation: docs structure, navigation, source-of-truth placement, and writing quality. Use when a repo’s docs are missing, stale, duplicated, or hard to navigate, or when adding new durable engineering guidance."
-compatibility: "Requires repository write access; updates docs and documentation structure."
+metadata:
+  compatibility: "Requires repository write access; updates docs and documentation structure."
 ---
 
 # MCAF: Documentation
@@ -38,9 +39,11 @@ compatibility: "Requires repository write access; updates docs and documentation
 ## Workflow
 
 1. Decide the canonical location for each fact before writing.
-2. Prefer navigational docs that link to detail instead of copying detail.
-3. Keep bootstrap pages small; move workflow scaffolds into skills.
-4. Update stale docs in the same change as the code or policy they describe.
+2. Apply `MCAF-ARCH-001`: keep solution documentation in this repository and map feature docs to the same canonical slice names used by backend, frontend, contracts, and tests.
+3. Apply `MCAF-REQ-001`: require stable feature requirements/acceptance IDs, an explicit ADR decision, ADR implementation contracts, and traceability through tasks, tests, and evidence.
+4. Prefer navigational docs that link to detail instead of copying detail.
+5. Keep bootstrap pages small; move workflow scaffolds into skills.
+6. Update stale docs in the same change as the code or policy they describe.
 
 ## Deliver
 
@@ -54,6 +57,8 @@ compatibility: "Requires repository write access; updates docs and documentation
 - entry pages route the reader correctly
 - pages do not bloat with template or reference dumps
 - docs match the real repo, not the intended future repo
+- feature documentation uses canonical slice names and does not point to another repository as the owner of a solution surface
+- feature and ADR statuses, requirements, implementation contracts, tests, and evidence remain traceable and match reality
 
 ## Ralph Loop
 

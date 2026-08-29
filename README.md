@@ -34,7 +34,7 @@ Repository `AGENTS.md` files apply both to a specific solution.
 
 ### 1.1 Bootstrap Surface
 
-`v1.2` is skill-first.
+`v1.3` is skill-first.
 
 Bootstrap stays minimal:
 
@@ -119,11 +119,15 @@ Agents should run the repo-defined post-change quality pass before completion, a
 
 ### 2.5 Context Rules
 
+The canonical contract is [`MCAF-ARCH-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-solution-governance/references/monorepo-vertical-slices.md).
+
 - All durable engineering context lives in the repository.
+- `MCAF-ARCH-001` is mandatory: one solution repository contains all solution-owned backend, frontend, contracts, tests, infrastructure, and documentation.
 - The project has a current `docs/Architecture.md`.
 - Humans and agents start from the architecture map, not repo-wide scanning.
-- Vertical-slice architecture is mandatory by default.
-- Each feature lives in its own folder tree with the code, tests, contracts, docs, and other dependencies needed for that slice.
+- Vertical-slice architecture is mandatory across every technical root.
+- Each feature uses one canonical slice name and one documented internal convention across backend, frontend, contracts, tests, and `docs/Features/`.
+- Feature-owned behaviour is organized by business capability, not by repository-level technical-layer folders.
 - Feature slices stay as isolated as possible so task context stays narrow and the right files are easy to find.
 - `docs/Architecture.md` contains Mermaid diagrams for system/module boundaries, interfaces/contracts, and key types for the active area.
 - Feature docs under `docs/Features/` contain at least one Mermaid diagram for the main flow.
@@ -131,6 +135,54 @@ Agents should run the repo-defined post-change quality pass before completion, a
 - Multi-project solutions use root plus project-local `AGENTS.md` files.
 - Bootstrap templates stay tiny; detailed scaffolds belong in skills.
 - Docs are written precisely enough to support direct implementation and verification.
+
+### 2.6 Vertical-Slice Architecture for AI Coding
+
+A vertical slice is one end-to-end business capability or use case, not one technical layer. A slice such as `Orders` owns its affected UI, API or backend behaviour, contracts, persistence or integrations, tests, infrastructure, and feature documentation.
+
+In this policy, the solution is the complete product delivery boundary—not merely a `.sln` or `.slnx` file and not merely the backend. Its solution-owned frontend, backend, contracts, tests, infrastructure, and docs live and evolve together.
+
+For an AI coding agent, the slice is the default unit of context and delivery. The agent starts from `docs/Architecture.md`, reads the applicable root and local `AGENTS.md` files, opens `docs/Features/<SliceName>.md`, and then works only in the matching slice paths. This lets the agent find the full behaviour without scanning the repository or guessing which generic service, controller, component, or test folder belongs to the feature.
+
+The solution remains one repository, while toolchains may keep separate projects. Reuse the exact same slice name and internal convention across those roots:
+
+```text
+src/Backend/Features/Orders/
+src/Frontend/Features/Orders/
+src/Contracts/Features/Orders/
+tests/Features/Orders/
+docs/Features/Orders.md
+```
+
+With this structure, a request such as "add order cancellation" has one deterministic scope: read the `Orders` feature doc and applicable governance, then update the affected Orders backend, frontend, contract, test, and documentation surfaces together.
+
+Do not organize feature ownership primarily as repository-level `Controllers/`, `Services/`, `Repositories/`, `Components/`, or generic test buckets. Technical subfolders may exist inside a slice, but the business capability remains the owner.
+
+To structure a solution:
+
+1. Inventory backend, frontend, contract, test, infrastructure, and documentation roots.
+2. Choose one canonical `<SliceName>` naming and casing convention.
+3. Choose colocated slices or mirrored `Features/<SliceName>/` paths.
+4. Record the convention and slice-to-surface map in root `AGENTS.md` and `docs/Architecture.md`.
+5. Add one `docs/Features/<SliceName>.md` behaviour and verification source for every feature.
+6. Keep feature-owned code in the slice; move only genuinely multi-slice code into shared building blocks.
+7. Require every change to name its slice and keep all affected surfaces aligned.
+
+### 2.7 Executable Feature Requirements and ADR Implementation
+
+`MCAF-REQ-001` makes requirements the input to architecture, agent tasks, code, and verification—not a prose artifact written afterward.
+
+Every non-trivial `docs/Features/<SliceName>.md` contains:
+
+- stable `REQ-*` requirements with type, priority, rationale, and measurable pass/fail conditions
+- stable `AC-*` acceptance criteria and positive, negative, edge, and error flows
+- an explicit ADR link, or `ADR: N/A` with a concrete reason
+- a `MCAF-AI-001` execution contract for non-trivial parallel work
+- a traceability matrix from requirement to acceptance, ADR, task, automated test, and evidence
+
+Create an ADR before implementation when a feature changes boundaries, public contracts, data, dependencies, security, deployment topology, cross-cutting standards, or migration architecture. The ADR must include an executable implementation contract: ordered stages, exact slice/file ownership, dependencies, migration/rollout/rollback, agent roles, tests, pass conditions, and join evidence. `Accepted` means the decision is approved; `Implemented` means the implementation and verification evidence actually exist.
+
+Canonical contract: [`MCAF-REQ-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-feature-spec/references/requirements-adr-traceability.md).
 
 ## 3. Verification
 
@@ -169,12 +221,13 @@ Integration tests are the backbone because they prove that a slice works through
 
 ### 3.3 Verification Artifacts
 
-Feature docs and ADRs should point to:
+Under `MCAF-REQ-001`, non-trivial feature docs and architecture-affecting ADRs MUST point to:
 
 - the scenarios that must be proven
 - the testing methodology for those scenarios
 - the commands used to prove them
 - the suites or artifacts that provide that proof
+- the stable `REQ-*`, `AC-*`, ADR, and `TASK-*` IDs that make the proof traceable
 
 ## 4. Instructions and AGENTS.md
 
@@ -221,11 +274,13 @@ Root `AGENTS.md` stays current with:
 - global skills and when to use them
 - self-learning rules
 - subagent orchestration rules for large, non-trivial, research-heavy, or implementation-heavy tasks
+- mandatory `MCAF-AI-001` model-tier routing: strongest suitable planning model, least expensive capable coding workers, required instruction packets, escalation, and lead review
+- mandatory `MCAF-REQ-001` feature requirements, ADR triggers and implementation contracts, plus traceability through tasks, tests, and evidence
 - non-trivial task workflow rules, including root-level `<slug>.brainstorm.md` and `<slug>.plan.md` usage
 - testing discipline
 - done criteria for tests, coverage, and quality gates
 - design and maintainability rules
-- vertical-slice architecture rules and allowed exceptions
+- the mandatory `MCAF-ARCH-001` single-repository boundary and canonical vertical-slice path convention
 - exception policy
 - topology for local `AGENTS.md` files
 
@@ -237,6 +292,7 @@ Project-local `AGENTS.md` files stay current with:
 - local risks
 - stricter maintainability limits when needed
 - exact applicable skills
+- owned slices and their paths, using the same canonical names as all other project, test, and documentation roots
 
 ### 4.4 Maintainability Limits
 
@@ -267,12 +323,18 @@ Self-learning is a cornerstone of the framework, not an optional habit.
 
 ### 4.6 Hard Rules for Instructions
 
+- [`MCAF-GOV-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-solution-governance/references/agents-update-safety.md) makes MCAF installation and updates merge-only: every existing root and local `AGENTS.md` rule stays mandatory and cannot be deleted, omitted, overwritten, summarized away, or weakened.
 - Every MCAF repo has a root `AGENTS.md`.
 - Multi-project solutions use local `AGENTS.md` files at project roots.
 - Agents read root and local `AGENTS.md` before editing code.
-- Vertical-slice architecture is mandatory unless an ADR or local exception rule says otherwise.
-- Each feature must live in its own isolated folder tree with its local code, tests, and supporting artifacts kept together.
+- `MCAF-ARCH-001` is mandatory: all solution-owned backend, frontend, contracts, tests, infrastructure, and docs stay in one repository.
+- Every feature uses one canonical slice name and one consistent feature-first convention across all applicable technical roots.
+- Local rules and ADRs cannot weaken this target architecture. They may only document a time-bounded migration deviation with an owner, target layout, verification, and removal date.
 - Agents must prefer the smallest relevant feature slice over repo-wide scanning.
+- [`MCAF-AI-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-solution-governance/references/model-tier-orchestration.md) is mandatory for non-trivial work: the strongest suitable large or high-capability model available owns planning and final integration, while bounded coding scopes are spawned on the least expensive capable models.
+- Coding delegation starts only after scope, architecture, contracts, acceptance criteria, tests, and the ordered plan are explicit.
+- Cheaper coding models receive exact ownership, constraints, expected artifacts, verification commands, and escalation conditions; they do not invent architecture or weaken rules.
+- [`MCAF-REQ-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-feature-spec/references/requirements-adr-traceability.md) is mandatory: non-trivial feature docs define stable `REQ-*`/`AC-*`; architecture-affecting ADRs define their implementation contract; every requirement traces through tasks, tests, and evidence.
 - For large or complex tasks, the lead agent plans the work, explicitly identifies parallelizable workstreams, and spawns subagents for independent research, implementation, test, verification, documentation, and review scopes that can run in parallel.
 - The agent must spawn subagents for every independent parallel workstream unless there is a concrete coordination, risk, or ownership reason not to.
 - Subagents must receive concrete ownership and verification duties; the lead agent remains responsible for integration, quality gates, and final completion.
@@ -291,8 +353,9 @@ MCAF coding rules exist to keep systems changeable and testable.
 
 - SOLID is mandatory.
 - SRP and cohesion are mandatory.
-- Vertical-slice architecture is mandatory at feature level.
-- Organize code so each feature owns its folder, subfolders, tests, and nearby dependencies as an isolated slice.
+- `MCAF-ARCH-001` makes the single-repository boundary and vertical-slice architecture mandatory for the complete solution.
+- Organize every technical root by feature so backend, frontend, contracts, tests, and docs reuse the same canonical slice name and internal convention.
+- Do not use repository-level `Controllers`, `Services`, `Repositories`, or equivalent layer folders as the owners of feature behaviour.
 - Prefer composition over inheritance unless inheritance is explicitly justified.
 - Boundaries must support realistic tests through public interfaces.
 - Do not preserve obsolete, dead, duplicate, or replaced legacy code unless the user explicitly asks for a temporary compatibility path.
@@ -451,6 +514,32 @@ The agent and engineer iterate together on design, code, tests, and docs.
 
 The agent reviews, critiques, or drafts options while humans retain implementation control.
 
+### 8.4 Mandatory Model-Tier Orchestration
+
+For non-trivial implementation work, MCAF separates expensive reasoning from bounded code production:
+
+- the strongest suitable large or high-capability model available owns repository discovery, architecture, acceptance criteria, test strategy, planning, decomposition, integration, and final review
+- after the plan is explicit, independent coding scopes are spawned on the least expensive models that are still capable of the required stack, tools, context, and risk level
+- every coding worker receives exact scope, ownership, contracts, constraints, expected artifacts, verification commands, and escalation conditions
+- workers stop on ambiguity instead of inventing architecture, changing contracts, weakening tests, or expanding scope
+- the planning model reviews every diff and remains accountable for integration and all quality gates
+
+The mandatory run protocol is:
+
+1. finish `MCAF-REQ-001` feature requirements and every required ADR implementation contract
+2. build a task graph with stable IDs, dependencies, disjoint write ownership, artifacts, tests, completion states, and join conditions
+3. use strong reasoning for architecture, ambiguity, security, and final review; use the least expensive capable models for bounded exploration, implementation, test work, and documentation
+4. spawn only independent workstreams; serialize same-file work and give shared contracts or migrations one integration owner
+5. monitor native task status, steer or replace stuck agents, and wait for all required results
+6. accept only explicit `complete`, `blocked`, `failed`, or `cancelled` states with evidence; `idle` and unverified summaries are not completion
+7. have the planning model inspect every result and diff, then run integrated repository verification
+
+For Codex, official guidance supports read-heavy `explorer`, execution-focused `worker`, and project custom agents with per-agent model/reasoning configuration; Codex can wait for all requested agents and consolidate their results. For Claude Code, choose subagents for bounded delegation, background sessions for human-monitored independent work, and experimental agent teams only when workers need shared tasks or messaging. Claude Code exposes current-session work through `/tasks` and background sessions through `claude agents`. See the official [Codex subagents](https://developers.openai.com/codex/subagents), [Claude Code parallel agents](https://code.claude.com/docs/en/agents), [Claude Code subagents](https://code.claude.com/docs/en/sub-agents), and [Claude Code agent teams](https://code.claude.com/docs/en/agent-teams) documentation.
+
+Simple work does not require delegation when orchestration overhead exceeds the task. For non-trivial work, failure to delegate routine coding must have a concrete recorded reason such as unavailable model routing, insufficient worker capability, inseparable high-risk decisions, or unsafe ownership overlap.
+
+The canonical contract is [`MCAF-AI-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-solution-governance/references/model-tier-orchestration.md).
+
 The repo may choose different modes per task, but the same verification and governance rules still apply.
 
 ## 9. Adopting MCAF in a Repository
@@ -470,6 +559,10 @@ Adoption is complete when:
 - commands and docs reflect the real repo
 - non-trivial work is guided by root-level `<slug>.brainstorm.md`, `<slug>.plan.md`, and the Ralph Loop
 - simple work skips brainstorm overhead and goes straight to execution
+- `MCAF-ARCH-001` is recorded in `AGENTS.md` and `docs/Architecture.md`, with all solution-owned surfaces in one repository and a consistent repo-wide slice map
+- `MCAF-GOV-001` is enforced: framework updates preserve every existing root and local `AGENTS.md` rule and keep the stricter formulation on overlap
+- `MCAF-AI-001` is enforced: strong models plan and review non-trivial work, while bounded coding is delegated to cheaper capable models with explicit instructions
+- `MCAF-REQ-001` is enforced: non-trivial features have stable requirements and acceptance criteria, required ADRs have implementation contracts, and requirements trace through tasks, tests, and evidence
 - vertical-slice architecture, integration tests, and self-learning are treated as core framework pillars
 - tool-specific skills document real bootstrap and install steps when the tool is missing
 - tests and analyzers are the real gates

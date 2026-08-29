@@ -276,7 +276,7 @@ jobs:
                   "---",
                   "layout: default",
                   "title: Tutorial",
-                  "description: Step-by-step tutorial for bootstrapping an MCAF v1.2 repository through URLs, bootstrap templates, and direct GitHub skill folders.",
+                  "description: Step-by-step tutorial for bootstrapping an MCAF v1.3 repository through URLs, bootstrap templates, and direct GitHub skill folders.",
                   "keywords: MCAF tutorial, AGENTS.md setup, skill-first install, AI coding bootstrap, Codex skills, Claude Code skills",
                   "nav_order: 3",
                   "---",

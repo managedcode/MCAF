@@ -4,6 +4,8 @@ Source-control policy exists to keep collaboration predictable and reviewable.
 
 ## Baseline Rules
 
+- `MCAF-ARCH-001` keeps all solution-owned backend, frontend, contracts, tests, infrastructure, and documentation in one repository and versions them together
+- `MCAF-REQ-001` keeps feature requirements, ADR implementation contracts, tasks, tests, and evidence reviewable in the same change history
 - one protected main branch is the default source of truth
 - changes land through pull requests or an equally reviewable flow
 - branch naming is explicit and documented

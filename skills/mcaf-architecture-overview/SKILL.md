@@ -1,7 +1,8 @@
 ---
 name: mcaf-architecture-overview
 description: "Create or update `docs/Architecture.md` as the global architecture map for a solution. Use when bootstrapping a repo, onboarding, or changing modules, boundaries, or contracts. Keep it navigational and use `references/overview-template.md` for scaffolding."
-compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
+metadata:
+  compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
 # MCAF: Architecture Overview
@@ -26,7 +27,9 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 ## Inputs
 
 - current solution layout and entry points
+- the in-repository backend, frontend, contract, test, infrastructure, and docs roots plus the canonical slice convention required by `MCAF-ARCH-001`
 - existing ADRs, feature docs, and boundary docs
+- feature `REQ-*`/`AC-*` and ADR implementation links required by `MCAF-REQ-001`
 - the nearest `AGENTS.md` files
 
 ## Quick Start
@@ -39,10 +42,13 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 1. Start from the current `docs/Architecture.md`; if it is missing, scaffold it from `references/overview-template.md`.
 2. Build a short navigational overview:
+   - the single repository boundary and every solution-owned surface
+   - a repo-wide vertical-slice map using one canonical name per feature across backend, frontend, contracts, tests, and docs
    - system or module map
    - key boundaries and contracts
    - scoping hints
    - links to ADRs, feature docs, and high-signal code paths
+   - traceability from each non-trivial slice to its feature requirements and architecture-affecting ADR implementation contracts
 3. Use only real names from the repo. No placeholders like "Module A".
 4. Prefer Mermaid diagrams plus a tiny link index over long prose.
 5. Split diagrams by boundary if the map becomes noisy.
@@ -51,6 +57,7 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 
 - `docs/Architecture.md`
 - a short architecture map that routes the reader to deeper docs
+- explicit evidence that `MCAF-ARCH-001` is applied to the real repository topology
 
 ## Validate
 
@@ -58,6 +65,9 @@ compatibility: "Requires repository write access; produces Markdown docs with Me
 - every important box or boundary links to deeper material
 - the file stays navigational instead of becoming an inventory dump
 - the overview lets a new agent scope work without reading the whole repo
+- no solution-owned surface points to another repository
+- slice names and internal conventions match across every applicable technical root; non-applicable surfaces are explained
+- non-trivial slices link to stable requirements and acceptance criteria, and architecture-affecting decisions link to ADRs whose status and implementation contract match reality
 
 ## Ralph Loop
 

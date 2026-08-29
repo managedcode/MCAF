@@ -1,7 +1,8 @@
 ---
 name: mcaf-nfr
 description: "Capture or refine non-functional requirements such as accessibility, reliability, scalability, maintainability, performance, and compliance. Use when a feature or architecture change needs explicit quality attributes and trade-offs."
-compatibility: "Requires repository access when NFRs are documented in feature docs, ADRs, or architecture docs."
+metadata:
+  compatibility: "Requires repository access when NFRs are documented in feature docs, ADRs, or architecture docs."
 ---
 
 # MCAF: Non-Functional Requirements

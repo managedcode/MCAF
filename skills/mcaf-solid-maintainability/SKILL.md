@@ -1,7 +1,8 @@
 ---
 name: mcaf-solid-maintainability
 description: "Apply SOLID, SRP, cohesion, composition-over-inheritance, and small-file discipline to code changes. Use when refactoring large files or classes, setting maintainability limits in `AGENTS.md`, documenting justified exceptions, or reviewing design quality."
-compatibility: "Requires repository write access; uses maintainability limits from root or local `AGENTS.md`."
+metadata:
+  compatibility: "Requires repository write access; uses maintainability limits from root or local `AGENTS.md`."
 ---
 
 # MCAF: SOLID Maintainability

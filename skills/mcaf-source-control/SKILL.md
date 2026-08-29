@@ -1,7 +1,8 @@
 ---
 name: mcaf-source-control
 description: "Set or refine source-control policy for repository structure, branch naming, merge strategy, commit hygiene, and secrets-in-git discipline. Use when bootstrapping a repo, tightening PR flow, or documenting branch and release policy."
-compatibility: "Requires repository access; may update contribution docs, AGENTS rules, or repository policy files."
+metadata:
+  compatibility: "Requires repository access; may update contribution docs, AGENTS rules, or repository policy files."
 ---
 
 # MCAF: Source Control
@@ -39,9 +40,11 @@ compatibility: "Requires repository access; may update contribution docs, AGENTS
 ## Workflow
 
 1. Agree on merge and release strategy before scaling implementation.
-2. Keep branch and PR rules explicit in-repo.
-3. Treat secrets in git history as a critical incident, not cleanup noise.
-4. Use concrete policy language, not hand-waving.
+2. Enforce `MCAF-ARCH-001`: the complete solution-owned backend, frontend, contracts, tests, infrastructure, and docs are versioned in one repository.
+3. Enforce `MCAF-REQ-001` at PR boundaries: changed behaviour traces through `REQ-*`, `AC-*`, ADR implementation tasks, tests, and evidence; document statuses match reality.
+4. Keep branch and PR rules explicit in-repo.
+5. Treat secrets in git history as a critical incident, not cleanup noise.
+6. Use concrete policy language, not hand-waving.
 
 ## Deliver
 
@@ -54,6 +57,8 @@ compatibility: "Requires repository access; may update contribution docs, AGENTS
 - naming and merge rules are explicit
 - release/versioning implications are documented where needed
 - secret hygiene is treated as policy, not tribal knowledge
+- repository policy does not permit solution-owned surfaces to drift into separate repositories
+- PR policy rejects missing requirements/ADR implementation traceability or premature `Verified`/`Implemented` status
 
 ## Ralph Loop
 

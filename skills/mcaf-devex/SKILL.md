@@ -1,7 +1,8 @@
 ---
 name: mcaf-devex
 description: "Improve developer experience for multi-component solutions: onboarding, F5 contract, cross-platform tasks, local inner loop, and reproducible setup. Use when the repo is hard to run, debug, test, or onboard into."
-compatibility: "Requires repository access; may update docs, task runners, devcontainer guidance, or local setup conventions."
+metadata:
+  compatibility: "Requires repository access; may update docs, task runners, devcontainer guidance, or local setup conventions."
 ---
 
 # MCAF: Developer Experience
@@ -44,7 +45,9 @@ compatibility: "Requires repository access; may update docs, task runners, devco
    - test
 2. Standardize tasks before optimizing them.
 3. Prefer one documented way to run the full solution locally.
-4. Pull only the references that match the local-dev problem you are fixing.
+4. Teach `MCAF-ARCH-001` in onboarding: show the single repository boundary and trace one real canonical slice through backend, frontend, contracts, tests, and docs.
+5. Teach `MCAF-REQ-001`: show where a real slice's `REQ-*`/`AC-*`, ADR implementation contract, `TASK-*`, tests, and evidence live.
+6. Pull only the references that match the local-dev problem you are fixing.
 
 ## Deliver
 
@@ -58,6 +61,8 @@ compatibility: "Requires repository access; may update docs, task runners, devco
 - the inner loop is explicit and reproducible
 - cross-platform or containerized guidance is used only where it helps
 - local development uses real services, containers, or sandbox environments instead of fakes or stubs
+- a newcomer can find every surface of a slice by one canonical name without leaving the repository
+- a newcomer can follow one real requirement through its ADR decision, implementation task, automated test, and verification evidence
 
 ## Ralph Loop
 

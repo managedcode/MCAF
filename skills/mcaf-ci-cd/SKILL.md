@@ -1,7 +1,8 @@
 ---
 name: mcaf-ci-cd
 description: "Design or refine CI/CD workflows, quality gates, release flow, and safe AI-assisted pipeline authoring. Use when adding or changing build pipelines, release stages, IaC-driven environments, or deployment rollback policy."
-compatibility: "Requires repository access; may update CI workflows, pipeline docs, and release guidance."
+metadata:
+  compatibility: "Requires repository access; may update CI workflows, pipeline docs, and release guidance."
 ---
 
 # MCAF: CI/CD

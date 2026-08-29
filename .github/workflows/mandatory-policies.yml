@@ -1,0 +1,20 @@
+name: Mandatory policies
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify MCAF-ARCH-001, MCAF-GOV-001, MCAF-AI-001, and MCAF-REQ-001
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify mandatory architecture, governance, model-tier, and requirements policies
+        run: bash scripts/verify-mandatory-policies.sh

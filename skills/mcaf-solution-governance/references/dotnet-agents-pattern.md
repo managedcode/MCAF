@@ -5,6 +5,15 @@ The `.NET` skill bundle itself lives in the [Managed Code Skills catalog](https:
 
 ## Root AGENTS.md Expectations
 
+Before recording commands, apply `MCAF-ARCH-001`:
+
+- keep every solution-owned backend project, frontend project, contract project, test project, infrastructure asset, and durable doc in the same repository as the `.sln` or `.slnx`
+- record one canonical feature-slice name and path convention across every project root, such as `Features/<SliceName>/`
+- keep tests and feature docs mapped to that same slice name
+- do not treat solution folders or separate projects as permission to organize feature behaviour by technical layer
+
+Also apply `MCAF-REQ-001`: every non-trivial .NET feature has stable `REQ-*`/`AC-*`, an explicit ADR decision, `TASK-*`, real automated tests, and evidence. Architecture-affecting ADRs define executable implementation stages, project/slice ownership, dependencies, migrations, verification, and join gates before coding.
+
 Record the real commands, not placeholders:
 
 ```text

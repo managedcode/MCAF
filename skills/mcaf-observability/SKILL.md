@@ -1,7 +1,8 @@
 ---
 name: mcaf-observability
 description: "Design or improve observability for application and delivery flows: logs, metrics, traces, correlation, alerts, and operational diagnostics. Use when a change affects runtime visibility, failure diagnosis, SLOs, or alerting."
-compatibility: "Requires repository access; may update code, dashboards-as-code, alerting docs, or operational guidance."
+metadata:
+  compatibility: "Requires repository access; may update code, dashboards-as-code, alerting docs, or operational guidance."
 ---
 
 # MCAF: Observability

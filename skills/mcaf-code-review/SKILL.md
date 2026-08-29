@@ -1,7 +1,8 @@
 ---
 name: mcaf-code-review
 description: "Prepare for, perform, or tighten code review workflow: PR scope, review checklist, reviewer expectations, and merge hygiene. Use when shaping pull requests, defining review policy, or auditing whether a change is review-ready."
-compatibility: "Requires repository access; may update PR templates, review docs, or contribution guidance."
+metadata:
+  compatibility: "Requires repository access; may update PR templates, review docs, or contribution guidance."
 ---
 
 # MCAF: Code Review
@@ -39,14 +40,17 @@ compatibility: "Requires repository access; may update PR templates, review docs
 ## Workflow
 
 1. Confirm the change is small enough to review coherently. Split if needed.
-2. Check that tests, docs, and architecture notes moved with the code.
-3. Review in this order:
+2. Apply `MCAF-AI-001`: the planning model reviews every delegated coding diff against its instruction packet, plan, acceptance criteria, architecture, contracts, and verification duties.
+3. Apply `MCAF-REQ-001`: trace each changed behaviour from `REQ-*` and `AC-*` through the required ADR implementation contract, `TASK-*`, automated tests, and evidence. Reject missing links or an ADR marked `Implemented` without proof.
+4. Apply `MCAF-ARCH-001`: confirm all solution-owned artifacts remain in this repository and affected backend, frontend, contracts, tests, and docs use the same canonical slice name and convention.
+5. Check that tests, docs, and architecture notes moved with the code.
+6. Review in this order:
    - behavioural risk
    - design and maintainability
    - test quality
    - operational or security impact
-4. If the repo needs review policy or a template, define it in-repo.
-5. Keep reviewer guidance concrete. Avoid vague "review carefully" language.
+6. If the repo needs review policy or a template, define it in-repo.
+7. Keep reviewer guidance concrete. Avoid vague "review carefully" language.
 
 ## Deliver
 
@@ -59,6 +63,10 @@ compatibility: "Requires repository access; may update PR templates, review docs
 - the review guidance tells reviewers what to check, not just that they should check
 - PR scope is understandable without opening the whole repo
 - tests and docs are part of review readiness, not afterthoughts
+- the PR does not split solution-owned artifacts, introduce layer-first feature ownership, or let slice names and structures drift across technical roots
+- the planning model reviewed delegated output and rejected unplanned scope, architecture, contract, or quality changes
+- every requirement and acceptance criterion maps to the implemented task, required ADR, automated proof, and integrated verification evidence
+- all required worker results were awaited, reached explicit completion states, and were inspected before integration
 
 ## Ralph Loop
 

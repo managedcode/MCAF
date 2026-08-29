@@ -8,12 +8,30 @@ This file is the primary “start here” card for humans and AI agents.
 
 Single source of truth: keep this doc navigational and coarse (diagrams + links). Detailed behaviour belongs in `docs/Features/*`; detailed decisions/invariants belong in `docs/ADR/*`.
 
+Architecture policy: `MCAF-ARCH-001` is mandatory. The complete solution-owned backend, frontend, contracts, tests, infrastructure, and documentation MUST stay in this repository and use one consistent repo-wide vertical-slice convention.
+
+Requirements policy: `MCAF-REQ-001` is mandatory. Every non-trivial slice links to a feature spec with stable `REQ-*`/`AC-*`; architecture-affecting decisions link to ADRs with implementation contracts and real status.
+
+Execution policy: `MCAF-AI-001` is mandatory. Non-trivial slice work links to a task graph with model tiers, disjoint ownership, dependencies, explicit completion states, wait/join conditions, and final lead verification.
+
 ## Summary (keep it short)
 
 - **System:**  
+- **Repository boundary:** one repository containing all solution-owned surfaces
+- **Canonical slice convention:** `.../Features/<SliceName>/...`
 - **Where is the code:**  
 - **Entry points:**  
 - **Dependencies:**  
+
+## 1) Repository and vertical-slice map (required)
+
+Record every solution-owned surface and its in-repository root. Then map every feature with one canonical slice name. Use `N/A` with a reason when a surface genuinely does not apply.
+
+| Canonical slice | Backend | Frontend | Contracts | Tests | Feature requirements | Implementing ADRs |
+| --- | --- | --- | --- | --- | --- | --- |
+| `<SliceName>` | `.../Features/<SliceName>/` | `.../Features/<SliceName>/` | `.../Features/<SliceName>/` | `.../Features/<SliceName>/` | `docs/Features/<SliceName>.md` (`REQ-*`, `AC-*`) | `docs/ADR/...` or `N/A: reason` |
+
+The table MUST NOT point to another repository. Different technical roots MUST reuse the same `<SliceName>` and documented internal convention.
 
 ## Scoping (read first)
 
@@ -40,9 +58,11 @@ Single source of truth: keep this doc navigational and coarse (diagrams + links)
 
 ```mermaid
 flowchart LR
-  EP[Entry Points]
-  A[Module A]
-  B[Module B]
+  subgraph Repo[Single solution repository]
+    EP[Entry Points]
+    A[Feature Slice A]
+    B[Feature Slice B]
+  end
 
   EP --> A
   A --> B
@@ -103,6 +123,7 @@ classDiagram
 
 ## 4) Dependency rules (must be explicit)
 
+- `MCAF-ARCH-001`: one repository and one consistent vertical-slice convention are mandatory and cannot be weakened locally.
 - Allowed dependencies:  
 - Forbidden dependencies:  
 - Integration style: sync calls / events / shared library  
