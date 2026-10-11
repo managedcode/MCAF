@@ -38,6 +38,9 @@ Rules:
 - before write-capable agents start, require a feature spec with stable REQ-* and AC-* IDs plus every required ADR with an implementation contract
 - after the plan is explicit, spawn bounded coding tasks on the least expensive capable models with exact instructions, disjoint ownership, dependencies, verification commands, completion states, wait/join conditions, and escalation rules
 - wait for all required agent results, inspect every diff and evidence packet, then run integrated verification before completion
+- inspect the complete affected code, callers, contracts, tests, and docs up front; implement all approved behavior and wiring, self-review code and tests, fix findings, and format before one planned verification phase
+- preserve required repository gates; rerun affected checks only for a new change, concrete failure, or unresolved question
+- require explicit user approval for architecture, serializers/serialization contracts, and other material changes; do routine work within the approved design without asking again
 ```
 
 ---
@@ -150,23 +153,16 @@ Do not hard-code temporary product names unless the repository intentionally pin
 
 Canonical details: [`MCAF-AI-001`](https://github.com/managedcode/MCAF/blob/main/skills/mcaf-solution-governance/references/model-tier-orchestration.md).
 
-Current platform examples:
+Inspect the actual runtime's models, roles, permissions, and native delegation/status/wait controls. Use durable capability roles rather than model names or commands that may become stale:
 
-- **Codex:** use read-only `explorer` agents for mapping, bounded `worker` agents for implementation, and a stronger independent reviewer. Configure reusable agents under `.codex/agents/`; use the app agent panel or CLI `/agent` to inspect and steer them. Tell Codex how to split the work, to wait for all required agents, and what consolidated evidence to return. See the official [Codex subagents guide](https://developers.openai.com/codex/subagents).
-- **Claude Code:** use subagents for bounded work returning to one lead; use background sessions for independently monitored jobs; use experimental agent teams only when workers need a shared task list and messaging. Use `claude agents` for background sessions and `/tasks` for current-session work. See the official [parallel agents](https://code.claude.com/docs/en/agents), [subagents](https://code.claude.com/docs/en/sub-agents), and [agent teams](https://code.claude.com/docs/en/agent-teams) guides.
+| Role | Selection rule | Ownership |
+| --- | --- | --- |
+| Lead / architect | Highest-capability suitable model | Requirements, decisions, task graph, integration, final quality |
+| Explorer / researcher | Least expensive capable model; stronger reasoning for ambiguity | Read-only discovery and evidence |
+| Coding worker | Least expensive model proven capable of the bounded stack/tool/risk scope | Disjoint writes, fixed contracts, complete implementation and tests |
+| Independent reviewer | Suitable correctness/security reasoning capability | Read-only requirement, code, and test review |
 
-Treat exact product model names as refreshable configuration. As of this tutorial update, official Codex guidance maps the flagship tier to demanding planning/review, faster lower-cost tiers to read-heavy scans, and the fastest tier to narrow repeatable tasks. Claude Code supports per-agent model selection and explicitly recommends cheaper models such as Haiku for suitable bounded work. Always validate the chosen tier on the real task.
-
-A practical starting map (an MCAF recommendation derived from those current platform capabilities, not a permanent product guarantee) is:
-
-| Role | Codex starting point | Claude Code starting point | Default capability boundary |
-| --- | --- | --- | --- |
-| Lead / architect | `gpt-5.6`, high or stronger reasoning as risk requires | strongest allowed planning model such as `opus`, high effort as risk requires | Own requirements, ADRs, task graph, integration, and final decision |
-| Explorer / researcher | `gpt-5.6-terra` or `gpt-5.6-luna`, medium/low | custom `haiku` or capable `sonnet` | Read-only discovery and distilled evidence |
-| Bounded coding worker | `gpt-5.6-terra` medium; `luna` only for clear repeatable work | `sonnet` for normal coding; `haiku` only after proving the scope is simple enough | Disjoint write scope, fixed contracts, exact tests |
-| Independent reviewer | `gpt-5.6` or capable `terra`, high | `opus` or capable `sonnet`, high | Read-only correctness/security/requirement review |
-
-Start smaller only after representative tasks show the tier is capable. Escalate a worker when it cannot satisfy the language, context, tool, or risk boundary; do not lower requirements to fit the cheaper model.
+For exact product configuration, consult the current official [Codex subagents](https://developers.openai.com/codex/subagents), [Claude Code parallel agents](https://code.claude.com/docs/en/agents), [subagents](https://code.claude.com/docs/en/sub-agents), or [agent teams](https://code.claude.com/docs/en/agent-teams) documentation as applicable. Record unsupported capabilities instead of inventing an adapter. Escalate incapable workers without lowering requirements.
 
 Use a spawn request shaped like this:
 
@@ -228,7 +224,9 @@ For each selected skill:
 1. Open the skill entry on the Skills page.
 2. Open the `Raw SKILL` link for that skill.
 3. Fetch `SKILL.md` into the target skill folder.
-4. Read the skill’s `Load References` section and fetch only the referenced files you actually need from the same GitHub folder.
+4. Follow the skill's reference links and fetch only the files needed for the active task, preserving relative paths. If a link points into another skill folder, fetch that required reference at the matching path too.
+
+Read the installed repository's `AGENTS.md` for the shared task workflow and approval rules. Skill entrypoints add task-specific guidance; references are conditional, not a list to load in full. When updating a skill, keep its name and folder stable, replace its files with the current version, and review removed resources before deleting them. Governance updates still follow `MCAF-GOV-001`.
 
 This keeps install deterministic without requiring manifests or archives.
 
@@ -362,6 +360,7 @@ The bootstrap is complete when:
 - docs and commands are customized to the real repo
 - root `AGENTS.md` defines the mandatory `MCAF-AI-001` planning tier, coding tier, task graph, worker instruction packet, native status/wait, completion states, join, escalation, and lead review rules
 - root `AGENTS.md` defines mandatory `MCAF-REQ-001` feature requirements, ADR triggers and implementation contracts, plus traceability through tasks, tests, and evidence
+- root `AGENTS.md` requires complete implementation and code/test self-review before planned verification, and user approval for architecture, serialization, and other material decisions while allowing routine work autonomously
 
 ---
 
@@ -379,5 +378,7 @@ Use one canonical vertical-slice name and one consistent feature-first conventio
 Require MCAF-AI-001 for non-trivial work: use the strongest suitable large or high-capability model available for planning, architecture, acceptance criteria, decomposition, integration, and final review; delegate bounded coding scopes to the least expensive capable models with exact instructions, disjoint ownership, dependencies, status/wait, completion evidence, and join gates.
 Require MCAF-REQ-001: every non-trivial feature has stable REQ-* and AC-* before implementation; every architecture-affecting decision has an ADR with an ordered implementation contract; trace requirements through ADRs, TASK-*, tests, and final evidence.
 Treat integration tests, self-learning, and full quality-gate execution as non-negotiable repo rules.
+Inspect the complete affected flow before coding, implement every approved variant and integration, self-review code and tests, fix findings, and format before one planned verification phase. Keep TDD and the Ralph Loop purposeful; rerun checks only for a new change, concrete failure, or unresolved question.
+Require explicit user approval before architecture, serializer/serialization, or other material contract, data, security, dependency, or deployment changes. Preserve prior authorization and do routine work within the agreed design without asking again.
 Finally, update docs/Architecture.md so agents can scope work without repo-wide scanning.
 ```

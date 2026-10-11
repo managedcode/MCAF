@@ -21,6 +21,9 @@ Source-control policy exists to keep collaboration predictable and reviewable.
 
 ## Hygiene
 
+- never use `git stash` or automatic stashing; preserve concurrent work visibly
+- when asked to commit all current changes, include the full requested scope on the current branch
+- never force-push or bypass protections
 - keep commit messages understandable
 - avoid long-lived branches unless the repo truly needs them
 - prefer small PRs that can be reviewed coherently

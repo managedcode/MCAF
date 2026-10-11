@@ -56,7 +56,9 @@ jobs:
           ignore = {"overview-template.md"}
 
           failures = []
-          for path in sorted((repo / "skills").glob("*/references/*.md")):
+          skill_files = list((repo / "skills").glob("*/SKILL.md"))
+          skill_files.extend((repo / "skills").glob("*/references/*.md"))
+          for path in sorted(skill_files):
             if path.name.endswith("-template.md") or path.name in ignore:
               continue
             text = path.read_text(encoding="utf-8")

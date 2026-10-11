@@ -11,6 +11,8 @@ Use a PR template that helps the reviewer verify the change quickly.
 - verification
 - docs updated
 
+Record approval for material architecture, serializer/serialization, contract, data, security, dependency, or deployment decisions. Routine implementation within an already approved design does not need another confirmation.
+
 ## Mandatory Architecture Check (`MCAF-ARCH-001`)
 
 - [ ] All solution-owned backend, frontend, contracts, tests, infrastructure, and docs changed by this PR remain in this repository.

@@ -1,103 +1,24 @@
 ---
 name: mcaf-security-baseline
-description: "Apply baseline engineering security guidance: secrets handling, secure defaults, threat modelling references, and review checkpoints for auth, data flow, pipelines, and external integrations. Use when a change has security impact but does not require a full standalone AppSec engagement."
+description: "Review or implement scoped security controls for authentication, authorization, secrets, external inputs, data handling, and pipeline permissions. Use for a concrete security impact or baseline request."
 metadata:
   compatibility: "Requires repository access; may update security docs, ADRs, and verification steps."
 ---
 
 # MCAF: Security Baseline
 
-## Trigger On
-
-- a change has security impact but does not need a full separate AppSec exercise
-- the work touches auth, secrets, trust boundaries, data flow, or pipeline permissions
-- the team needs secure-default guidance before implementing
-
-## Value
-
-- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
-- reduce ambiguity through explicit planning, verification, and final validation skills
-- leave reusable project context so future tasks are faster and safer
-
-## Do Not Use For
-
-- a full standalone threat-modeling engagement
-- generic code review with no security surface
-
-## Inputs
-
-- the changed boundary, data flow, or integration
-- auth, secret, and permission model for the affected path
-- current security docs, ADRs, or CI rules
-
-## Quick Start
-
-1. Read the nearest `AGENTS.md` and confirm scope and constraints.
-2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
-3. Return the `Required Result Format` with concrete artifacts and verification evidence.
+Read root/local `AGENTS.md`, the affected trust/data flow, permission model, and existing security controls. Do not expand ordinary work into an unrelated security engagement.
 
 ## Workflow
 
-1. Identify the security surface:
-   - authn and authz
-   - secrets
-   - external inputs
-   - storage and transport
-   - pipeline permissions
-2. Apply secure defaults and least privilege before adding behaviour.
-3. If the change introduces a trust boundary, update or add an ADR and link the reasoning.
-4. Pull the relevant security references, not the whole set.
+1. Identify relevant actors, assets, external inputs, trust boundaries, secrets, storage/transport, and CI permissions.
+2. Inspect authentication, authorization, validation, tenant/owner isolation, and failure handling through actual entry points and state changes.
+3. Preserve secure defaults and least privilege. Material identity, trust, dependency, or weakened-control changes require user approval and the applicable ADR.
+4. Implement the complete approved security behavior and meaningful rejection tests. Review code and tests before planned verification with real authorized test environments.
+5. Report concrete findings, controls, proof, and unresolved risks. Baseline review does not establish certification or authorize live scanning.
 
-## Deliver
+## References
 
-- security-aware design or implementation guidance
-- updated security checkpoints in docs, ADRs, or CI
-- the right threat-model references for the impacted area
-
-## Validate
-
-- secrets are handled explicitly
-- authn and authz assumptions are visible
-- new trust boundaries are documented
-- the change does not smuggle insecure defaults into the repo
-
-## Ralph Loop
-
-Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
-
-1. Brainstorm first (mandatory):
-   - analyze current state
-   - define the problem, target outcome, constraints, and risks
-   - generate options and think through trade-offs before committing
-   - capture the recommended direction and open questions
-2. Plan second (mandatory):
-   - write a detailed execution plan from the chosen direction
-   - list final validation skills to run at the end, with order and reason
-3. Execute one planned step and produce a concrete delta.
-4. Review the result and capture findings with actionable next fixes.
-5. Apply fixes in small batches and rerun the relevant checks or review steps.
-6. Update the plan after each iteration.
-7. Repeat until outcomes are acceptable or only explicit exceptions remain.
-8. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
-
-### Required Result Format
-
-- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
-- `plan`: concise plan and current iteration step
-- `actions_taken`: concrete changes made
-- `validation_skills`: final skills run, or skipped with reasons
-- `verification`: commands, checks, or review evidence summary
-- `remaining`: top unresolved items or `none`
-
-For setup-only requests with no execution, return `status: configured` and exact next commands.
-
-## Load References
-
-- read `references/security.md` first
-- open `references/rules-of-engagement.md` or `references/threat-modelling.md` only when they match the task
-
-## Example Requests
-
-- "Review the security baseline for this new OAuth flow."
-- "We are adding a webhook. What baseline security work is required?"
-- "Tighten secrets and pipeline permissions for this repo."
+- For review areas and escalation: [security baseline](references/security.md).
+- When mapping a new trust boundary: [threat modelling](references/threat-modelling.md).
+- Before active security testing: [rules of engagement](references/rules-of-engagement.md).

@@ -1,102 +1,26 @@
 ---
 name: mcaf-source-control
-description: "Set or refine source-control policy for repository structure, branch naming, merge strategy, commit hygiene, and secrets-in-git discipline. Use when bootstrapping a repo, tightening PR flow, or documenting branch and release policy."
+description: "Define or refine branch, merge, commit, release, and repository ownership policy. Use for source-control governance or secrets-in-history response, not routine Git commands."
 metadata:
   compatibility: "Requires repository access; may update contribution docs, AGENTS rules, or repository policy files."
 ---
 
 # MCAF: Source Control
 
-## Trigger On
-
-- bootstrapping source-control policy
-- tightening branch, merge, or PR rules
-- documenting commit or release hygiene
-- dealing with secrets-in-git or repository structure issues
-
-## Value
-
-- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
-- reduce ambiguity through explicit planning, verification, and final validation skills
-- leave reusable project context so future tasks are faster and safer
-
-## Do Not Use For
-
-- CI/CD workflow design with no source-control policy change
-- one-off git commands that do not alter repo policy
-
-## Inputs
-
-- current branching and merge flow
-- release strategy and versioning expectations
-- secret-handling and repository-structure constraints
-
-## Quick Start
-
-1. Read the nearest `AGENTS.md` and confirm scope and constraints.
-2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
-3. Return the `Required Result Format` with concrete artifacts and verification evidence.
+Read existing root/local `AGENTS.md`, branch protections, release conventions, and the user's authorized Git scope before changing policy.
 
 ## Workflow
 
-1. Agree on merge and release strategy before scaling implementation.
-2. Enforce `MCAF-ARCH-001`: the complete solution-owned backend, frontend, contracts, tests, infrastructure, and docs are versioned in one repository.
-3. Enforce `MCAF-REQ-001` at PR boundaries: changed behaviour traces through `REQ-*`, `AC-*`, ADR implementation tasks, tests, and evidence; document statuses match reality.
-4. Keep branch and PR rules explicit in-repo.
-5. Treat secrets in git history as a critical incident, not cleanup noise.
-6. Use concrete policy language, not hand-waving.
+1. Make the default/release branch model, merge strategy, review expectations, and tag/versioning rules explicit using the team's actual workflow.
+2. Apply `MCAF-ARCH-001`: version solution-owned backend, frontend, contracts, tests, infrastructure, and docs together in one repository.
+3. Apply `MCAF-REQ-001`: review changed behavior through requirements, acceptance, required ADR contracts, tasks, tests, and evidence; document statuses must match reality.
+4. Preserve visible concurrent work. Never use `git stash` or automatic stashing. When the user requests committing all current changes, include the full requested scope on the current branch.
+5. Do not force-push or bypass protections. Policy writing alone does not authorize pushing, merging, releasing, or rewriting history.
+6. If a secret entered history, arrange authorized credential rotation before any separately approved history cleanup.
 
-## Deliver
+Deliver the requested contribution/governance changes and explain their practical effect. Do not silently introduce another branching strategy or repository.
 
-- clear branch and merge strategy
-- updated contribution or governance docs
-- safer repository hygiene around commits, PRs, and secrets
+## References
 
-## Validate
-
-- naming and merge rules are explicit
-- release/versioning implications are documented where needed
-- secret hygiene is treated as policy, not tribal knowledge
-- repository policy does not permit solution-owned surfaces to drift into separate repositories
-- PR policy rejects missing requirements/ADR implementation traceability or premature `Verified`/`Implemented` status
-
-## Ralph Loop
-
-Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
-
-1. Brainstorm first (mandatory):
-   - analyze current state
-   - define the problem, target outcome, constraints, and risks
-   - generate options and think through trade-offs before committing
-   - capture the recommended direction and open questions
-2. Plan second (mandatory):
-   - write a detailed execution plan from the chosen direction
-   - list final validation skills to run at the end, with order and reason
-3. Execute one planned step and produce a concrete delta.
-4. Review the result and capture findings with actionable next fixes.
-5. Apply fixes in small batches and rerun the relevant checks or review steps.
-6. Update the plan after each iteration.
-7. Repeat until outcomes are acceptable or only explicit exceptions remain.
-8. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
-
-### Required Result Format
-
-- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
-- `plan`: concise plan and current iteration step
-- `actions_taken`: concrete changes made
-- `validation_skills`: final skills run, or skipped with reasons
-- `verification`: commands, checks, or review evidence summary
-- `remaining`: top unresolved items or `none`
-
-For setup-only requests with no execution, return `status: configured` and exact next commands.
-
-## Load References
-
-- read `references/source-control.md` first
-- open `references/naming-branches.md` only when the task is specifically about branch naming
-
-## Example Requests
-
-- "Define branch naming and merge rules for this repo."
-- "Document how releases and component versions should work."
-- "Tighten our source-control policy after a secrets leak."
+- For repository hygiene: [source-control policy](references/source-control.md).
+- When defining a naming convention: [branch naming](references/naming-branches.md); preserve the existing user/repo prefix.

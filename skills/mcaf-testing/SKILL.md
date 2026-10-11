@@ -1,117 +1,28 @@
 ---
 name: mcaf-testing
-description: "Add or update automated tests for a change using the repository’s verification rules in `AGENTS.md`. Use when implementing a feature, bugfix, refactor, or regression test; prefer stable integration/API/UI coverage and pull deeper test strategy from the bundled references."
+description: "Design or update regression tests for features, defects, and refactors using repository verification commands. Use for meaningful user or system flow coverage and test strategy."
 metadata:
   compatibility: "Requires the repository’s build and test tooling; uses commands from root or local `AGENTS.md`."
 ---
 
 # MCAF: Testing
 
-## Trigger On
-
-- implementing a feature or bugfix
-- adding a regression test for a failure
-- protecting a refactor with automated verification
-
-## Value
-
-- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
-- reduce ambiguity through explicit planning, verification, and final validation skills
-- leave reusable project context so future tasks are faster and safer
-
-## Do Not Use For
-
-- repo-wide delivery policy with no test change
-- documentation-only changes unless they alter executable verification
-
-## Inputs
-
-- the nearest `AGENTS.md`
-- the changed behaviour and touched boundaries
-- existing tests near the impacted code path
-
-## Quick Start
-
-1. Read the nearest `AGENTS.md` and confirm scope and constraints.
-2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
-3. Return the `Required Result Format` with concrete artifacts and verification evidence.
+Follow root and applicable local `AGENTS.md` for scope, test commands, runner, coverage policy, and required gates.
 
 ## Workflow
 
-1. Read the repo’s real verification commands from `AGENTS.md`.
-2. Read the owning feature spec and apply `MCAF-REQ-001`: map every test to stable `REQ-*` and `AC-*` IDs and update the feature traceability matrix with the test and resulting evidence.
-3. Place tests under the owning canonical slice required by `MCAF-ARCH-001`, using the same slice name as backend, frontend, contracts, and feature docs.
-4. Start with a failing test first when the change adds behaviour or fixes a bug.
-5. Start with the smallest meaningful test scope:
-   - new or changed tests
-   - related suite
-   - broader regressions
-6. When the stack is .NET, use the external `.NET` skills from the [Managed Code Skills catalog](https://skills.managed-code.com/), use `mcaf-dotnet` as the orchestration skill when the task spans code, tests, and verification, and route framework mechanics through exactly one matching skill:
-   - `mcaf-dotnet-xunit`
-   - `mcaf-dotnet-tunit`
-   - `mcaf-dotnet-mstest`
-7. Prefer integration, API, or UI coverage when behaviour crosses boundaries.
-8. Prove the user flow or caller-visible system flow, not just internal details.
-9. Add a regression test for every bug that can be captured reliably.
-10. If the stack is .NET and production code changed, do not stop at tests only. Finish with the repo-defined format and analyzer pass as well.
-11. Use deeper testing references only when the repo’s current strategy is unclear.
+1. Inspect the implementation, callers, contracts, existing tests, fixtures, and accepted behavior before designing tests. Under `MCAF-REQ-001`, map non-trivial feature tests to `REQ-*`/`AC-*` and update their evidence matrix.
+2. Keep tests in the owning canonical slice under `MCAF-ARCH-001`. Choose the level that proves the real flow: isolated logic, integration, API, or rendered UI.
+3. Design regressions from requirements before implementation. They must detect the original defect and assert meaningful caller-visible results, required rejection paths, side effects, state transitions, and edge cases.
+4. Implement the complete approved code and test scope, then review both before execution. Check fixtures, isolation, cleanup, assertion strength, and whether incorrect behavior would actually fail the test.
+5. Use real dependencies, containers, test instances, or sandboxes as required by repository policy. Do not substitute doubles or lower expectations to hide broken behavior.
+6. After self-review, fixes, and formatting, execute one planned verification phase with focused tests and required broader gates. A separate red-phase or baseline run needs a concrete purpose or explicit requirement. Fix the complete cause of failures before rerunning affected checks.
+7. Report commands and observed results, coverage gaps, and exact blockers. Passing focused tests does not imply a broader suite or deployment passed.
 
-## Deliver
+For .NET, identify `VSTest` versus `Microsoft.Testing.Platform` from the actual repo configuration. Use its installed matching framework skill and exact commands; do not copy arguments from another runner.
 
-- automated tests close to the changed behaviour
-- verification results that match the repo’s real commands
+## References
 
-## Validate
-
-- the new behaviour is covered at the right level
-- the main user flow or caller-visible system flow is proven
-- tests assert meaningful outcomes, not implementation trivia
-- coverage expectations from `AGENTS.md` are met, or the exception is documented
-- the verification sequence matches `AGENTS.md`
-- for .NET changes, tests were not treated as a substitute for formatting or analyzer gates
-- broader suites are run after there is something real to verify
-- test paths use the owning slice's canonical name and remain in the solution repository
-- every test and result is traceable to the owning `REQ-*` and `AC-*`
-
-## Ralph Loop
-
-Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
-
-1. Brainstorm first (mandatory):
-   - analyze current state
-   - define the problem, target outcome, constraints, and risks
-   - generate options and think through trade-offs before committing
-   - capture the recommended direction and open questions
-2. Plan second (mandatory):
-   - write a detailed execution plan from the chosen direction
-   - list final validation skills to run at the end, with order and reason
-3. Execute one planned step and produce a concrete delta.
-4. Review the result and capture findings with actionable next fixes.
-5. Apply fixes in small batches and rerun the relevant checks or review steps.
-6. Update the plan after each iteration.
-7. Repeat until outcomes are acceptable or only explicit exceptions remain.
-8. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
-
-### Required Result Format
-
-- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
-- `plan`: concise plan and current iteration step
-- `actions_taken`: concrete changes made
-- `validation_skills`: final skills run, or skipped with reasons
-- `verification`: commands, checks, or review evidence summary
-- `remaining`: top unresolved items or `none`
-
-For setup-only requests with no execution, return `status: configured` and exact next commands.
-
-## Load References
-
-- read `references/test-planning.md` first
-- open `references/automated-testing.md` for deeper strategy and trade-offs
-- for broader .NET implementation flow, use the external `mcaf-dotnet` skill from the [Managed Code Skills catalog](https://skills.managed-code.com/)
-- for .NET framework-specific mechanics, use exactly one external skill from the [Managed Code Skills catalog](https://skills.managed-code.com/): `mcaf-dotnet-xunit`, `mcaf-dotnet-tunit`, or `mcaf-dotnet-mstest`
-
-## Example Requests
-
-- "Add tests for this bugfix."
-- "Protect this refactor with regression coverage."
-- "Choose the right test level for this API change."
+- When designing a scenario matrix or unclear strategy: [test planning](references/test-planning.md).
+- For test levels, realism, and coverage expectations: [automated testing](references/automated-testing.md).
+- For .NET tooling not installed here: [Managed Code Skills catalog](https://skills.managed-code.com/).

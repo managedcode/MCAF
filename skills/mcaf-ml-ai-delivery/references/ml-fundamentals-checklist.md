@@ -1,54 +1,26 @@
-# ML Fundamentals Checklist
+# ML Delivery Fundamentals
 
-This checklist helps ensure that our ML projects meet our ML Fundamentals. The items below are not sequential, but rather organized by different parts of an ML project.
+Use only the sections relevant to the active stage. Record evidence and unresolved assumptions; a checked box is not evidence by itself.
 
-## Data Quality and Governance
+## Data and Feasibility
 
-- [ ] There is access to data.
-- [ ] Labels exist for dataset of interest.
-- [ ] Data quality evaluation.
-- [ ] Able to track data lineage.
-- [ ] Understanding of where the data is coming from and any policies related to data access.
-- [ ] Gather Security and Compliance requirements.
+- [ ] Data access, use restrictions, ownership, lineage, and quality are understood.
+- [ ] Labels or another meaningful evaluation method are available where needed.
+- [ ] Representative exploration identifies distributions, gaps, leakage, and integration risks.
+- [ ] A bounded [feasibility decision](feasibility-studies.md) connects results to product outcomes, cost, and harm constraints.
 
-## Feasibility Study
+## Evaluation and Experiments
 
-- [ ] A feasibility study was performed to assess if the data supports the proposed tasks.
-- [ ] Rigorous Exploratory data analysis was performed (including analysis of data distribution).
-- [ ] Hypotheses were tested producing sufficient evidence to either support or reject that an ML approach is feasible to solve the problem.
-- [ ] ROI estimation and risk analysis was performed for the project.
-- [ ] ML outputs/assets can be integrated within the production system.
-- [ ] Recommendations on how to proceed have been documented.
-
-## Evaluation and Metrics
-
-- [ ] Clear definition of how performance will be measured.
-- [ ] The evaluation metrics are somewhat connected to the success criteria.
-- [ ] The metrics can be calculated with the datasets available.
-- [ ] Evaluation flow can be applied to all versions of the model.
-- [ ] Evaluation code is unit-tested and reviewed by all team members.
-- [ ] Evaluation flow facilitates further results and error analysis.
-
-## Model Baseline
-
-- [ ] Well-defined baseline model exists and its performance is calculated. ([More details on well defined baselines](./ml-model-checklist.md))
-- [ ] The performance of other ML models can be compared with the model baseline.
-
-## Experimentation setup
-
-- [ ] Well-defined train/test dataset with labels.
-- [ ] Reproducible and logged experiments in an environment accessible by all data scientists to quickly iterate.
-- [ ] Defined experiments/hypothesis to test.
-- [ ] Results of experiments are documented.
-- [ ] Model hyper parameters are tuned systematically.
-- [ ] Same performance evaluation metrics and consistent datasets are used when comparing candidate models.
+- [ ] Metrics directly measure accepted success/failure criteria and can be computed from available data.
+- [ ] Evaluation code and fixtures have meaningful tests.
+- [ ] Versioned datasets/splits, transforms, parameters, artifacts, and results make comparisons reproducible.
+- [ ] A documented baseline and common evaluation conditions support candidate comparisons.
+- [ ] Error analysis includes relevant segments and limitations; results are not cherry-picked.
 
 ## Production
 
-- [ ] [Model readiness checklist](./ml-model-checklist.md) reviewed.
-- [ ] Model reviews were performed (covering model debugging, reviews of training and evaluation approaches, model performance).
-- [ ] Data pipeline for inferencing, including an end-to-end tests.
-- [ ] SLAs requirements for models are gathered and documented.
-- [ ] Monitoring of data feeds and model output.
-- [ ] Ensure consistent schema is used across the system with expected input/output defined for each component of the pipelines (data processing as well as models).
-- [ ] [Responsible AI](./responsible-ai.md) reviewed.
+- [ ] [Model readiness](ml-model-checklist.md) is supported by actual evidence.
+- [ ] Input/output schemas, artifact loading, transforms, and inference work through real end-to-end paths.
+- [ ] Accepted quality, latency, throughput, and cost requirements hold.
+- [ ] Monitoring and controlled retraining/rollback ownership are defined.
+- [ ] [Responsible AI](responsible-ai.md) requirements and mitigations are implemented where applicable.

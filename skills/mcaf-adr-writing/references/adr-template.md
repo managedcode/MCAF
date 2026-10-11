@@ -1,265 +1,113 @@
 # ADR-XXXX: Title
 
-> TEMPLATE ONLY — remove this note and replace all placeholder text before saving as a real ADR under `docs/ADR/`.
+> TEMPLATE ONLY — copy to `docs/ADR/ADR-XXXX-title-in-kebab-case.md`, replace placeholders, remove this note, and omit optional fields only when inapplicable.
 
-Status: Proposed | Accepted | Implemented | Rejected | Superseded  
-Date: YYYY-MM-DD  
-Related Features: `docs/Features/...` (required for feature-driven decisions)
-Related Requirements: `REQ-...`, `AC-...` from `docs/Features/...`, or `N/A: cross-cutting obligation ...`
-Supersedes: `docs/ADR/ADR-....md` (delete if none)  
-Superseded by: `docs/ADR/ADR-....md` (delete if none)
-
-Rules:
-
-- This ADR is **self-contained** — avoid “as discussed”; include all critical context and links.
-- At least **one Mermaid diagram is mandatory** (boundaries/modules/interactions for this decision).
-- `MCAF-ARCH-001` remains mandatory: an ADR MUST NOT redefine a split repository, layer-first feature ownership, or inconsistent slice naming as compliant. It may document only a time-bounded migration deviation with an owner and removal date.
-- `MCAF-REQ-001` remains mandatory: this ADR MUST map the decision and every implementation stage to stable feature `REQ-*` and `AC-*` IDs, or to an explicit cross-cutting operational obligation. `Implemented` is valid only after the implementation and verification evidence exist.
-- Once accepted, save as `docs/ADR/ADR-XXXX-title-in-kebab-case.md` (English, kebab-case). Keep this reference file unchanged and copy its structure into the real ADR.
-
----
-
-## Implementation plan (step-by-step)
-
-> TEMPLATE ONLY — replace these checkboxes with real implementation steps for this ADR and keep them updated while implementing.
-
-- [ ] Analyze current state (facts)
-- [ ] Map the decision to feature `REQ-*` and `AC-*` IDs
-- [ ] Plan the change (ordered stages, files/modules, dependencies, integration points, tests, docs)
-- [ ] Define `MCAF-AI-001` lead/worker/reviewer roles, disjoint write scopes, completion evidence, and join gates
-- [ ] Implement the change (smallest safe increments)
-- [ ] Add/update automated tests (happy + negative + edge; protect invariants)
-- [ ] Run verification commands (build/test/format/analyze/coverage) and record results
-- [ ] Update docs (ADR/Features/Architecture overview) and close the checklist
-
----
+- Status: Proposed | Accepted | Implemented | Rejected | Superseded
+- Date: YYYY-MM-DD
+- Owner: `...`
+- Approval: user decision/reference for the exact material change; pending while Proposed
+- Related Features: `docs/Features/...` or `N/A: cross-cutting operational obligation ...`
+- Related Requirements: `REQ-*`, `AC-*` or named operational obligations
+- Supersedes / Superseded by: links, if applicable
 
 ## Context
 
-- Current situation (what exists today).
-- Constraints (tech/legal/time/org constraints that matter).
-- Problem statement (what is failing / what you must enable).
-- Goals (what success looks like).
-- Non-goals (what this ADR is not trying to solve).
-
----
+- Current behavior and affected source:
+- Problem and required outcome:
+- Constraints and decision drivers:
+- Scope and non-goals:
 
 ## Requirements and Decision Traceability (`MCAF-REQ-001`)
 
-| Requirement | Acceptance criteria | Decision obligation | Why this ADR is required |
+| Requirement / obligation | Acceptance criteria | Decision needed | Why this ADR is required |
 | --- | --- | --- | --- |
-| `REQ-001` | `AC-001` | Boundary, contract, data, security, dependency, deployment, or standard decision | Concrete reason |
+| `REQ-001` | `AC-001` | Boundary / contract / data / security / dependency / deployment | Concrete reason |
 
-Every decision point and implementation stage MUST map back to a requirement or an explicit operational obligation.
-
----
-
-## Stakeholders (who needs this to be clear)
-
-| Role | What they need to know | Questions this ADR must answer |
-| --- | --- | --- |
-| Product / Owner | User/business impact, scope, rollout risk | What changes for users? What’s out of scope? |
-| Engineering | Boundaries/modules, data/contract changes, edge cases | What do we change, where, and why? |
-| DevOps / SRE | Deployability, config, monitoring, rollback | How do we ship safely and observe it? |
-| QA | Test scenarios + environment assumptions | What must be proven by automated tests? |
-
----
+Every decision and implementation stage maps to requirements or an explicit operational obligation.
 
 ## Decision
 
-- One sentence decision statement.
+State the chosen approach, why it meets the requirements, and the preserved/changed contracts. A proposed record does not authorize implementation. Material architecture, serializer/serialization, contract, data, security, dependency, or deployment changes need user approval unless already authorized for this exact scope.
 
-Key points:
+### Architecture placement (`MCAF-ARCH-001`)
 
-- Key point 1
-- Key point 2
+| Canonical slice | Backend | Frontend | Contracts | Tests | Docs | Infrastructure |
+| --- | --- | --- | --- | --- | --- | --- |
+| `<SliceName>` | Exact path | Exact path | Exact path | Exact path | `docs/Features/<SliceName>.md` | Exact path |
 
-### Mandatory architecture guardrail (`MCAF-ARCH-001`)
-
-- Canonical slice name(s):
-- Backend path(s) in this repository:
-- Frontend path(s) in this repository:
-- Contract path(s) in this repository:
-- Test path(s) in this repository:
-- Documentation path(s) in this repository:
-- Confirmation that this decision does not split solution-owned artifacts across repositories or introduce layer-first feature ownership:
-- Existing migration deviation, owner, target layout, verification, and removal date (delete if none):
-
----
+All solution-owned artifacts stay in one repository with canonical slice names and conventions. Use `N/A: reason` for inapplicable surfaces. A split repository or layer-first feature owner is migration debt, not a compliant target; record affected paths, owner, target, verification, and removal date.
 
 ## Diagram
 
-This section is mandatory.
-
-> TEMPLATE ONLY — Mermaid often breaks with fancy syntax. Keep it simple and make sure it renders in the repo.
+Include at least one Mermaid diagram of real boundaries, contracts, or interactions, and verify that it renders.
 
 ```mermaid
 ```
 
----
+## Alternatives and Consequences
 
-## Alternatives considered
+| Option | Benefits | Costs / risks | Reason accepted or rejected |
+| --- | --- | --- | --- |
+| Actual option | Concrete benefit | Concrete trade-off | Requirement/constraint |
 
-### Option A
-
-- Pros:  
-- Cons:  
-- Rejected because:
-
-### Option B
-
-- Pros:  
-- Cons:  
-- Rejected because:
-
----
-
-## Consequences
-
-### Positive
-
-- Benefit
-
-### Negative / risks
-
-- Risk  
-- Mitigation:
-
----
-
-## Impact
-
-### Code
-
-- Affected modules / services:  
-- New boundaries / responsibilities:  
-- Feature flags / toggles (names, defaults, removal plan):
-
-### Data / configuration
-
-- Data model / schema changes:  
-- Config changes (keys, defaults, secrets handling):  
-- Backwards compatibility strategy:
-
-### Documentation
-
-- Feature docs to update:  
-- Testing docs to update:  
-- Architecture docs to update:  
-- `docs/Architecture.md` updates (what must change):  
-- Notes for `AGENTS.md` (new rules/patterns):
-
----
+- Positive consequences:
+- Negative consequences and mitigations:
+- User/business, operational, and security impact where applicable:
 
 ## Implementation Contract
 
-This section is mandatory. An ADR without an actionable implementation contract remains `Proposed` or `Accepted`, never `Implemented`.
+Define the complete approved scope of code, tests, wiring, migration, cleanup, and docs. Do not substitute incomplete increments for delivery.
 
 ### Ordered stages
 
-| Task ID | Requirement and AC IDs | Stage / deliverable | Canonical slice and exact ownership | Dependencies / start condition | Owner / model tier | Tests and pass condition | Join / completion evidence |
+| Task | Requirement / AC | Deliverable | Slice / exact file ownership | Dependencies / start | Owner / model tier | Tests / pass condition | Join / evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `TASK-001` | `REQ-001`, `AC-001` | Smallest safe implementation stage | `<SliceName>` and exact paths | None / `TASK-... complete` | Lead / least expensive capable worker / reviewer | Test IDs and exact command | Changed artifacts, result, and evidence inspected |
+| `TASK-001` | `REQ-001`, `AC-001` | Working outcome | Exact paths | None / verified prerequisite | Lead / worker / reviewer | Scenario and command | Artifacts and inspected result |
 
-### Contracts and migration
+### Contracts, Data, and Rollout
 
-- Public/internal contracts to add, change, or preserve:
-- Data/configuration migration order:
-- Compatibility window and removal step:
-- Rollout and rollback checkpoints:
-- Documentation and architecture-map updates:
+- Public/internal contracts and serializer/format settings to preserve or change:
+- Schema/configuration changes, defaults, and secret ownership:
+- Migration order, compatibility window, cleanup, and removal:
+- Rollout, failure signal, rollback, and required production evidence:
+- Feature, architecture, testing, operations, and governance docs to update:
 
-### Multi-agent integration (`MCAF-AI-001`)
+### Multi-Agent Integration (`MCAF-AI-001`)
 
-- Planning and final integration owner:
-- Read-only research/review workstreams:
-- Disjoint write-capable workstreams:
-- Shared files/contracts with a single integration owner:
-- Native status/wait mechanism:
-- Conditions that block dependent tasks:
-- Final join condition before integrated verification:
-- Escalation path for ambiguity, failed verification, scope expansion, or worker drift:
+- Planning/final integration owner and model tier:
+- Read-only research/review scopes:
+- Disjoint implementation scopes and one owner for shared files/contracts:
+- Native status/wait mechanism and dependencies:
+- Completion states: `complete`, `blocked`, `failed`, `cancelled`:
+- Join and escalation conditions:
 
-The lead MUST wait for every required dependency, inspect each task's explicit `complete`, `blocked`, `failed`, or `cancelled` state, and verify the combined repository state. A worker's plan, idle state, or unverified summary is not completion.
-
----
+The lead waits for required results, inspects every diff and evidence packet, and verifies the combined repository. Idle state, plans, and unverified worker claims are not completion.
 
 ## Verification
 
-This section is mandatory: describe how to prove the decision (tests + commands).
+Review the complete code and tests, fix in-scope findings, and format before one planned verification phase. A separate baseline/red-phase run or repeated check needs a concrete purpose or explicit requirement.
 
-### Objectives
+- Real environment/dependencies, fixtures, isolation, and reset:
+- Success, rejection, failure, edge, and migration/rollback scenarios:
+- Observable invariants and required/forbidden side effects:
+- Coverage baseline and active `AGENTS.md` thresholds:
+- Exact repo build/test/format/analyze/coverage and extra-gate commands:
+- Manual evidence or approved test exceptions:
+- Monitoring and rollout evidence where applicable:
 
-- What behaviour / qualities must be proven.
-- Which invariants from this ADR must be encoded as tests (happy path + negative/forbidden + edge cases).
-- Link each objective/scenario to the specific automated test(s) that prove it.
-
-### Test environment
-
-- Environment (local compose / staging / prod-like):  
-- Data and reset strategy (seed data, migrations, rollback plan):  
-- External dependencies (real / sandbox / test environment required):
-
-### Testing methodology
-
-- Core flows and invariants that MUST be proven:  
-- Positive flows that MUST pass:  
-- Negative / forbidden flows that MUST be rejected or fail safely:  
-- Edge / boundary / unexpected flows that MUST be covered:  
-- Required realism level (real dependencies, contracts, environments):  
-- Coverage baseline requirement (must stay at least at the pre-change level or improve):  
-- Pass criteria for considering the ADR implementation complete (all relevant tests green, new tests added, verification complete):
-
-### Test commands
-
-- build: (paste from `AGENTS.md`)
-- test: (paste from `AGENTS.md`)
-- format: (paste from `AGENTS.md`)
-- coverage: (paste from `AGENTS.md`; delete if none)
-
-### New or changed tests
-
-| ID | Scenario | Level (Unit / Int / API / UI) | Expected result | Notes / Data |
+| Test | Requirement / AC | Scenario / level | Meaningful assertion | Command / result / evidence |
 | --- | --- | --- | --- | --- |
-| TST-001 | Happy path / negative / edge | Integration | Observable outcome | Fixtures / seed data |
+| `TST-001` | `REQ-001`, `AC-001` | Real flow | Observable outcome / rejected effect | Pending or observed result |
 
-### Regression and analysis
+## Completion Checklist
 
-- Regression suites to run (must stay green):  
-- Static analysis (tools/configs that must pass):  
-- Monitoring during rollout (logs/metrics/alerts to watch):
-- Coverage comparison against baseline:
-
----
-
-## Rollout and migration
-
-- Migration steps:  
-- Backwards compatibility:  
-- Rollback:
-
----
+- [ ] Decision approval, alternatives, consequences, and a rendered diagram are recorded.
+- [ ] `MCAF-ARCH-001`: one repository and canonical slices; no expanded architecture deviation.
+- [ ] `MCAF-REQ-001`: requirements/obligations, stages, tests, and evidence are traceable.
+- [ ] `MCAF-AI-001`: ownership, required completions, joins, lead review, and integrated checks are satisfied.
+- [ ] Required code, migrations, tests, cleanup, docs, and rollout evidence exist; required gates pass and coverage does not regress without an approved exception.
+- [ ] Status matches evidence; `Implemented` is not used while required delivery work remains.
 
 ## References
 
-- Issues / tickets:  
-- External docs / specs:  
-- Related ADRs:
-
----
-
-## Filing checklist
-
-- [ ] `MCAF-ARCH-001` remains satisfied: one repository, one canonical name and convention per vertical slice, and no layer-first feature owner.
-- [ ] `MCAF-REQ-001` remains satisfied: related `REQ-*` and `AC-*` IDs, ordered implementation tasks, tests, and evidence are traceable.
-- [ ] The mandatory Implementation Contract defines exact ownership, dependencies, migration/rollout, verification, and join conditions.
-- [ ] `MCAF-AI-001` is satisfied for non-trivial implementation: model tiers, disjoint write scopes, explicit completion states, waiting, lead review, and integrated verification are recorded.
-- [ ] Status is `Implemented` only when every required implementation step and verification item is complete.
-- [ ] File saved under `docs/ADR/ADR-XXXX-title-in-kebab-case.md` (not in `docs/templates/`).
-- [ ] Status reflects real state (`Proposed`, `Accepted`, `Rejected`, `Superseded`).
-- [ ] Links to related features, tests, and ADRs are filled in.
-- [ ] Diagram section contains at least one Mermaid diagram.
-- [ ] Testing methodology is filled in with positive, negative, and edge flows plus pass criteria.
-- [ ] New or updated automated tests exist for the changed behaviour.
-- [ ] All relevant tests are green and coverage did not fall below baseline.
-- [ ] `docs/Architecture.md` updated if module boundaries or interactions changed.
+Link real feature docs, architecture, source, tests, issues, related ADRs, and authoritative external specifications.

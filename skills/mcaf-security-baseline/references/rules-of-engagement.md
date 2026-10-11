@@ -1,16 +1,14 @@
-# Application Security Analysis: Rules of Engagement
+# Active Security Testing Boundaries
 
-When performing application security analysis, it is expected that the tester follow the *Rules of Engagement* as laid out below. This is to standardize the scope of application testing and provide a concrete awareness of what is considered "out of scope" for security analysis.
+A baseline code review does not authorize active scanning or attacks against a live system.
 
-## Rules of Engagement - For Those Requesting Review
+Before active testing, establish the authorized target/environment, allowed techniques, credentials, data restrictions, time/load limits, owner, and stop condition. Use an isolated test or sandbox environment where practical.
 
-* Web Application Firewalls can be up and configured, but do not enable any automatic blocking. This can greatly slow down the person performing the test.
-* Similarly, if a service is running on a virtual machine, ensure services such as `fail2ban` are disabled.
-* You cannot make changes to the running application until the test is complete. This is to prevent accidentally breaking an otherwise valid attack in progress.
-* Any review results are not considered as "final". A security review should always be performed by a security team orchestrated by the customer prior to moving an application into production. If a customer requires further assistance, they can engage Premier Support.
+- Keep WAFs, rate limits, and other protections enabled unless the system owner explicitly approves a scoped change. A test request alone does not authorize disabling them.
+- Do not perform denial-of-service, destructive actions, credential phishing, or interactions with uninvolved users.
+- Keep test data and credentials within the agreed boundary; do not expose customer data in evidence.
+- Stop when the agreed limit is reached or unexpected service/data impact occurs, and report the concrete result.
+- Coordinate reproducibility through the agreed environment/version rather than forbidding necessary incident fixes.
+- Report findings and untested areas accurately. Technical review is not certification or approval to deploy.
 
-## Rules of Engagement - For Those Performing Tests
-
-* Do not attempt to perform Denial-of-Service attacks or otherwise crash services. Heavy active scanning is tolerated (and is assumed to be somewhat of a load test) but deliberate takedowns are not permitted.
-* Do not interact with human beings. Phishing credentials or other such client-side attacks are off-limits. Detailing XSS and similar attacks is encouraged as a part of the test, but do not leverage these against internal users or customers.
-* Attack from a single point. Especially if the application is currently in the customer's hands, provide the IP address or hostname of the attacking host to avoid setting off alarms.
+These rules constrain an explicitly authorized active test; they do not add an approval step to ordinary read-only source inspection.

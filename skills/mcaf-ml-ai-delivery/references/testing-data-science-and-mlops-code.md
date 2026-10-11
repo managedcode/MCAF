@@ -1,88 +1,27 @@
-# Testing Data Science and MLOps Code
+# Data Science and MLOps Tests
 
-Testing ML code follows the same rule as the rest of MCAF: verify real behaviour with real boundaries.
+Apply the repository's test policy to real data loading, transforms, evaluation, training, artifact storage/loading, and inference paths. Inspect source and contracts and review code/tests before the planned verification phase.
 
-## Core Rules
+## Fixtures and Execution
 
-- test data pipelines, feature transforms, training code, and inference code through real execution paths
-- do not use mocks, fakes, stubs, or service doubles
-- do not hardcode important values inline; keep reusable test values in named constants or fixtures
-- keep datasets tiny, deterministic, and representative
-- separate fast checks from heavier end-to-end or training checks
+Use tiny, deterministic, representative real files and datasets. Keep expensive training/E2E suites distinct from focused checks without omitting required gates. Use real sandbox/test dependencies, not doubles that conceal contract failures.
 
-## Data Loading
+## Required Scenario Selection
 
-Use small real files or checked-in fixtures instead of replacing file I/O with doubles.
+| Boundary | Meaningful proof |
+| --- | --- |
+| Loading | Correct schema/values; missing file, malformed record, null, and invalid schema behavior |
+| Transforms | Expected values as well as shape; boundary/range/encoding behavior and training/serving consistency |
+| Training | Real selected training path updates parameters and produces a usable artifact |
+| Artifact and inference | Real save/load and caller entry point; meaningful outputs plus invalid/unavailable artifact behavior |
+| Evaluation | Known fixture yields correct metrics and threshold decisions; split/segment assumptions are honored |
+| Pipeline | Real transforms, model, validation, and required metadata/lineage persistence work together |
+| Monitoring/recovery | Quality/drift/threshold logic and accepted uncertain, invalid, or unavailable-output behavior |
 
-Recommended pattern:
+Select scenarios from the accepted requirements; do not add irrelevant model checks or use shape assertions as the only prediction proof.
 
-1. keep a tiny CSV, JSON, image, or parquet fixture in the test assets
-2. load it through the same public function or pipeline used by production code
-3. assert the parsed schema, row count, key values, and validation behaviour
+## Review and Evidence
 
-Good checks:
+Confirm that tests can detect the intended regression, expected values come from the contract, fixtures are isolated, and required negative paths reach the actual boundary. Use named reusable values where repository policy requires them.
 
-- valid file loads successfully
-- missing file fails in the expected way
-- invalid schema is rejected clearly
-- nulls, outliers, or malformed records are handled explicitly
-
-## Data Transformation
-
-Transformation tests should prove input-to-output behaviour with small deterministic examples.
-
-Use:
-
-- named fixture constants for sample values
-- one assertion focus per test when possible
-- parametrized tests for shape, range, normalization, encoding, or padding rules
-
-Avoid:
-
-- inline magic numbers or string literals repeated across tests
-- giant synthetic datasets that make failures unreadable
-
-## Model Training and Inference
-
-Use tiny real models or reduced training configurations that still execute the true code path.
-
-Examples of useful checks:
-
-- the model accepts the expected input shape
-- the training step updates weights or parameters
-- inference produces the expected output shape and type
-- the saved model can be loaded and used by the real inference entry point
-- evaluation code calculates metrics correctly on a fixed fixture dataset
-
-Keep long-running verification separate from the fast inner loop by marking or grouping those suites explicitly.
-
-## Integration and Pipeline Tests
-
-For MLOps flows, prefer narrow but real integration coverage:
-
-- real feature pipeline plus real model inference
-- real model artifact load plus API or batch entry point
-- real data validation and schema enforcement
-- real persistence of model metadata, metrics, or lineage where the system depends on it
-
-If a dependency is external, use a real sandbox or test environment with the real contract.
-
-## Validation and Monitoring
-
-ML verification should cover more than code execution.
-
-Test or document:
-
-- schema validation
-- feature drift detection logic
-- threshold and alert calculations
-- fallback behaviour when model output is invalid or unavailable
-- reproducibility of evaluation inputs and metrics
-
-## Test Design Rules
-
-- prefer TDD for bug fixes and non-trivial behaviour changes
-- use named constants for file names, labels, thresholds, and expected values
-- keep fixtures small enough to understand at a glance
-- prove behaviour through public interfaces, not internal implementation details
-- if a test is hard to write without doubles, treat that as a design problem and simplify the boundary
+After complete approved code/tests, self-review, fixes, and formatting, run the planned checks. Separate exploratory model experiments from software verification and production proof; repeat checks only for a new change, concrete failure, or unresolved question.

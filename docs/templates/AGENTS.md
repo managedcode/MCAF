@@ -226,6 +226,28 @@ These limits are repo-configured policy values. They live here so the solution c
 
 Local `AGENTS.md` files may tighten these values, but they must not loosen them without an explicit root-level exception.
 
+### Engineering Judgment and Complete Delivery
+
+You are a smart, highly capable engineering agent with extensive technical knowledge and strong reasoning ability. Use the intelligence and expertise you already have to understand the code, anticipate problems, implement the complete solution, and review your own work from the outset. Do not outsource your thinking to repeated test runs or hide incomplete work behind "safe small steps" and iterative trial and error.
+
+- Inspect all code needed for the approved task up front: implementation, callers, contracts, tests, and documentation. Think through the complete solution, dependencies, normal flows, failure paths, and edge cases. Identify defects through careful code inspection and reasoning instead of waiting for repeated test failures to reveal problems visible in the code.
+- Implement every requested capability and required behavior variant completely, including end-to-end wiring and applicable success, failure, and edge-case behavior. Do not omit requirements, substitute a simplified subset, or leave in-scope branches, integrations, stubs, TODOs, or deferred follow-ups unfinished.
+- Before running verification, self-review the complete implementation and diff against every accepted requirement. Check logic, contracts, authorization, state ownership, and failure handling where relevant. Fix all identified in-scope problems before launching builds or tests.
+- Review the tests themselves before execution: they must exercise real user or system flows, assert meaningful outcomes, cover required negative scenarios, and be capable of detecting the intended regression. Fix weak assertions, incomplete scenarios, and incorrect expectations; tests must not merely mirror the implementation or exist as a formality.
+- TDD and development loops, including the Ralph Loop, remain valid. Design meaningful tests from accepted requirements, then execute verification after the complete approved scope of code and tests has been written, thought through, and reviewed. Frequent test execution does not replace sound implementation and analysis.
+- Every review, test, change, and verification step must serve a concrete purpose: confirm a requirement, identify or fix a defect, examine a specific risk in the affected code, or verify a required flow. Do not review for the sake of reviewing, invent problems, or repeat an answered check without a new reason.
+- After complete implementation, fixes, self-review of code and tests, and formatting, run the necessary verification in one planned phase. Preserve required repository gates and follow explicit user instructions to run or defer checks. Rerun affected checks only for a new change, concrete failure, or unresolved question; fix the complete cause before rerunning instead of launching the same checks after every tiny edit.
+
+### User Approval and Routine Autonomy
+
+- Obtain explicit user approval before changing architecture, module/service boundaries, state ownership, persistence models, or deployment topology.
+- Obtain explicit user approval before introducing, replacing, or materially reconfiguring a serializer, or changing serialization formats or settings that affect persisted data, messages, public payloads, or compatibility.
+- Obtain explicit user approval for other material changes: public API/event contracts, database schemas or destructive migrations, identity/authorization/trust boundaries, new or replacement dependencies, and weakened quality or security gates.
+- Present a concrete proposal with the reason, affected behavior and contracts, alternatives, risks, migration/rollback where relevant, and verification plan before implementing such a decision. Record an approved architectural decision in its ADR.
+- Continue useful inspection, planning, and unaffected work while approval is pending; do not implement the protected decision before approval.
+- Approval already given in the task or standing repository instructions remains valid within that exact scope. Do not ask for the same approval again; a new material decision outside it requires approval.
+- Do not ask for approval for obvious, routine work within the accepted design: bug fixes that preserve contracts, completing agreed wiring, focused tests, formatting, documentation, or local refactors that preserve boundaries and behavior. Remove obsolete artifacts when that removal is part of the approved replacement.
+
 ### Task Delivery
 
 - Start from `docs/Architecture.md` and the nearest local `AGENTS.md`.
@@ -238,7 +260,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 - Define scope before coding:
   - in scope
   - out of scope
-- Keep context tight. Do not read the whole repo if the architecture map and local docs are enough.
+- Keep context tight, but inspect the complete affected flow, including callers, contracts, dependencies, tests, and docs, before editing. Do not read unrelated parts of the repo when the architecture map and local docs identify the necessary paths.
 - If the task matches a skill, use the skill instead of improvising.
 - Analyze first:
   - current state
@@ -277,7 +299,7 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - a test plan derived from the `AC-*` criteria, with every criterion covered by tests or a documented exception
   - the test and verification strategy for each planned step
   - the testing methodology for the task: what flows will be tested, how they will be tested, and what quality bar the tests must meet
-  - an explicit full-test baseline step after the plan is prepared
+  - the planned verification phase and the concrete purpose of each check; a pre-change baseline run only when required by repository policy or needed to resolve a specific risk
   - a tracked list of already failing tests, with one checklist item per failing test
   - root-cause notes and intended fix path for each failing test that must be addressed
   - a checklist with explicit done criteria for each step
@@ -289,23 +311,24 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
   - map every acceptance criterion to planned automated tests or a documented test exception before coding
   - turn the chosen direction into a detailed `<slug>.plan.md`
   - include test creation, test updates, and verification work in the ordered steps from the start
-  - once the initial plan is ready, run the full relevant test suite to establish the real baseline
-  - if tests are already failing, add each failing test back into `<slug>.plan.md` as a tracked item with its failure symptom, suspected cause, and fix status
-  - work through failing tests one by one: reproduce, find the root cause, apply the fix, rerun, and update the plan file
+  - use existing baseline evidence when available; run a new baseline only for a documented requirement or unanswered question
+  - track discovered failing tests in `<slug>.plan.md` with their symptom, root cause, scope, and fix status; do not expand into unrelated repairs without authorization
+  - diagnose each in-scope failure, inspect related failure paths, and fix the complete cause before rerunning affected checks
   - include ordered final validation skills in the plan file, with reason for each skill
   - require each selected skill to produce a concrete action, artifact, or verification outcome
-  - execute one planned step at a time
+  - implement the complete approved scope of code, tests, wiring, and docs before the planned verification phase
   - mark checklist items in `<slug>.plan.md` as work progresses
   - update `<slug>.acceptance.md` when the criteria change, then update the mapped tests and plan before continuing
-  - review findings, apply fixes, and rerun relevant verification
+  - self-review the complete implementation and tests, fix findings, and format before verification
+  - rerun affected verification only when a new change, concrete failure, or unresolved question warrants it
   - update the plan file and repeat until done criteria are met or an explicit exception is documented
 - Implement code and tests together.
-- Run verification in layers:
+- Run one planned verification phase, using the necessary layers:
   - changed tests
   - related suite
   - broader required regressions
 - If `build` is separate from `test`, run `build` before `test`.
-- After tests pass, run `format`, then the final required verification commands.
+- Apply formatting before verification; use the repo's format check in the verification phase when configured.
 - Run every repo-defined quality gate that is available for the stack and change scope, including analyzers, linters, complexity checks, coverage, architecture checks, security checks, and any other configured tools.
 - The task is complete only when every planned checklist item is done, every acceptance criterion is satisfied, and all relevant tests are green.
 - Summarize the change, risks, and verification before marking the task complete.
@@ -336,8 +359,8 @@ Local `AGENTS.md` files may tighten these values, but they must not loosen them 
 
 ### Testing
 
-- TDD is the default for new behaviour and bug fixes: write the failing test first, make it pass, then refactor.
-- Bug fixes start with a failing regression test that reproduces the issue.
+- TDD remains the default test-design approach for new behaviour and bug fixes: design the regression from accepted requirements before implementation and ensure it can detect the original defect.
+- Write and review the complete approved code and tests before the planned verification phase. A separate red-phase or baseline run needs a concrete purpose or an explicit repository/user requirement; it does not replace inspecting the code and completing the scope.
 - Tests MUST be written from acceptance criteria, not from implementation details.
 - Each `AC-*` criterion in `<slug>.acceptance.md` MUST be covered by one or more automated tests or by an explicit written exception.
 - Test names, display names, or comments should reference the relevant `AC-*` ID when that improves traceability.
@@ -403,12 +426,7 @@ Always:
 - Read the relevant docs before changing behaviour or architecture.
 - Run the required verification commands yourself.
 
-Ask first:
-
-- changing public API contracts
-- adding new dependencies
-- modifying database schema
-- deleting code files
+Ask first when a decision requires approval under **User Approval and Routine Autonomy**. Existing authorization covers its agreed scope; routine implementation within it proceeds autonomously.
 
 ## Preferences
 

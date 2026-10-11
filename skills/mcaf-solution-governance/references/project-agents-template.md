@@ -15,6 +15,8 @@ Model-tier orchestration: `MCAF-AI-001` is mandatory for non-trivial work in thi
 
 Requirements and ADR traceability: `MCAF-REQ-001` is mandatory here. Non-trivial features require stable `REQ-*`/`AC-*`, an explicit ADR decision, implementation tasks, tests, and evidence; required ADRs must include an implementation contract before coding.
 
+Delivery and approval: inherit the root rules for complete implementation, code/test self-review, and formatting before planned verification. Material architecture, serializer/serialization, contract, data, security, dependency, or deployment changes require user approval; routine work within prior authorization does not require another confirmation.
+
 ## Purpose
 
 - What this project or module does:

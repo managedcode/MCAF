@@ -28,12 +28,15 @@ Create or update an ADR before implementation when the feature changes any of th
 
 - solution, module, service, or vertical-slice boundaries
 - public API, event, schema, persistence, or compatibility contracts
+- serializer choice or serialization formats/settings affecting persisted data, messages, public payloads, or compatibility
 - dependency, platform, runtime, deployment topology, or infrastructure ownership
 - security, privacy, identity, authorization, or trust boundaries
 - cross-cutting engineering standards or an exception to an existing rule
 - a migration that changes the target architecture or has rollback risk
 
 For a non-trivial feature with no ADR trigger, record `ADR: N/A` and explain why the existing architecture and contracts are sufficient. Silence is not an ADR decision.
+
+Before implementing a material architecture, serializer/serialization, contract, data, security, dependency, or deployment decision, obtain user approval for the concrete proposal. An ADR remains `Proposed` until that approval exists; drafting or marking it `Accepted` does not create authorization. Prior task or standing approval remains valid within its exact scope, and routine work preserving the accepted design proceeds autonomously.
 
 ## ADR Implementation Contract
 
@@ -91,3 +94,5 @@ Before a feature is marked complete, the reviewer MUST confirm:
 4. all worker results reached an explicit completion state and all required joins occurred
 5. the integrated implementation satisfies requirements and all mapped verification passes
 6. the feature doc and ADR status match the actual repository and rollout state
+
+Review the complete implementation and tests against the accepted requirements before execution, fix in-scope findings, and format. Run necessary verification in one planned phase, preserving repository gates. Repeat affected checks only for a new change, concrete failure, or unresolved question, after fixing the complete cause.

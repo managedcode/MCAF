@@ -102,6 +102,8 @@ A skill contains:
 - `assets/` — output assets or templates used by the workflow
 - `scripts/` — deterministic helpers when they add reliability
 
+`AGENTS.md` owns the shared delivery workflow and approval rules. Skills contain only the guidance specific to their task; they do not repeat the Ralph Loop, generic planning advice, or a mandatory response schema. Load a reference only when its procedure or scaffold is needed. Keep existing skill names stable when tightening their contents so installed catalogs and links continue to work.
+
 Recommended target locations in a consuming repo:
 
 - Codex: `.codex/skills/`
@@ -204,7 +206,10 @@ Integration tests are the backbone because they prove that a slice works through
 
 ### 3.2 Verification Rules
 
-- Prefer TDD for new behaviour and bug fixes: start with a failing test, make it pass, then refactor.
+- Use TDD to design meaningful regression tests from accepted requirements before implementation; the test must be capable of detecting the original defect.
+- Inspect the complete affected code and flows up front, implement all approved variants and wiring, then self-review code, tests, and the full diff before verification.
+- Format first, then run the necessary checks in one planned verification phase. Preserve required repository gates and explicit instructions to run or defer checks.
+- Run a separate red-phase or pre-change baseline only for a concrete question or explicit requirement. Rerun affected checks only after a new change, concrete failure, or unresolved question; diagnose and fix the complete cause first.
 - New or changed behaviour is proven by new or updated automated tests.
 - Tests prove user-visible or caller-visible flows, not just isolated implementation detail.
 - Tests cover positive, negative, edge, and unexpected flows when the behaviour can fail in different ways.
@@ -278,6 +283,8 @@ Root `AGENTS.md` stays current with:
 - mandatory `MCAF-REQ-001` feature requirements, ADR triggers and implementation contracts, plus traceability through tasks, tests, and evidence
 - non-trivial task workflow rules, including root-level `<slug>.brainstorm.md` and `<slug>.plan.md` usage
 - testing discipline
+- complete implementation and self-review before planned verification
+- explicit approval boundaries for architecture, serialization, and other material changes, with autonomy for routine work inside the approved scope
 - done criteria for tests, coverage, and quality gates
 - design and maintainability rules
 - the mandatory `MCAF-ARCH-001` single-repository boundary and canonical vertical-slice path convention
@@ -344,6 +351,14 @@ Self-learning is a cornerstone of the framework, not an optional habit.
 - Plans include ordered implementation steps, explicit test steps, testing methodology, and final validation commands.
 - Skills are preferred over improvised workflow when a skill matches the task.
 - Numeric maintainability limits live in `AGENTS.md`, not in framework prose.
+
+### 4.7 Engineering Judgment and Approval
+
+Agents must use code inspection and reasoning from the outset. Read the implementation, callers, contracts, dependencies, tests, and docs needed for the whole approved task; think through success, failure, and edge paths. Deliver every accepted capability and required variant end to end. Do not substitute a simplified subset, leave in-scope wiring unfinished, or use repeated test runs to discover defects already visible in the code.
+
+Before verification, review the complete implementation and tests against every accepted requirement, fix in-scope findings, and format the result. Tests must prove real flows and meaningful outcomes, cover required negative scenarios, and detect the intended regression. TDD and the Ralph Loop remain useful; every iteration and check needs a concrete purpose.
+
+Obtain explicit user approval before introducing or replacing architecture, state ownership, serializers, serialization contracts, public APIs/events, database schemas, identity/trust boundaries, dependencies, or deployment topology, and before weakening quality or security gates. Present the concrete proposal, consequences, alternatives, migration/rollback, and verification plan. Prior approval remains valid for its exact scope. Routine bug fixes, wiring, local refactors preserving contracts and boundaries, tests, formatting, and docs proceed without renewed approval.
 
 ## 5. Coding and Testability
 
@@ -465,27 +480,28 @@ The plan records:
 - final validation skills and commands, with reasons
 - checklist items and done criteria
 
-Before implementation starts, run the full relevant test baseline.
-If anything is already failing, add each failing test to the plan with its symptom, suspected or confirmed root cause, and intended fix path.
+Plan one verification phase after complete implementation, self-review of code and tests, fixes, and formatting. Use existing baseline evidence when available; run a pre-change baseline only when required or when it answers a specific question. Track discovered failures with their root cause and scope, and preserve required repository gates without turning unrelated failures into unauthorized repair work.
 
 ### 7.4 Implement
 
-- Use the Ralph Loop for non-trivial work: brainstorm first, turn the chosen direction into a plan, execute one planned step, run the relevant checks, update the plan, then move to the next step.
-- implement code and tests together
-- keep changes small and reviewable
-- fix failing tests deliberately, one by one, and track them in the plan until they are closed
+- Use the Ralph Loop for non-trivial work: inspect and reason, define acceptance and the plan, implement the complete approved scope, self-review and fix, format, then verify.
+- implement code, tests, wiring, and docs together; cover every accepted behavior variant
+- keep changes coherent and reviewable without leaving the approved scope incomplete
+- diagnose failures deliberately, fix the complete in-scope cause, and update the plan before rerunning affected checks
 - use the architecture map and nearest local `AGENTS.md` to stay in scope
 
 ### 7.5 Verify
 
-Run verification in layers:
+After reviewing code and tests and applying formatting, run the necessary layers in one planned phase:
 
 1. changed tests
 2. related suite
 3. broader required regressions and the full relevant suite
-4. analyzers, formatters, and any configured architecture, security, mutation, or other quality gates
+4. analyzers, format checks, and any configured architecture, security, mutation, or other quality gates
 5. complexity checks and any other configured code-quality tools
 6. coverage comparison against the pre-change baseline
+
+Do not repeat passed checks without a new change, concrete failure, or unresolved question. Follow explicit instructions to run or defer checks and report the evidence and any remaining blockers accurately.
 
 ### 7.6 Update Durable Context and Close the Task
 
@@ -534,7 +550,7 @@ The mandatory run protocol is:
 6. accept only explicit `complete`, `blocked`, `failed`, or `cancelled` states with evidence; `idle` and unverified summaries are not completion
 7. have the planning model inspect every result and diff, then run integrated repository verification
 
-For Codex, official guidance supports read-heavy `explorer`, execution-focused `worker`, and project custom agents with per-agent model/reasoning configuration; Codex can wait for all requested agents and consolidate their results. For Claude Code, choose subagents for bounded delegation, background sessions for human-monitored independent work, and experimental agent teams only when workers need shared tasks or messaging. Claude Code exposes current-session work through `/tasks` and background sessions through `claude agents`. See the official [Codex subagents](https://developers.openai.com/codex/subagents), [Claude Code parallel agents](https://code.claude.com/docs/en/agents), [Claude Code subagents](https://code.claude.com/docs/en/sub-agents), and [Claude Code agent teams](https://code.claude.com/docs/en/agent-teams) documentation.
+Use the runtime's available models, roles, permissions, and native spawn/status/message/wait controls. Exact model names and product commands are refreshable configuration. When configuring a platform, consult the current official [Codex subagents](https://developers.openai.com/codex/subagents), [Claude Code parallel agents](https://code.claude.com/docs/en/agents), [Claude Code subagents](https://code.claude.com/docs/en/sub-agents), or [Claude Code agent teams](https://code.claude.com/docs/en/agent-teams) documentation as applicable.
 
 Simple work does not require delegation when orchestration overhead exceeds the task. For non-trivial work, failure to delegate routine coding must have a concrete recorded reason such as unavailable model routing, insufficient worker capability, inseparable high-risk decisions, or unsafe ownership overlap.
 

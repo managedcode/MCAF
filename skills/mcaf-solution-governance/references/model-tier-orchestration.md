@@ -17,6 +17,8 @@ No implementation agent may start a non-trivial feature until all of the followi
 
 Research-only agents may run before this gate, but they MUST remain read-only and return evidence to the planning model. Platform-native plan approval is not a substitute for the planning model checking the plan against the feature requirements and ADR.
 
+Obtain user approval before a material architecture, serializer/serialization, contract, data, security, dependency, or deployment decision is implemented. Existing task or standing authorization covers its exact scope; routine work within that scope does not need renewed approval.
+
 ## Mandatory Responsibilities
 
 ### Planning model
@@ -130,28 +132,21 @@ Delegation never transfers accountability. Before accepting worker output, the p
 
 The lead MUST wait for all required workers before finalizing. It MUST verify the integrated repository state itself; passing worker-local checks do not prove that combined changes build, test, or satisfy the feature.
 
+Every worker and lead inspects the complete affected flow, finishes the approved scope, reviews code and tests, fixes findings, and formats before its planned verification. Coordinate shared build/test writers rather than launching competing or redundant runs. Rerun affected checks only for a new change, concrete failure, or unresolved question, and fix the complete cause first.
+
 ## Platform Adapters
 
-These adapters describe current product controls as of 2026-08-29. Re-check the linked official documentation when configuring exact model names, commands, or experimental features. The mandatory lifecycle above remains stable when product details change.
+Inspect the actual runtime's available models, roles, permissions, and native spawn/status/message/wait controls before configuring delegation. Product names and commands are refreshable configuration, not framework policy.
 
 ### Codex
 
-- Use the built-in `explorer` role or a custom read-only agent for codebase mapping; use `worker` or a narrow custom agent for implementation.
-- Configure project-scoped custom agents under `.codex/agents/` when stable model, reasoning, sandbox, tool, or skill boundaries are useful.
-- Choose a flagship/high-capability model and higher reasoning for ambiguous planning or demanding review. Use faster/lower-cost models for read-heavy scans and narrow repeatable work only when they remain capable.
-- Ask explicitly for the task split, whether Codex must wait for all agents, and the required consolidated output.
-- Use the app agent panel or CLI `/agent` view to inspect, steer, stop, and review agent threads. Codex can wait for all requested results and consolidate them, but the lead still applies the MCAF review gate.
-- Keep concurrent-agent limits aligned with the actual independent task graph; do not maximize concurrency by default.
+Use the exposed read-only and implementation roles, supported per-agent model routing, and native status/wait tools. Keep concurrency aligned with safe ownership and record unavailable capabilities instead of assuming a particular UI or command exists.
 
 Official sources: [Codex subagents](https://developers.openai.com/codex/subagents), [OpenAI model guidance](https://developers.openai.com/api/docs/guides/latest-model).
 
 ### Claude Code
 
-- Use subagents for bounded side work that should return to one lead context. Use background sessions when a human wants to dispatch and monitor independent tasks. Use agent teams only when workers must share a task list or message one another; agent teams are experimental.
-- Define reusable project agents under `.claude/agents/` and select a model alias or model ID per role. Lower-cost models such as Haiku are appropriate for clear, bounded work only after capability is established; stronger models remain appropriate for demanding analysis or review.
-- Foreground subagents block until complete; background subagents run concurrently. Use `claude agents` for background sessions and `/tasks` for work running in the current session.
-- For teams, encode dependencies in the shared task list, wait for teammates before proceeding, partition different file sets, and use `TaskCompleted` or `TeammateIdle` hooks when deterministic quality gates are needed.
-- Because teammates do not inherit the lead's conversation history, include all task-specific requirements, architecture constraints, ownership, evidence, and stop conditions in the spawn prompt.
+Choose the currently supported delegation mode according to whether work returns to one lead or needs shared coordination. Give each participant the complete instruction packet; do not assume inherited conversation context or availability of a specific command, model alias, or experimental feature.
 
 Official sources: [Claude Code parallel agents](https://code.claude.com/docs/en/agents), [Claude Code subagents](https://code.claude.com/docs/en/sub-agents), [Claude Code agent teams](https://code.claude.com/docs/en/agent-teams).
 

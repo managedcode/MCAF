@@ -1,110 +1,25 @@
 ---
 name: mcaf-architecture-overview
-description: "Create or update `docs/Architecture.md` as the global architecture map for a solution. Use when bootstrapping a repo, onboarding, or changing modules, boundaries, or contracts. Keep it navigational and use `references/overview-template.md` for scaffolding."
+description: "Create or refresh docs/Architecture.md as a concise map of real modules, boundaries, contracts, slices, and entry points. Use for onboarding or architecture documentation changes."
 metadata:
   compatibility: "Requires repository write access; produces Markdown docs with Mermaid diagrams."
 ---
 
 # MCAF: Architecture Overview
 
-## Trigger On
-
-- create the first repo-wide architecture map
-- modules, boundaries, interfaces, or ownership changed
-- onboarding is slow because there is no short "start here" system map
-
-## Value
-
-- produce a concrete project delta: code, docs, config, tests, CI, or review artifact
-- reduce ambiguity through explicit planning, verification, and final validation skills
-- leave reusable project context so future tasks are faster and safer
-
-## Do Not Use For
-
-- recording a single architecture decision with alternatives
-- writing feature-level behaviour details
-
-## Inputs
-
-- current solution layout and entry points
-- the in-repository backend, frontend, contract, test, infrastructure, and docs roots plus the canonical slice convention required by `MCAF-ARCH-001`
-- existing ADRs, feature docs, and boundary docs
-- feature `REQ-*`/`AC-*` and ADR implementation links required by `MCAF-REQ-001`
-- the nearest `AGENTS.md` files
-
-## Quick Start
-
-1. Read the nearest `AGENTS.md` and confirm scope and constraints.
-2. Run this skill's `Workflow` through the `Ralph Loop` until outcomes are acceptable.
-3. Return the `Required Result Format` with concrete artifacts and verification evidence.
+Read root/local `AGENTS.md`, the existing map, relevant source and contracts, ADRs, and feature docs. Document the actual system; do not turn a map update into an unapproved redesign.
 
 ## Workflow
 
-1. Start from the current `docs/Architecture.md`; if it is missing, scaffold it from `references/overview-template.md`.
-2. Build a short navigational overview:
-   - the single repository boundary and every solution-owned surface
-   - a repo-wide vertical-slice map using one canonical name per feature across backend, frontend, contracts, tests, and docs
-   - system or module map
-   - key boundaries and contracts
-   - scoping hints
-   - links to ADRs, feature docs, and high-signal code paths
-   - traceability from each non-trivial slice to its feature requirements and architecture-affecting ADR implementation contracts
-3. Use only real names from the repo. No placeholders like "Module A".
-4. Prefer Mermaid diagrams plus a tiny link index over long prose.
-5. Split diagrams by boundary if the map becomes noisy.
+1. Map the complete solution boundary under `MCAF-ARCH-001`: in-repository backend, frontend, contracts, tests, infrastructure, and docs, with one canonical name and convention per slice.
+2. Show module boundaries, interfaces/contracts, and the key types for the active area with readable Mermaid diagrams using real repository names.
+3. Add a small navigation index linking diagram elements to high-signal code, entry points, feature docs, and ADRs. Split crowded diagrams by boundary.
+4. Under `MCAF-REQ-001`, link non-trivial slices to stable requirements/acceptance and required ADR implementation contracts with accurate status.
+5. Record existing topology deviations as migration debt; do not present split solution repositories or layer-first feature ownership as compliant.
+6. Review links, names, diagrams, and ownership against source. Keep behavior and decision details in their canonical feature/ADR docs.
 
-## Deliver
+Deliver a navigational `docs/Architecture.md` that lets the next agent find the complete affected flow without scanning unrelated code.
 
-- `docs/Architecture.md`
-- a short architecture map that routes the reader to deeper docs
-- explicit evidence that `MCAF-ARCH-001` is applied to the real repository topology
+## References
 
-## Validate
-
-- diagram nodes use real repo names
-- every important box or boundary links to deeper material
-- the file stays navigational instead of becoming an inventory dump
-- the overview lets a new agent scope work without reading the whole repo
-- no solution-owned surface points to another repository
-- slice names and internal conventions match across every applicable technical root; non-applicable surfaces are explained
-- non-trivial slices link to stable requirements and acceptance criteria, and architecture-affecting decisions link to ADRs whose status and implementation contract match reality
-
-## Ralph Loop
-
-Use the Ralph Loop for every task, including docs, architecture, testing, and tooling work.
-
-1. Brainstorm first (mandatory):
-   - analyze current state
-   - define the problem, target outcome, constraints, and risks
-   - generate options and think through trade-offs before committing
-   - capture the recommended direction and open questions
-2. Plan second (mandatory):
-   - write a detailed execution plan from the chosen direction
-   - list final validation skills to run at the end, with order and reason
-3. Execute one planned step and produce a concrete delta.
-4. Review the result and capture findings with actionable next fixes.
-5. Apply fixes in small batches and rerun the relevant checks or review steps.
-6. Update the plan after each iteration.
-7. Repeat until outcomes are acceptable or only explicit exceptions remain.
-8. If a dependency is missing, bootstrap it or return `status: not_applicable` with explicit reason and fallback path.
-
-### Required Result Format
-
-- `status`: `complete` | `clean` | `improved` | `configured` | `not_applicable` | `blocked`
-- `plan`: concise plan and current iteration step
-- `actions_taken`: concrete changes made
-- `validation_skills`: final skills run, or skipped with reasons
-- `verification`: commands, checks, or review evidence summary
-- `remaining`: top unresolved items or `none`
-
-For setup-only requests with no execution, return `status: configured` and exact next commands.
-
-## Load References
-
-- use `references/overview-template.md` only when scaffolding the file
-
-## Example Requests
-
-- "Create an architecture overview for this repo."
-- "Update the overview after splitting the API and worker."
-- "Make onboarding easier by adding a real module map."
+- When scaffolding: [architecture overview template](references/overview-template.md).
